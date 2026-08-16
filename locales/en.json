@@ -7,7 +7,6 @@
     "hint_host": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local.",
     "label_port": "Port",
     "hint_port": "443 for HTTPS, 80 for HTTP.",
-    "label_protocol": "Protocol",
     "label_api_key": "API key",
     "hint_api_key": "Credentials → API Keys → Add in the TrueNAS web interface.",
     "label_ignore_cert": "Accept self-signed certificate",
@@ -17,7 +16,6 @@
     "status_testing": "Testing connection…",
     "status_adding": "Adding NAS…",
     "status_done": "Successfully added.",
-    "select_system": "Select the TrueNAS system",
     "no_system": "Add a TrueNAS system first, then add this device.",
     "err_host_required": "Please enter a host name or IP address.",
     "err_port_invalid": "Please enter a valid port (1–65535).",
@@ -33,25 +31,15 @@
     "no_system": "The TrueNAS system for this device no longer exists. Remove this device and add it again.",
     "not_found": "This entry no longer exists on the TrueNAS.",
     "permission_denied": "The API key lacks permission for this action.",
-    "not_connected": "Not connected to TrueNAS."
+    "not_connected": "Not connected to TrueNAS.",
+    "boot_scrub_stop": "A boot pool scrub cannot be stopped once it has started."
   },
   "state": {
     "unknown": "Unknown",
     "up_to_date": "Up to date",
     "update_available": "Update available",
-    "updating": "Installing update",
     "no_scrub": "No scrub",
-    "healthy": "Healthy",
     "downloading": "Downloading update",
     "update_error": "Check failed"
-  },
-  "settings": {
-    "title": "TrueNAS Manager",
-    "connection": "Connection",
-    "systems": "Paired systems",
-    "no_systems": "No TrueNAS system paired yet.",
-    "log": "App log",
-    "refresh": "Refresh",
-    "copy": "Copy"
   }
 }

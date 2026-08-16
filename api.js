@@ -5,8 +5,15 @@ module.exports = {
   /** Overview of every paired TrueNAS system and its live counters. */
   async getSystems({ homey }) {
     const app = homey.app;
-    const driver = homey.drivers.getDriver('truenas-system');
-    const devices = driver ? driver.getDevices() : [];
+
+    let devices = [];
+    try {
+      const driver = homey.drivers.getDriver('truenas-system');
+      devices = driver ? driver.getDevices() : [];
+    } catch (_err) {
+      // Driver not ready yet — an empty list is better than a failed page.
+      return [];
+    }
 
     return devices.map((device) => {
       const systemId = device.getData().id;

@@ -185,8 +185,16 @@ class TrueNasPoolDevice extends ChildDevice {
     const hub = this.requireHub();
     const pool = this._requirePool();
 
+    // The boot pool is not a regular pool: it has its own scrub method, which
+    // only starts and cannot be stopped.
     if (pool.isBoot) {
-      throw new Error(this.homey.__('error.not_found'));
+      if (action !== 'START') {
+        throw new Error(this.homey.__('error.boot_scrub_stop'));
+      }
+      this.log('Starting scrub on the boot pool');
+      await hub.call('boot.scrub', []);
+      hub.scheduleRefresh(5000);
+      return;
     }
 
     this.log(`${action} scrub on pool ${pool.name}`);

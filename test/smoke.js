@@ -23,6 +23,7 @@ const RESPONSES = {
     physmem: 64 * GIB,
     cores: 12,
     model: 'Intel(R) Core(TM) i5-12500',
+    loadavg: [0.83, 0.61, 0.5],
   },
   'pool.query': [{
     id: 1,
@@ -40,16 +41,18 @@ const RESPONSES = {
       errors: 0, total_secs_left: 3600,
     },
   }],
+  // 25.10 returns a PoolEntry with id and guid excluded — the size fields are
+  // right here, not nested under root_dataset like on older releases.
   'boot.get_state': {
     name: 'boot-pool',
     status: 'ONLINE',
+    healthy: true,
+    warning: false,
+    status_detail: null,
+    size: 100 * GIB,
+    allocated: 10 * GIB,
+    free: 90 * GIB,
     scan: { function: 'SCRUB', state: 'FINISHED', percentage: 100, errors: 0 },
-    root_dataset: {
-      properties: {
-        used: { parsed: 10 * GIB },
-        available: { parsed: 90 * GIB },
-      },
-    },
   },
   'service.query': [
     { id: 1, service: 'cifs', enable: true, state: 'RUNNING', pids: [123] },
@@ -230,6 +233,9 @@ function check(label, actual, expected) {
   check('boot isBoot', boot.isBoot, true);
   check('boot healthy', boot.healthy, true);
   check('boot usage %', boot.usage, 10);
+  // Regression: these came out 0 while the parser still expected root_dataset.
+  check('boot total GB', toGiB(boot.size), 100);
+  check('boot free GB', toGiB(boot.free), 90);
 
   console.log('\nDisks');
   check('count', hub.data.disks.length, 2);
@@ -334,7 +340,9 @@ function check(label, actual, expected) {
   console.log('\nReporting request');
   const reporting = calls.find((c) => c.method === 'reporting.netdata_get_data');
   const graphNames = reporting.params[0].map((g) => g.name);
-  check('graphs requested', graphNames, ['load', 'cpu', 'memory', 'arcsize', 'cputemp', 'interface']);
+  // `load` is intentionally absent: system.info already supplied loadavg.
+  check('graphs requested', graphNames, ['cpu', 'memory', 'arcsize', 'cputemp', 'interface']);
+  check('load came from system.info', hub.data.system.load1, 0.83);
   check('only UP interfaces', reporting.params[0].filter((g) => g.name === 'interface').map((g) => g.identifier), ['eno1']);
 
   console.log('\nAvailability');

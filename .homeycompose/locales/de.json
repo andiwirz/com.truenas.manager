@@ -7,7 +7,6 @@
     "hint_host": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local.",
     "label_port": "Port",
     "hint_port": "443 für HTTPS, 80 für HTTP.",
-    "label_protocol": "Protokoll",
     "label_api_key": "API-Schlüssel",
     "hint_api_key": "Im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel → Hinzufügen.",
     "label_ignore_cert": "Selbstsigniertes Zertifikat akzeptieren",
@@ -17,7 +16,6 @@
     "status_testing": "Verbindung wird geprüft…",
     "status_adding": "NAS wird hinzugefügt…",
     "status_done": "Erfolgreich hinzugefügt.",
-    "select_system": "TrueNAS-System auswählen",
     "no_system": "Zuerst ein TrueNAS-System hinzufügen, danach dieses Gerät.",
     "err_host_required": "Bitte einen Hostnamen oder eine IP-Adresse eingeben.",
     "err_port_invalid": "Bitte einen gültigen Port eingeben (1–65535).",
@@ -32,6 +30,7 @@
     "timeout": "TrueNAS hat nicht rechtzeitig geantwortet.",
     "no_system": "Das zugehörige TrueNAS-System existiert nicht mehr. Entferne dieses Gerät und füge es neu hinzu.",
     "not_found": "Dieser Eintrag existiert auf dem TrueNAS nicht mehr.",
+    "boot_scrub_stop": "Ein Scrub des Boot-Pools kann nach dem Start nicht gestoppt werden.",
     "permission_denied": "Dem API-Schlüssel fehlt die Berechtigung für diese Aktion.",
     "not_connected": "Keine Verbindung zum TrueNAS."
   },
@@ -39,19 +38,8 @@
     "unknown": "Unbekannt",
     "up_to_date": "Aktuell",
     "update_available": "Update verfügbar",
-    "updating": "Update wird installiert",
     "downloading": "Update wird heruntergeladen",
     "update_error": "Prüfung fehlgeschlagen",
-    "no_scrub": "Kein Scrub",
-    "healthy": "In Ordnung"
-  },
-  "settings": {
-    "title": "TrueNAS Manager",
-    "connection": "Verbindung",
-    "systems": "Verbundene Systeme",
-    "no_systems": "Noch kein TrueNAS-System verbunden.",
-    "log": "App-Protokoll",
-    "refresh": "Aktualisieren",
-    "copy": "Kopieren"
+    "no_scrub": "Kein Scrub"
   }
 }

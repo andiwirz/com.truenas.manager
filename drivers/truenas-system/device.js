@@ -266,6 +266,7 @@ class TrueNasSystemDevice extends Device {
     const pollKeys = ['poll_interval', 'disk_poll_interval'];
 
     if (!changedKeys.some((key) => [...connectionKeys, ...pollKeys].includes(key))) return;
+    if (!this._hub) return;
 
     this._hub.reconfigure({
       host: newSettings.host,
