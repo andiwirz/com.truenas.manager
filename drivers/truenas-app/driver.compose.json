@@ -1,0 +1,115 @@
+{
+  "name": {
+    "en": "App",
+    "de": "App"
+  },
+  "class": "other",
+  "capabilities": [
+    "onoff",
+    "app_state",
+    "app_version",
+    "app_update_available",
+    "app_image_update",
+    "app_containers",
+    "app_upgrade_button",
+    "app_restart_button"
+  ],
+  "capabilitiesOptions": {
+    "onoff": {
+      "title": {
+        "en": "Running",
+        "de": "Läuft"
+      },
+      "insightsTitleTrue": {
+        "en": "App started",
+        "de": "App gestartet"
+      },
+      "insightsTitleFalse": {
+        "en": "App stopped",
+        "de": "App gestoppt"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-app/assets/images/small.png",
+    "large": "/drivers/truenas-app/assets/images/large.png",
+    "xlarge": "/drivers/truenas-app/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "App",
+        "de": "App"
+      },
+      "children": [
+        {
+          "id": "show_upgrade_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show update button",
+            "de": "Update-Schaltfläche anzeigen"
+          },
+          "value": true,
+          "hint": {
+            "en": "Shows a button on the device tile that installs a pending update. A catalog version upgrade is installed directly; if only newer container images are waiting, the app is redeployed instead. The app restarts either way.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu."
+          }
+        },
+        {
+          "id": "show_restart_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show redeploy button",
+            "de": "Schaltfläche «Neu bereitstellen» anzeigen"
+          },
+          "value": true,
+          "hint": {
+            "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."
+          }
+        },
+        {
+          "id": "info_app",
+          "type": "label",
+          "label": {
+            "en": "App identifier",
+            "de": "App-Kennung"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_latest_version",
+          "type": "label",
+          "label": {
+            "en": "Latest version",
+            "de": "Neueste Version"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_portal",
+          "type": "label",
+          "label": {
+            "en": "Web address",
+            "de": "Webadresse"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

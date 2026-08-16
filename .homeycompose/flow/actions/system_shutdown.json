@@ -1,0 +1,37 @@
+{
+  "id": "system_shutdown",
+  "title": {
+    "en": "Shut down the NAS",
+    "de": "NAS herunterfahren"
+  },
+  "titleFormatted": {
+    "en": "Shut down the NAS after [[delay]] s",
+    "de": "NAS nach [[delay]] s herunterfahren"
+  },
+  "hint": {
+    "en": "Powers off the whole TrueNAS system. It cannot be switched back on from Homey.",
+    "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "title": {
+        "en": "Delay (seconds)",
+        "de": "Verzögerung (Sekunden)"
+      },
+      "min": 0,
+      "max": 3600,
+      "step": 1,
+      "placeholder": {
+        "en": "0",
+        "de": "0"
+      }
+    }
+  ]
+}

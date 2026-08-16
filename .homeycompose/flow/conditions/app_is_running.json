@@ -1,0 +1,14 @@
+{
+  "id": "app_is_running",
+  "title": {
+    "en": "App !{{is|is not}} running",
+    "de": "App !{{läuft|läuft nicht}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Memory",
+    "de": "Arbeitsspeicher"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "units": {
+    "en": "MB",
+    "de": "MB"
+  },
+  "decimals": 0,
+  "min": 0,
+  "icon": "/assets/capabilities/memory.svg"
+}

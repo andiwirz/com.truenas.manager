@@ -1,0 +1,33 @@
+{
+  "id": "system_cpu_usage_above",
+  "title": {
+    "en": "CPU usage !{{is|is not}} above",
+    "de": "CPU-Auslastung !{{ist|ist nicht}} über"
+  },
+  "titleFormatted": {
+    "en": "CPU usage !{{is|is not}} above [[percent]] %",
+    "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    },
+    {
+      "name": "percent",
+      "type": "number",
+      "title": {
+        "en": "Usage (%)",
+        "de": "Auslastung (%)"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "placeholder": {
+        "en": "80",
+        "de": "80"
+      }
+    }
+  ]
+}

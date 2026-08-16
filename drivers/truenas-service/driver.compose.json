@@ -1,0 +1,80 @@
+{
+  "name": {
+    "en": "Service",
+    "de": "Dienst"
+  },
+  "class": "other",
+  "capabilities": [
+    "onoff",
+    "service_state",
+    "service_autostart",
+    "service_restart_button"
+  ],
+  "capabilitiesOptions": {
+    "onoff": {
+      "title": {
+        "en": "Running",
+        "de": "Läuft"
+      },
+      "insightsTitleTrue": {
+        "en": "Service started",
+        "de": "Dienst gestartet"
+      },
+      "insightsTitleFalse": {
+        "en": "Service stopped",
+        "de": "Dienst gestoppt"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-service/assets/images/small.png",
+    "large": "/drivers/truenas-service/assets/images/large.png",
+    "xlarge": "/drivers/truenas-service/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Service",
+        "de": "Dienst"
+      },
+      "children": [
+        {
+          "id": "show_restart_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show restart button",
+            "de": "Neustart-Schaltfläche anzeigen"
+          },
+          "value": true,
+          "hint": {
+            "en": "Shows a button on the device tile that restarts this service. Active connections are dropped.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt."
+          }
+        },
+        {
+          "id": "info_service",
+          "type": "label",
+          "label": {
+            "en": "Service identifier",
+            "de": "Dienstkennung"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

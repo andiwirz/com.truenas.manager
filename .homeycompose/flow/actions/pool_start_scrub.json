@@ -1,0 +1,18 @@
+{
+  "id": "pool_start_scrub",
+  "title": {
+    "en": "Start a scrub",
+    "de": "Scrub starten"
+  },
+  "hint": {
+    "en": "Verifies every block in the pool. This takes hours on large pools and slows down other access.",
+    "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    }
+  ]
+}

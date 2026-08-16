@@ -1,0 +1,28 @@
+{
+  "id": "app_image_update_found",
+  "title": {
+    "en": "A container image update became available",
+    "de": "Ein Container-Image-Update ist verfügbar"
+  },
+  "hint": {
+    "en": "Fires when a newer Docker image is available for this app. This is separate from a catalog version upgrade — either can be pending without the other.",
+    "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "portal",
+      "type": "string",
+      "title": {
+        "en": "Web address",
+        "de": "Webadresse"
+      }
+    }
+  ]
+}

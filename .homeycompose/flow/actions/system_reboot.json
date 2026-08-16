@@ -1,0 +1,37 @@
+{
+  "id": "system_reboot",
+  "title": {
+    "en": "Reboot the NAS",
+    "de": "NAS neu starten"
+  },
+  "titleFormatted": {
+    "en": "Reboot the NAS after [[delay]] s",
+    "de": "NAS nach [[delay]] s neu starten"
+  },
+  "hint": {
+    "en": "Reboots the whole TrueNAS system. All shares, apps and virtual machines go offline. The API key needs write permission.",
+    "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "title": {
+        "en": "Delay (seconds)",
+        "de": "Verzögerung (Sekunden)"
+      },
+      "min": 0,
+      "max": 3600,
+      "step": 1,
+      "placeholder": {
+        "en": "0",
+        "de": "0"
+      }
+    }
+  ]
+}

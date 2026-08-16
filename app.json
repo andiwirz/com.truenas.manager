@@ -1,0 +1,2437 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.truenas.manager",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "TrueNAS Manager",
+    "de": "TrueNAS Manager"
+  },
+  "description": {
+    "en": "Your storage, pools and services at a glance.",
+    "de": "Speicher, Pools und Dienste immer im Blick."
+  },
+  "category": [
+    "tools"
+  ],
+  "tags": {
+    "en": [
+      "truenas",
+      "nas",
+      "zfs",
+      "storage",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "disk",
+      "smart",
+      "backup",
+      "network storage"
+    ],
+    "de": [
+      "truenas",
+      "nas",
+      "zfs",
+      "speicher",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "festplatte",
+      "smart",
+      "backup",
+      "netzwerkspeicher"
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "brandColor": "#0095D5",
+  "author": {
+    "name": "Andi Wirz",
+    "email": "andi@wirzfamily.ch"
+  },
+  "api": {
+    "getSystems": {
+      "method": "GET",
+      "path": "/systems"
+    },
+    "getDebug": {
+      "method": "GET",
+      "path": "/debug"
+    },
+    "refreshSystem": {
+      "method": "GET",
+      "path": "/refresh"
+    },
+    "getLog": {
+      "method": "GET",
+      "path": "/log"
+    },
+    "clearLog": {
+      "method": "POST",
+      "path": "/log/clear"
+    }
+  },
+  "source": "https://github.com/andiwirz/com.truenas.manager",
+  "bugs": {
+    "url": "https://github.com/andiwirz/com.truenas.manager/issues"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "AndiWirz"
+      }
+    }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "app_image_update_found",
+        "title": {
+          "en": "A container image update became available",
+          "de": "Ein Container-Image-Update ist verfügbar"
+        },
+        "hint": {
+          "en": "Fires when a newer Docker image is available for this app. This is separate from a catalog version upgrade — either can be pending without the other.",
+          "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "portal",
+            "type": "string",
+            "title": {
+              "en": "Web address",
+              "de": "Webadresse"
+            }
+          }
+        ]
+      },
+      {
+        "id": "app_state_changed",
+        "title": {
+          "en": "App status changed",
+          "de": "App-Status hat gewechselt"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            }
+          },
+          {
+            "name": "previous_state",
+            "type": "string",
+            "title": {
+              "en": "Previous status",
+              "de": "Vorheriger Status"
+            }
+          },
+          {
+            "name": "portal",
+            "type": "string",
+            "title": {
+              "en": "Web address",
+              "de": "Webadresse"
+            }
+          }
+        ]
+      },
+      {
+        "id": "app_update_found",
+        "title": {
+          "en": "An app update became available",
+          "de": "Ein App-Update ist verfügbar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "version",
+            "type": "string",
+            "title": {
+              "en": "Version",
+              "de": "Version"
+            }
+          },
+          {
+            "name": "portal",
+            "type": "string",
+            "title": {
+              "en": "Web address",
+              "de": "Webadresse"
+            }
+          }
+        ]
+      },
+      {
+        "id": "disk_temperature_high",
+        "title": {
+          "en": "Disk temperature rose above",
+          "de": "Festplattentemperatur ist gestiegen über"
+        },
+        "titleFormatted": {
+          "en": "Disk temperature rose above [[temperature]] °C",
+          "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen"
+        },
+        "hint": {
+          "en": "Fires once each time the temperature crosses the threshold upwards, not on every reading above it.",
+          "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-disk"
+          },
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature (°C)",
+              "de": "Temperatur (°C)"
+            },
+            "min": 20,
+            "max": 90,
+            "step": 1,
+            "placeholder": {
+              "en": "50",
+              "de": "50"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "de": "Temperatur"
+            }
+          },
+          {
+            "name": "disk",
+            "type": "string",
+            "title": {
+              "en": "Disk",
+              "de": "Festplatte"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_scrub_finished",
+        "title": {
+          "en": "Scrub finished",
+          "de": "Scrub ist abgeschlossen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "pool",
+            "type": "string",
+            "title": {
+              "en": "Pool",
+              "de": "Pool"
+            }
+          },
+          {
+            "name": "errors",
+            "type": "number",
+            "title": {
+              "en": "Errors",
+              "de": "Fehler"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_scrub_started",
+        "title": {
+          "en": "Scrub started",
+          "de": "Scrub wurde gestartet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "pool",
+            "type": "string",
+            "title": {
+              "en": "Pool",
+              "de": "Pool"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_space_low",
+        "title": {
+          "en": "Free space dropped below",
+          "de": "Freier Speicher ist gefallen unter"
+        },
+        "titleFormatted": {
+          "en": "Free space dropped below [[percent]] %",
+          "de": "Freier Speicher ist unter [[percent]] % gefallen"
+        },
+        "hint": {
+          "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
+          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          },
+          {
+            "name": "percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            },
+            "min": 1,
+            "max": 99,
+            "step": 1,
+            "placeholder": {
+              "en": "10",
+              "de": "10"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "free_percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            }
+          },
+          {
+            "name": "free_tb",
+            "type": "number",
+            "title": {
+              "en": "Free space (TB)",
+              "de": "Freier Speicher (TB)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_status_changed",
+        "title": {
+          "en": "Pool status changed",
+          "de": "Pool-Status hat gewechselt"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            }
+          },
+          {
+            "name": "previous_status",
+            "type": "string",
+            "title": {
+              "en": "Previous status",
+              "de": "Vorheriger Status"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_unhealthy",
+        "title": {
+          "en": "Pool became unhealthy",
+          "de": "Pool ist nicht mehr in Ordnung"
+        },
+        "hint": {
+          "en": "Fires when the pool leaves the healthy state, for example on DEGRADED or FAULTED.",
+          "de": "Wird ausgelöst, wenn der Pool den fehlerfreien Zustand verlässt, etwa bei DEGRADED oder FAULTED."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            }
+          },
+          {
+            "name": "detail",
+            "type": "string",
+            "title": {
+              "en": "Detail",
+              "de": "Details"
+            }
+          }
+        ]
+      },
+      {
+        "id": "system_alert_raised",
+        "title": {
+          "en": "An alert was raised",
+          "de": "Eine Meldung ist aufgetreten"
+        },
+        "hint": {
+          "en": "Fires once for every new TrueNAS alert at or above the level set in the device settings.",
+          "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "level",
+            "type": "string",
+            "title": {
+              "en": "Level",
+              "de": "Stufe"
+            }
+          },
+          {
+            "name": "message",
+            "type": "string",
+            "title": {
+              "en": "Message",
+              "de": "Meldung"
+            }
+          },
+          {
+            "name": "category",
+            "type": "string",
+            "title": {
+              "en": "Category",
+              "de": "Kategorie"
+            }
+          }
+        ]
+      },
+      {
+        "id": "system_update_found",
+        "title": {
+          "en": "A system update became available",
+          "de": "Ein System-Update ist verfügbar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "version",
+            "type": "string",
+            "title": {
+              "en": "Version",
+              "de": "Version"
+            }
+          }
+        ]
+      },
+      {
+        "id": "vm_state_changed",
+        "title": {
+          "en": "Virtual machine status changed",
+          "de": "VM-Status hat gewechselt"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-vm"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "de": "Status"
+            }
+          },
+          {
+            "name": "previous_state",
+            "type": "string",
+            "title": {
+              "en": "Previous status",
+              "de": "Vorheriger Status"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "app_image_update_available",
+        "title": {
+          "en": "A container image update !{{is|is not}} available",
+          "de": "Ein Container-Image-Update !{{ist|ist nicht}} verfügbar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "app_is_running",
+        "title": {
+          "en": "App !{{is|is not}} running",
+          "de": "App !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "app_update_available",
+        "title": {
+          "en": "An app update !{{is|is not}} available",
+          "de": "Ein App-Update !{{ist|ist nicht}} verfügbar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "disk_temperature_above",
+        "title": {
+          "en": "Temperature !{{is|is not}} above",
+          "de": "Temperatur !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "Temperature !{{is|is not}} above [[temperature]] °C",
+          "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-disk"
+          },
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature (°C)",
+              "de": "Temperatur (°C)"
+            },
+            "min": 20,
+            "max": 90,
+            "step": 1,
+            "placeholder": {
+              "en": "50",
+              "de": "50"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_free_space_below",
+        "title": {
+          "en": "Free space !{{is|is not}} below",
+          "de": "Freier Speicher !{{ist|ist nicht}} unter"
+        },
+        "titleFormatted": {
+          "en": "Free space !{{is|is not}} below [[percent]] %",
+          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          },
+          {
+            "name": "percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            },
+            "min": 1,
+            "max": 99,
+            "step": 1,
+            "placeholder": {
+              "en": "10",
+              "de": "10"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pool_is_healthy",
+        "title": {
+          "en": "Pool !{{is|is not}} healthy",
+          "de": "Pool !{{ist|ist nicht}} in Ordnung"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ]
+      },
+      {
+        "id": "pool_scrub_running",
+        "title": {
+          "en": "A scrub !{{is|is not}} running",
+          "de": "Ein Scrub !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ]
+      },
+      {
+        "id": "service_is_running",
+        "title": {
+          "en": "Service !{{is|is not}} running",
+          "de": "Dienst !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-service"
+          }
+        ]
+      },
+      {
+        "id": "system_cpu_usage_above",
+        "title": {
+          "en": "CPU usage !{{is|is not}} above",
+          "de": "CPU-Auslastung !{{ist|ist nicht}} über"
+        },
+        "titleFormatted": {
+          "en": "CPU usage !{{is|is not}} above [[percent]] %",
+          "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          },
+          {
+            "name": "percent",
+            "type": "number",
+            "title": {
+              "en": "Usage (%)",
+              "de": "Auslastung (%)"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "placeholder": {
+              "en": "80",
+              "de": "80"
+            }
+          }
+        ]
+      },
+      {
+        "id": "system_has_alert",
+        "title": {
+          "en": "There !{{is|is no}} alert of level",
+          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe"
+        },
+        "titleFormatted": {
+          "en": "There !{{is|is no}} alert of level [[level]] or higher",
+          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "Level",
+              "de": "Stufe"
+            },
+            "values": [
+              {
+                "id": "WARNING",
+                "label": {
+                  "en": "Warning",
+                  "de": "Warnung"
+                }
+              },
+              {
+                "id": "ERROR",
+                "label": {
+                  "en": "Error",
+                  "de": "Fehler"
+                }
+              },
+              {
+                "id": "CRITICAL",
+                "label": {
+                  "en": "Critical",
+                  "de": "Kritisch"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "system_update_available",
+        "title": {
+          "en": "A system update !{{is|is not}} available",
+          "de": "Ein System-Update !{{ist|ist nicht}} verfügbar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          }
+        ]
+      },
+      {
+        "id": "vm_is_running",
+        "title": {
+          "en": "Virtual machine !{{is|is not}} running",
+          "de": "VM !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-vm"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "app_redeploy",
+        "title": {
+          "en": "Redeploy the app",
+          "de": "App neu bereitstellen"
+        },
+        "hint": {
+          "en": "Stops the app, pulls the latest container images and starts it again.",
+          "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "app_start",
+        "title": {
+          "en": "Start the app",
+          "de": "App starten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "app_stop",
+        "title": {
+          "en": "Stop the app",
+          "de": "App stoppen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "app_upgrade",
+        "title": {
+          "en": "Run the app update",
+          "de": "App-Update ausführen"
+        },
+        "hint": {
+          "en": "Installs whatever update is pending: a catalog version upgrade if one is available, otherwise newer container images. The app restarts. Does nothing when the app is already up to date.",
+          "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "pool_start_scrub",
+        "title": {
+          "en": "Start a scrub",
+          "de": "Scrub starten"
+        },
+        "hint": {
+          "en": "Verifies every block in the pool. This takes hours on large pools and slows down other access.",
+          "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ]
+      },
+      {
+        "id": "pool_stop_scrub",
+        "title": {
+          "en": "Stop the scrub",
+          "de": "Scrub stoppen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-pool"
+          }
+        ]
+      },
+      {
+        "id": "service_restart",
+        "title": {
+          "en": "Restart the service",
+          "de": "Dienst neu starten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-service"
+          }
+        ]
+      },
+      {
+        "id": "service_start",
+        "title": {
+          "en": "Start the service",
+          "de": "Dienst starten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-service"
+          }
+        ]
+      },
+      {
+        "id": "service_stop",
+        "title": {
+          "en": "Stop the service",
+          "de": "Dienst stoppen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-service"
+          }
+        ]
+      },
+      {
+        "id": "system_check_update",
+        "title": {
+          "en": "Check for system updates",
+          "de": "Auf System-Updates prüfen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          }
+        ]
+      },
+      {
+        "id": "system_reboot",
+        "title": {
+          "en": "Reboot the NAS",
+          "de": "NAS neu starten"
+        },
+        "titleFormatted": {
+          "en": "Reboot the NAS after [[delay]] s",
+          "de": "NAS nach [[delay]] s neu starten"
+        },
+        "hint": {
+          "en": "Reboots the whole TrueNAS system. All shares, apps and virtual machines go offline. The API key needs write permission.",
+          "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          },
+          {
+            "name": "delay",
+            "type": "number",
+            "title": {
+              "en": "Delay (seconds)",
+              "de": "Verzögerung (Sekunden)"
+            },
+            "min": 0,
+            "max": 3600,
+            "step": 1,
+            "placeholder": {
+              "en": "0",
+              "de": "0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "system_refresh",
+        "title": {
+          "en": "Refresh all data",
+          "de": "Alle Daten aktualisieren"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          }
+        ]
+      },
+      {
+        "id": "system_shutdown",
+        "title": {
+          "en": "Shut down the NAS",
+          "de": "NAS herunterfahren"
+        },
+        "titleFormatted": {
+          "en": "Shut down the NAS after [[delay]] s",
+          "de": "NAS nach [[delay]] s herunterfahren"
+        },
+        "hint": {
+          "en": "Powers off the whole TrueNAS system. It cannot be switched back on from Homey.",
+          "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          },
+          {
+            "name": "delay",
+            "type": "number",
+            "title": {
+              "en": "Delay (seconds)",
+              "de": "Verzögerung (Sekunden)"
+            },
+            "min": 0,
+            "max": 3600,
+            "step": 1,
+            "placeholder": {
+              "en": "0",
+              "de": "0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "vm_restart",
+        "title": {
+          "en": "Restart the virtual machine",
+          "de": "VM neu starten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-vm"
+          }
+        ]
+      },
+      {
+        "id": "vm_start",
+        "title": {
+          "en": "Start the virtual machine",
+          "de": "VM starten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-vm"
+          }
+        ]
+      },
+      {
+        "id": "vm_stop",
+        "title": {
+          "en": "Stop the virtual machine",
+          "de": "VM stoppen"
+        },
+        "titleFormatted": {
+          "en": "Stop the virtual machine, force [[force]]",
+          "de": "VM stoppen, erzwingen [[force]]"
+        },
+        "hint": {
+          "en": "Graceful asks the guest operating system to shut down. Forced cuts power immediately and can lose unsaved data.",
+          "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-vm"
+          },
+          {
+            "name": "force",
+            "type": "dropdown",
+            "title": {
+              "en": "Method",
+              "de": "Methode"
+            },
+            "values": [
+              {
+                "id": "false",
+                "label": {
+                  "en": "Graceful",
+                  "de": "Regulär"
+                }
+              },
+              {
+                "id": "true",
+                "label": {
+                  "en": "Forced",
+                  "de": "Erzwungen"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "App",
+        "de": "App"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "app_state",
+        "app_version",
+        "app_update_available",
+        "app_image_update",
+        "app_containers",
+        "app_upgrade_button",
+        "app_restart_button"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Running",
+            "de": "Läuft"
+          },
+          "insightsTitleTrue": {
+            "en": "App started",
+            "de": "App gestartet"
+          },
+          "insightsTitleFalse": {
+            "en": "App stopped",
+            "de": "App gestoppt"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-app/assets/images/small.png",
+        "large": "/drivers/truenas-app/assets/images/large.png",
+        "xlarge": "/drivers/truenas-app/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "App",
+            "de": "App"
+          },
+          "children": [
+            {
+              "id": "show_upgrade_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show update button",
+                "de": "Update-Schaltfläche anzeigen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Shows a button on the device tile that installs a pending update. A catalog version upgrade is installed directly; if only newer container images are waiting, the app is redeployed instead. The app restarts either way.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu."
+              }
+            },
+            {
+              "id": "show_restart_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show redeploy button",
+                "de": "Schaltfläche «Neu bereitstellen» anzeigen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."
+              }
+            },
+            {
+              "id": "info_app",
+              "type": "label",
+              "label": {
+                "en": "App identifier",
+                "de": "App-Kennung"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_latest_version",
+              "type": "label",
+              "label": {
+                "en": "Latest version",
+                "de": "Neueste Version"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_portal",
+              "type": "label",
+              "label": {
+                "en": "Web address",
+                "de": "Webadresse"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-app"
+    },
+    {
+      "name": {
+        "en": "Disk",
+        "de": "Festplatte"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_temperature",
+        "alarm_generic",
+        "disk_size",
+        "disk_model",
+        "disk_pool"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Temperature Alarm",
+            "de": "Temperaturalarm"
+          }
+        },
+        "measure_temperature": {
+          "title": {
+            "en": "Disk Temperature",
+            "de": "Festplattentemperatur"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-disk/assets/images/small.png",
+        "large": "/drivers/truenas-disk/assets/images/large.png",
+        "xlarge": "/drivers/truenas-disk/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Temperature",
+            "de": "Temperatur"
+          },
+          "children": [
+            {
+              "id": "temperature_alarm",
+              "type": "number",
+              "label": {
+                "en": "Alarm above (°C)",
+                "de": "Alarm oberhalb (°C)"
+              },
+              "value": 50,
+              "min": 20,
+              "max": 90,
+              "step": 1,
+              "hint": {
+                "en": "Sets the temperature alarm when the disk exceeds this value. Typical limits are 50 °C for hard drives and 65 °C for SSDs.",
+                "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Disk information",
+            "de": "Festplatteninformationen"
+          },
+          "children": [
+            {
+              "id": "info_device",
+              "type": "label",
+              "label": {
+                "en": "Device",
+                "de": "Gerät"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_serial",
+              "type": "label",
+              "label": {
+                "en": "Serial number",
+                "de": "Seriennummer"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_type",
+              "type": "label",
+              "label": {
+                "en": "Type",
+                "de": "Typ"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-disk"
+    },
+    {
+      "name": {
+        "en": "Storage Pool",
+        "de": "Speicher-Pool"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_generic",
+        "pool_status",
+        "pool_usage",
+        "pool_free",
+        "pool_used",
+        "pool_total",
+        "scrub_state",
+        "scrub_progress",
+        "pool_scrub_button"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Pool Problem",
+            "de": "Pool-Problem"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-pool/assets/images/small.png",
+        "large": "/drivers/truenas-pool/assets/images/large.png",
+        "xlarge": "/drivers/truenas-pool/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Pool",
+            "de": "Pool"
+          },
+          "children": [
+            {
+              "id": "show_scrub_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show scrub button",
+                "de": "Scrub-Schaltfläche anzeigen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Shows a button on the device tile that starts a scrub of this pool. A scrub reads every block and can take hours.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern."
+              }
+            },
+            {
+              "id": "info_pool",
+              "type": "label",
+              "label": {
+                "en": "Pool name",
+                "de": "Pool-Name"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_status_detail",
+              "type": "label",
+              "label": {
+                "en": "Status detail",
+                "de": "Statusdetails"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-pool"
+    },
+    {
+      "name": {
+        "en": "Service",
+        "de": "Dienst"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "service_state",
+        "service_autostart",
+        "service_restart_button"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Running",
+            "de": "Läuft"
+          },
+          "insightsTitleTrue": {
+            "en": "Service started",
+            "de": "Dienst gestartet"
+          },
+          "insightsTitleFalse": {
+            "en": "Service stopped",
+            "de": "Dienst gestoppt"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-service/assets/images/small.png",
+        "large": "/drivers/truenas-service/assets/images/large.png",
+        "xlarge": "/drivers/truenas-service/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Service",
+            "de": "Dienst"
+          },
+          "children": [
+            {
+              "id": "show_restart_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show restart button",
+                "de": "Neustart-Schaltfläche anzeigen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Shows a button on the device tile that restarts this service. Active connections are dropped.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt."
+              }
+            },
+            {
+              "id": "info_service",
+              "type": "label",
+              "label": {
+                "en": "Service identifier",
+                "de": "Dienstkennung"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-service"
+    },
+    {
+      "name": {
+        "en": "TrueNAS System",
+        "de": "TrueNAS System"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_generic",
+        "nas_cpu_usage",
+        "measure_temperature",
+        "nas_memory_usage",
+        "nas_load_1",
+        "nas_load_5",
+        "nas_load_15",
+        "nas_memory_used",
+        "nas_memory_free",
+        "nas_arc_size",
+        "nas_net_rx",
+        "nas_net_tx",
+        "nas_alert_count",
+        "nas_alert_text",
+        "nas_uptime",
+        "nas_version",
+        "nas_update_status",
+        "nas_refresh"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Critical Alert",
+            "de": "Kritische Meldung"
+          }
+        },
+        "measure_temperature": {
+          "title": {
+            "en": "CPU Temperature",
+            "de": "CPU-Temperatur"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-system/assets/images/small.png",
+        "large": "/drivers/truenas-system/assets/images/large.png",
+        "xlarge": "/drivers/truenas-system/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "de": "Verbindung"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "Host or IP address",
+                "de": "Host oder IP-Adresse"
+              },
+              "value": "",
+              "hint": {
+                "en": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local. A DHCP reservation in your router is recommended.",
+                "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen."
+              }
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "de": "Port"
+              },
+              "value": 443,
+              "min": 1,
+              "max": 65535,
+              "step": 1,
+              "hint": {
+                "en": "443 for HTTPS, 80 for HTTP.",
+                "de": "443 für HTTPS, 80 für HTTP."
+              }
+            },
+            {
+              "id": "use_ssl",
+              "type": "checkbox",
+              "label": {
+                "en": "Use HTTPS",
+                "de": "HTTPS verwenden"
+              },
+              "value": true,
+              "hint": {
+                "en": "Connects over wss:// instead of ws://. Turn off only if your TrueNAS web interface is reachable over plain HTTP.",
+                "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist."
+              }
+            },
+            {
+              "id": "ignore_cert",
+              "type": "checkbox",
+              "label": {
+                "en": "Accept self-signed certificate",
+                "de": "Selbstsigniertes Zertifikat akzeptieren"
+              },
+              "value": true,
+              "hint": {
+                "en": "TrueNAS uses a self-signed certificate by default. Turn this off only if you installed a certificate that Homey can verify.",
+                "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist."
+              }
+            },
+            {
+              "id": "api_key",
+              "type": "password",
+              "label": {
+                "en": "API key",
+                "de": "API-Schlüssel"
+              },
+              "value": "",
+              "hint": {
+                "en": "Create the key in the TrueNAS web interface under Credentials → API Keys. The account behind the key needs read access, plus write access for the actions you use.",
+                "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Polling",
+            "de": "Abfrage"
+          },
+          "children": [
+            {
+              "id": "poll_interval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval (seconds)",
+                "de": "Abfrageintervall (Sekunden)"
+              },
+              "value": 60,
+              "min": 15,
+              "max": 3600,
+              "step": 5,
+              "hint": {
+                "en": "How often system state, pools, services, apps and virtual machines are read. All devices of this NAS share one request per cycle (default: 60 s).",
+                "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s)."
+              }
+            },
+            {
+              "id": "disk_poll_interval",
+              "type": "number",
+              "label": {
+                "en": "Disk poll interval (seconds)",
+                "de": "Festplatten-Abfrageintervall (Sekunden)"
+              },
+              "value": 300,
+              "min": 60,
+              "max": 86400,
+              "step": 30,
+              "hint": {
+                "en": "Reading disk temperatures queries SMART, which can keep drives from spinning down. Increase this if your drives should stay in standby (default: 300 s).",
+                "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s)."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Alerts",
+            "de": "Meldungen"
+          },
+          "children": [
+            {
+              "id": "alarm_level",
+              "type": "radio",
+              "label": {
+                "en": "Trigger alarm from level",
+                "de": "Alarm auslösen ab Stufe"
+              },
+              "value": "ERROR",
+              "values": [
+                {
+                  "id": "WARNING",
+                  "label": {
+                    "en": "Warning and above",
+                    "de": "Warnung und höher"
+                  }
+                },
+                {
+                  "id": "ERROR",
+                  "label": {
+                    "en": "Error and above",
+                    "de": "Fehler und höher"
+                  }
+                },
+                {
+                  "id": "CRITICAL",
+                  "label": {
+                    "en": "Critical and above",
+                    "de": "Kritisch und höher"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Which TrueNAS alert level sets the Critical Alert flag and fires the alert flow trigger.",
+                "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "System information",
+            "de": "Systeminformationen"
+          },
+          "children": [
+            {
+              "id": "info_hostname",
+              "type": "label",
+              "label": {
+                "en": "Hostname",
+                "de": "Hostname"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_version",
+              "type": "label",
+              "label": {
+                "en": "TrueNAS version",
+                "de": "TrueNAS-Version"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_product",
+              "type": "label",
+              "label": {
+                "en": "Hardware",
+                "de": "Hardware"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_serial",
+              "type": "label",
+              "label": {
+                "en": "Serial number",
+                "de": "Seriennummer"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-system"
+    },
+    {
+      "name": {
+        "en": "Virtual Machine",
+        "de": "Virtuelle Maschine"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "vm_state",
+        "vm_memory",
+        "vm_restart_button"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Running",
+            "de": "Läuft"
+          },
+          "insightsTitleTrue": {
+            "en": "VM started",
+            "de": "VM gestartet"
+          },
+          "insightsTitleFalse": {
+            "en": "VM stopped",
+            "de": "VM gestoppt"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-vm/assets/images/small.png",
+        "large": "/drivers/truenas-vm/assets/images/large.png",
+        "xlarge": "/drivers/truenas-vm/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Virtual machine",
+            "de": "Virtuelle Maschine"
+          },
+          "children": [
+            {
+              "id": "force_stop",
+              "type": "checkbox",
+              "label": {
+                "en": "Force stop",
+                "de": "Erzwungenes Stoppen"
+              },
+              "value": false,
+              "hint": {
+                "en": "Off sends a graceful shutdown request to the guest operating system. On cuts power immediately, which can lose unsaved data.",
+                "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können."
+              }
+            },
+            {
+              "id": "show_restart_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show restart button",
+                "de": "Neustart-Schaltfläche anzeigen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Shows a button on the device tile that restarts this virtual machine.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet."
+              }
+            },
+            {
+              "id": "info_vcpus",
+              "type": "label",
+              "label": {
+                "en": "Virtual CPUs",
+                "de": "Virtuelle CPUs"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-vm"
+    }
+  ],
+  "capabilities": {
+    "app_containers": {
+      "type": "number",
+      "title": {
+        "en": "Containers",
+        "de": "Container"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "icon": "/assets/capabilities/app.svg"
+    },
+    "app_image_update": {
+      "type": "boolean",
+      "title": {
+        "en": "Image Update",
+        "de": "Image-Update"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/capabilities/image.svg"
+    },
+    "app_restart_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Redeploy",
+        "de": "Neu bereitstellen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/restart.svg"
+    },
+    "app_state": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/app.svg"
+    },
+    "app_update_available": {
+      "type": "boolean",
+      "title": {
+        "en": "Update Available",
+        "de": "Update verfügbar"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/capabilities/update.svg"
+    },
+    "app_upgrade_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Run Update",
+        "de": "Update ausführen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/update.svg"
+    },
+    "app_version": {
+      "type": "string",
+      "title": {
+        "en": "Version",
+        "de": "Version"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/info.svg"
+    },
+    "disk_model": {
+      "type": "string",
+      "title": {
+        "en": "Model",
+        "de": "Modell"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/disk.svg"
+    },
+    "disk_pool": {
+      "type": "string",
+      "title": {
+        "en": "Pool",
+        "de": "Pool"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "disk_size": {
+      "type": "number",
+      "title": {
+        "en": "Capacity",
+        "de": "Kapazität"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "units": {
+        "en": "TB",
+        "de": "TB"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/disk.svg"
+    },
+    "nas_alert_count": {
+      "type": "number",
+      "title": {
+        "en": "Active Alerts",
+        "de": "Aktive Meldungen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "icon": "/assets/capabilities/alert.svg"
+    },
+    "nas_alert_text": {
+      "type": "string",
+      "title": {
+        "en": "Latest Alert",
+        "de": "Neueste Meldung"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/alert.svg"
+    },
+    "nas_arc_size": {
+      "type": "number",
+      "title": {
+        "en": "ZFS ARC Size",
+        "de": "ZFS-ARC-Grösse"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/memory.svg"
+    },
+    "nas_cpu_usage": {
+      "type": "number",
+      "title": {
+        "en": "CPU Usage",
+        "de": "CPU-Auslastung"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/cpu.svg"
+    },
+    "nas_load_1": {
+      "type": "number",
+      "title": {
+        "en": "Load Average (1 min)",
+        "de": "Systemlast (1 Min.)"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/load.svg"
+    },
+    "nas_load_15": {
+      "type": "number",
+      "title": {
+        "en": "Load Average (15 min)",
+        "de": "Systemlast (15 Min.)"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/load.svg"
+    },
+    "nas_load_5": {
+      "type": "number",
+      "title": {
+        "en": "Load Average (5 min)",
+        "de": "Systemlast (5 Min.)"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/load.svg"
+    },
+    "nas_memory_free": {
+      "type": "number",
+      "title": {
+        "en": "Memory Free",
+        "de": "Speicher frei"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/memory.svg"
+    },
+    "nas_memory_usage": {
+      "type": "number",
+      "title": {
+        "en": "Memory Usage",
+        "de": "Speicherauslastung"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/memory.svg"
+    },
+    "nas_memory_used": {
+      "type": "number",
+      "title": {
+        "en": "Memory Used",
+        "de": "Speicher belegt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/memory.svg"
+    },
+    "nas_net_rx": {
+      "type": "number",
+      "title": {
+        "en": "Network Received",
+        "de": "Netzwerk empfangen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "Mbit/s",
+        "de": "Mbit/s"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/network.svg"
+    },
+    "nas_net_tx": {
+      "type": "number",
+      "title": {
+        "en": "Network Sent",
+        "de": "Netzwerk gesendet"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "Mbit/s",
+        "de": "Mbit/s"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/network.svg"
+    },
+    "nas_refresh": {
+      "type": "boolean",
+      "title": {
+        "en": "Refresh",
+        "de": "Aktualisieren"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/refresh.svg"
+    },
+    "nas_update_status": {
+      "type": "string",
+      "title": {
+        "en": "Update Status",
+        "de": "Update-Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/update.svg"
+    },
+    "nas_uptime": {
+      "type": "string",
+      "title": {
+        "en": "Uptime",
+        "de": "Laufzeit"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/clock.svg"
+    },
+    "nas_version": {
+      "type": "string",
+      "title": {
+        "en": "Version",
+        "de": "Version"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/info.svg"
+    },
+    "pool_free": {
+      "type": "number",
+      "title": {
+        "en": "Free",
+        "de": "Frei"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "TB",
+        "de": "TB"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "pool_scrub_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Start Scrub",
+        "de": "Scrub starten"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/scrub.svg"
+    },
+    "pool_status": {
+      "type": "string",
+      "title": {
+        "en": "Pool Status",
+        "de": "Pool-Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "pool_total": {
+      "type": "number",
+      "title": {
+        "en": "Total Size",
+        "de": "Gesamtgrösse"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "TB",
+        "de": "TB"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "pool_usage": {
+      "type": "number",
+      "title": {
+        "en": "Used Space",
+        "de": "Belegter Speicher"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "pool_used": {
+      "type": "number",
+      "title": {
+        "en": "Used",
+        "de": "Belegt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "TB",
+        "de": "TB"
+      },
+      "decimals": 2,
+      "min": 0,
+      "icon": "/assets/capabilities/pool.svg"
+    },
+    "scrub_progress": {
+      "type": "number",
+      "title": {
+        "en": "Scrub Progress",
+        "de": "Scrub-Fortschritt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/scrub.svg"
+    },
+    "scrub_state": {
+      "type": "string",
+      "title": {
+        "en": "Scrub Status",
+        "de": "Scrub-Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/scrub.svg"
+    },
+    "service_autostart": {
+      "type": "boolean",
+      "title": {
+        "en": "Starts on Boot",
+        "de": "Startet beim Hochfahren"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/capabilities/power.svg"
+    },
+    "service_restart_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Restart",
+        "de": "Neu starten"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/restart.svg"
+    },
+    "service_state": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/service.svg"
+    },
+    "vm_memory": {
+      "type": "number",
+      "title": {
+        "en": "Memory",
+        "de": "Arbeitsspeicher"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "units": {
+        "en": "MB",
+        "de": "MB"
+      },
+      "decimals": 0,
+      "min": 0,
+      "icon": "/assets/capabilities/memory.svg"
+    },
+    "vm_restart_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Restart",
+        "de": "Neu starten"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/restart.svg"
+    },
+    "vm_state": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/vm.svg"
+    }
+  }
+}

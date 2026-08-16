@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Pool Status",
+    "de": "Pool-Status"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/pool.svg"
+}

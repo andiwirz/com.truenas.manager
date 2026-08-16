@@ -1,0 +1,14 @@
+{
+  "id": "pool_scrub_running",
+  "title": {
+    "en": "A scrub !{{is|is not}} running",
+    "de": "Ein Scrub !{{läuft|läuft nicht}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    }
+  ]
+}

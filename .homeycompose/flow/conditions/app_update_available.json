@@ -1,0 +1,14 @@
+{
+  "id": "app_update_available",
+  "title": {
+    "en": "An app update !{{is|is not}} available",
+    "de": "Ein App-Update !{{ist|ist nicht}} verfügbar"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ]
+}

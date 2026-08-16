@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "ZFS ARC Size",
+    "de": "ZFS-ARC-Grösse"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "units": {
+    "en": "GB",
+    "de": "GB"
+  },
+  "decimals": 1,
+  "min": 0,
+  "icon": "/assets/capabilities/memory.svg"
+}

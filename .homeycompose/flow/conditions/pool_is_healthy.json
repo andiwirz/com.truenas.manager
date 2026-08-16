@@ -1,0 +1,14 @@
+{
+  "id": "pool_is_healthy",
+  "title": {
+    "en": "Pool !{{is|is not}} healthy",
+    "de": "Pool !{{ist|ist nicht}} in Ordnung"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    }
+  ]
+}

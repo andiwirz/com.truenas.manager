@@ -1,0 +1,46 @@
+{
+  "id": "vm_stop",
+  "title": {
+    "en": "Stop the virtual machine",
+    "de": "VM stoppen"
+  },
+  "titleFormatted": {
+    "en": "Stop the virtual machine, force [[force]]",
+    "de": "VM stoppen, erzwingen [[force]]"
+  },
+  "hint": {
+    "en": "Graceful asks the guest operating system to shut down. Forced cuts power immediately and can lose unsaved data.",
+    "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-vm"
+    },
+    {
+      "name": "force",
+      "type": "dropdown",
+      "title": {
+        "en": "Method",
+        "de": "Methode"
+      },
+      "values": [
+        {
+          "id": "false",
+          "label": {
+            "en": "Graceful",
+            "de": "Regulär"
+          }
+        },
+        {
+          "id": "true",
+          "label": {
+            "en": "Forced",
+            "de": "Erzwungen"
+          }
+        }
+      ]
+    }
+  ]
+}

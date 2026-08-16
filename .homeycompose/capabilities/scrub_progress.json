@@ -1,0 +1,19 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Scrub Progress",
+    "de": "Scrub-Fortschritt"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "units": {
+    "en": "%",
+    "de": "%"
+  },
+  "decimals": 1,
+  "min": 0,
+  "max": 100,
+  "icon": "/assets/capabilities/scrub.svg"
+}

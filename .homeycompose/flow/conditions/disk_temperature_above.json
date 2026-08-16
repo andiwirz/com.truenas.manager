@@ -1,0 +1,33 @@
+{
+  "id": "disk_temperature_above",
+  "title": {
+    "en": "Temperature !{{is|is not}} above",
+    "de": "Temperatur !{{ist|ist nicht}} über"
+  },
+  "titleFormatted": {
+    "en": "Temperature !{{is|is not}} above [[temperature]] °C",
+    "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-disk"
+    },
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature (°C)",
+        "de": "Temperatur (°C)"
+      },
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "placeholder": {
+        "en": "50",
+        "de": "50"
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "pool_space_low",
+  "title": {
+    "en": "Free space dropped below",
+    "de": "Freier Speicher ist gefallen unter"
+  },
+  "titleFormatted": {
+    "en": "Free space dropped below [[percent]] %",
+    "de": "Freier Speicher ist unter [[percent]] % gefallen"
+  },
+  "hint": {
+    "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
+    "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    },
+    {
+      "name": "percent",
+      "type": "number",
+      "title": {
+        "en": "Free space (%)",
+        "de": "Freier Speicher (%)"
+      },
+      "min": 1,
+      "max": 99,
+      "step": 1,
+      "placeholder": {
+        "en": "10",
+        "de": "10"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "free_percent",
+      "type": "number",
+      "title": {
+        "en": "Free space (%)",
+        "de": "Freier Speicher (%)"
+      }
+    },
+    {
+      "name": "free_tb",
+      "type": "number",
+      "title": {
+        "en": "Free space (TB)",
+        "de": "Freier Speicher (TB)"
+      }
+    }
+  ]
+}

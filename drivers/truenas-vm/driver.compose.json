@@ -1,0 +1,93 @@
+{
+  "name": {
+    "en": "Virtual Machine",
+    "de": "Virtuelle Maschine"
+  },
+  "class": "other",
+  "capabilities": [
+    "onoff",
+    "vm_state",
+    "vm_memory",
+    "vm_restart_button"
+  ],
+  "capabilitiesOptions": {
+    "onoff": {
+      "title": {
+        "en": "Running",
+        "de": "Läuft"
+      },
+      "insightsTitleTrue": {
+        "en": "VM started",
+        "de": "VM gestartet"
+      },
+      "insightsTitleFalse": {
+        "en": "VM stopped",
+        "de": "VM gestoppt"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-vm/assets/images/small.png",
+    "large": "/drivers/truenas-vm/assets/images/large.png",
+    "xlarge": "/drivers/truenas-vm/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Virtual machine",
+        "de": "Virtuelle Maschine"
+      },
+      "children": [
+        {
+          "id": "force_stop",
+          "type": "checkbox",
+          "label": {
+            "en": "Force stop",
+            "de": "Erzwungenes Stoppen"
+          },
+          "value": false,
+          "hint": {
+            "en": "Off sends a graceful shutdown request to the guest operating system. On cuts power immediately, which can lose unsaved data.",
+            "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können."
+          }
+        },
+        {
+          "id": "show_restart_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show restart button",
+            "de": "Neustart-Schaltfläche anzeigen"
+          },
+          "value": true,
+          "hint": {
+            "en": "Shows a button on the device tile that restarts this virtual machine.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet."
+          }
+        },
+        {
+          "id": "info_vcpus",
+          "type": "label",
+          "label": {
+            "en": "Virtual CPUs",
+            "de": "Virtuelle CPUs"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

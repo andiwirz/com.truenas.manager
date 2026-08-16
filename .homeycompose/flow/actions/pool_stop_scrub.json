@@ -1,0 +1,14 @@
+{
+  "id": "pool_stop_scrub",
+  "title": {
+    "en": "Stop the scrub",
+    "de": "Scrub stoppen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "disk_temperature_high",
+  "title": {
+    "en": "Disk temperature rose above",
+    "de": "Festplattentemperatur ist gestiegen über"
+  },
+  "titleFormatted": {
+    "en": "Disk temperature rose above [[temperature]] °C",
+    "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen"
+  },
+  "hint": {
+    "en": "Fires once each time the temperature crosses the threshold upwards, not on every reading above it.",
+    "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-disk"
+    },
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature (°C)",
+        "de": "Temperatur (°C)"
+      },
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "placeholder": {
+        "en": "50",
+        "de": "50"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature",
+        "de": "Temperatur"
+      }
+    },
+    {
+      "name": "disk",
+      "type": "string",
+      "title": {
+        "en": "Disk",
+        "de": "Festplatte"
+      }
+    }
+  ]
+}

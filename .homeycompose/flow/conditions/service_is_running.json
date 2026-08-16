@@ -1,0 +1,14 @@
+{
+  "id": "service_is_running",
+  "title": {
+    "en": "Service !{{is|is not}} running",
+    "de": "Dienst !{{läuft|läuft nicht}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-service"
+    }
+  ]
+}

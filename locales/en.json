@@ -1,0 +1,57 @@
+{
+  "pair": {
+    "title": "Connect to TrueNAS",
+    "subtitle": "Enter the address and API key of your NAS",
+    "info": "Create an API key in the TrueNAS web interface under Credentials → API Keys. The account behind the key needs read access, plus write access for the actions you want to use.",
+    "label_host": "Host or IP address",
+    "hint_host": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local.",
+    "label_port": "Port",
+    "hint_port": "443 for HTTPS, 80 for HTTP.",
+    "label_protocol": "Protocol",
+    "label_api_key": "API key",
+    "hint_api_key": "Credentials → API Keys → Add in the TrueNAS web interface.",
+    "label_ignore_cert": "Accept self-signed certificate",
+    "hint_ignore_cert": "TrueNAS uses a self-signed certificate by default. Leave this on unless you installed your own certificate.",
+    "btn_connect": "Connect",
+    "btn_connecting": "Connecting…",
+    "status_testing": "Testing connection…",
+    "status_adding": "Adding NAS…",
+    "status_done": "Successfully added.",
+    "select_system": "Select the TrueNAS system",
+    "no_system": "Add a TrueNAS system first, then add this device.",
+    "err_host_required": "Please enter a host name or IP address.",
+    "err_port_invalid": "Please enter a valid port (1–65535).",
+    "err_key_required": "Please enter an API key."
+  },
+  "error": {
+    "unreachable": "TrueNAS is unreachable",
+    "auth_failed": "API key rejected. Check the key in TrueNAS under Credentials → API Keys.",
+    "no_websocket": "This TrueNAS does not offer the JSON-RPC API. TrueNAS SCALE 25.04 or newer is required.",
+    "cert_rejected": "The TLS certificate was rejected. Enable 'Accept self-signed certificate' in the device settings.",
+    "connection_refused": "Connection refused. Check the address, port and protocol.",
+    "timeout": "TrueNAS did not respond in time.",
+    "no_system": "The TrueNAS system for this device no longer exists. Remove this device and add it again.",
+    "not_found": "This entry no longer exists on the TrueNAS.",
+    "permission_denied": "The API key lacks permission for this action.",
+    "not_connected": "Not connected to TrueNAS."
+  },
+  "state": {
+    "unknown": "Unknown",
+    "up_to_date": "Up to date",
+    "update_available": "Update available",
+    "updating": "Installing update",
+    "no_scrub": "No scrub",
+    "healthy": "Healthy",
+    "downloading": "Downloading update",
+    "update_error": "Check failed"
+  },
+  "settings": {
+    "title": "TrueNAS Manager",
+    "connection": "Connection",
+    "systems": "Paired systems",
+    "no_systems": "No TrueNAS system paired yet.",
+    "log": "App log",
+    "refresh": "Refresh",
+    "copy": "Copy"
+  }
+}

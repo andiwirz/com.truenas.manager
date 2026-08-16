@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueNAS Manager</title>
+  <script type="text/javascript">
+    // Defined before homey.js loads, so the callback always exists when it
+    // fires. The body script may not be parsed yet at that point, hence the
+    // DOM-ready guard around everything that lives down there.
+    var Homey;
+    var readyFired = false;
+
+    function whenReady(fn) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+    }
+
+    function onHomeyReady(homeyInstance) {
+      Homey = homeyInstance;
+      readyFired = true;
+      // Release the spinner before any other work, so a later failure still
+      // leaves a usable page behind.
+      Homey.ready();
+      whenReady(boot);
+    }
+  </script>
+  <!-- Required on app settings pages: without it onHomeyReady never fires and
+       Homey keeps showing its loading spinner forever. -->
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f7fafc;
+      color: #2d3748;
+      padding: 20px 18px 40px;
+      font-size: 14px;
+    }
+
+    .tabs { display: flex; gap: 6px; margin-bottom: 18px; }
+    .tab {
+      flex: 1;
+      padding: 9px 10px;
+      border: 1.5px solid #e2e8f0;
+      background: #fff;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4a5568;
+      cursor: pointer;
+    }
+    .tab.active { border-color: #0095D5; color: #0095D5; background: #f0faff; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .card {
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 15px;
+      margin-bottom: 12px;
+    }
+    .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #48bb78; flex: 0 0 auto; }
+    .dot.off { background: #e53e3e; }
+    .card-title { font-size: 15px; font-weight: 700; color: #1a202c; }
+    .card-sub { font-size: 12px; color: #718096; margin-top: 1px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .stat {
+      background: #f7fafc;
+      border-radius: 7px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+    .stat .v { font-size: 16px; font-weight: 700; color: #1a202c; }
+    .stat .k { font-size: 10px; color: #718096; margin-top: 2px; text-transform: uppercase; letter-spacing: .03em; }
+
+    .err {
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #c53030;
+      margin-top: 10px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .btn-row { display: flex; gap: 8px; margin-top: 12px; }
+    button.action {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      border-radius: 7px;
+      background: #0095D5;
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.action.ghost { background: #edf2f7; color: #4a5568; }
+    button.action:disabled { opacity: .55; cursor: not-allowed; }
+
+    pre {
+      background: #1a202c;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 11px;
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .log-line { padding: 5px 0; border-bottom: 1px solid #edf2f7; font-size: 12px; line-height: 1.45; }
+    .log-line:last-child { border-bottom: none; }
+    .log-line .t { color: #a0aec0; font-size: 11px; }
+    .log-line .s { color: #0095D5; font-weight: 600; }
+    .log-line.error .m { color: #c53030; }
+
+    .empty { color: #718096; font-size: 13px; text-align: center; padding: 26px 0; }
+    select {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1.5px solid #cbd5e0;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 13px;
+      background: #fff;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="p-systems" id="tab-systems">Systems</button>
+    <button class="tab" data-panel="p-debug" id="tab-debug">Data</button>
+    <button class="tab" data-panel="p-log" id="tab-log">Log</button>
+  </div>
+
+  <div class="panel active" id="p-systems">
+    <div id="systems"><div class="empty">…</div></div>
+  </div>
+
+  <div class="panel" id="p-debug">
+    <select id="debug-select"></select>
+    <div class="btn-row" style="margin-top:0">
+      <button class="action ghost" id="btn-debug-reload">Reload</button>
+      <button class="action ghost" id="btn-debug-copy">Copy</button>
+    </div>
+    <pre id="debug-out" style="margin-top:12px">–</pre>
+  </div>
+
+  <div class="panel" id="p-log">
+    <div class="btn-row" style="margin-top:0">
+      <button class="action ghost" id="btn-log-reload">Reload</button>
+      <button class="action ghost" id="btn-log-clear">Clear</button>
+    </div>
+    <div class="card" style="margin-top:12px" id="log-out">
+      <div class="empty">…</div>
+    </div>
+  </div>
+
+  <script>
+    var systems = [];
+    var isGerman = (navigator.language || 'en').toLowerCase().indexOf('de') === 0;
+
+    var TEXT = {
+      systems: ['Systems', 'Systeme'],
+      data: ['Data', 'Daten'],
+      log: ['Log', 'Protokoll'],
+      reload: ['Reload', 'Neu laden'],
+      copy: ['Copy', 'Kopieren'],
+      clear: ['Clear', 'Leeren'],
+      refresh: ['Refresh now', 'Jetzt aktualisieren'],
+      none: ['No TrueNAS system paired yet.', 'Noch kein TrueNAS-System verbunden.'],
+      noLog: ['No log entries yet.', 'Noch keine Protokolleinträge.'],
+      offline: ['offline', 'offline'],
+      online: ['online', 'online'],
+      pools: ['Pools', 'Pools'],
+      disks: ['Disks', 'Platten'],
+      services: ['Services', 'Dienste'],
+      apps: ['Apps', 'Apps'],
+      vms: ['VMs', 'VMs'],
+      alerts: ['Alerts', 'Meldungen'],
+      copied: ['Copied.', 'Kopiert.']
+    };
+
+    function tr(key) {
+      var entry = TEXT[key];
+      return entry ? entry[isGerman ? 1 : 0] : key;
+    }
+
+    // Last resort for the case where homey.js fails to load and onHomeyReady
+    // never fires: show something readable instead of an endless spinner.
+    setTimeout(function () {
+      if (readyFired) return;
+      var container = document.getElementById('systems');
+      if (container) {
+        container.innerHTML = '<div class="err">Could not connect to Homey '
+          + '(homey.js did not load). Close and reopen the app settings.</div>';
+      }
+    }, 12000);
+
+    function boot() {
+      try {
+        setupUi();
+      } catch (err) {
+        document.getElementById('systems').innerHTML =
+          '<div class="err">' + escapeHtml(err.message || err) + '</div>';
+        return;
+      }
+      loadSystems();
+    }
+
+    function setupUi() {
+      document.getElementById('tab-systems').textContent = tr('systems');
+      document.getElementById('tab-debug').textContent = tr('data');
+      document.getElementById('tab-log').textContent = tr('log');
+      document.getElementById('btn-debug-reload').textContent = tr('reload');
+      document.getElementById('btn-debug-copy').textContent = tr('copy');
+      document.getElementById('btn-log-reload').textContent = tr('reload');
+      document.getElementById('btn-log-clear').textContent = tr('clear');
+
+      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tab) {
+        tab.addEventListener('click', function () { showPanel(tab); });
+      });
+
+      document.getElementById('btn-debug-reload').addEventListener('click', loadDebug);
+      document.getElementById('btn-debug-copy').addEventListener('click', copyDebug);
+      document.getElementById('btn-log-reload').addEventListener('click', loadLog);
+      document.getElementById('btn-log-clear').addEventListener('click', clearLog);
+      document.getElementById('debug-select').addEventListener('change', loadDebug);
+    }
+
+    function showPanel(tab) {
+      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) {
+        t.classList.remove('active');
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('.panel'), function (p) {
+        p.classList.remove('active');
+      });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+
+      if (tab.dataset.panel === 'p-debug') loadDebug();
+      if (tab.dataset.panel === 'p-log') loadLog();
+    }
+
+    function api(method, path, body) {
+      return new Promise(function (resolve, reject) {
+        Homey.api(method, path, body || null, function (err, result) {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    }
+
+    // -- Systems --------------------------------------------------------------
+
+    function loadSystems() {
+      api('GET', '/systems')
+        .then(function (result) {
+          systems = result || [];
+          renderSystems();
+          renderDebugOptions();
+        })
+        .catch(function (err) {
+          document.getElementById('systems').innerHTML =
+            '<div class="err">' + escapeHtml(err.message || err) + '</div>';
+        });
+    }
+
+    function renderSystems() {
+      var container = document.getElementById('systems');
+      container.innerHTML = '';
+
+      if (!systems.length) {
+        container.innerHTML = '<div class="empty">' + tr('none') + '</div>';
+        return;
+      }
+
+      systems.forEach(function (system) {
+        var card = document.createElement('div');
+        card.className = 'card';
+
+        var counts = system.counts || {};
+        var stats = [
+          ['pools', counts.pools], ['disks', counts.disks], ['services', counts.services],
+          ['apps', counts.apps], ['vms', counts.vms], ['alerts', counts.alerts]
+        ];
+
+        var html = ''
+          + '<div class="card-head">'
+          + '<span class="dot' + (system.available ? '' : ' off') + '"></span>'
+          + '<span><div class="card-title">' + escapeHtml(system.name) + '</div>'
+          + '<div class="card-sub">' + escapeHtml(system.protocol + '://' + system.host + ':' + system.port)
+          + (system.version ? ' · ' + escapeHtml(system.version) : '')
+          + (system.uptime ? ' · ' + escapeHtml(system.uptime) : '')
+          + '</div></span></div>';
+
+        if (system.available) {
+          html += '<div class="grid">' + stats.map(function (s) {
+            return '<div class="stat"><div class="v">'
+              + (s[1] === undefined || s[1] === null ? '–' : s[1])
+              + '</div><div class="k">' + tr(s[0]) + '</div></div>';
+          }).join('') + '</div>';
+        } else if (system.lastError) {
+          html += '<div class="err">' + escapeHtml(system.lastError) + '</div>';
+        }
+
+        html += '<div class="btn-row"><button class="action" data-id="'
+          + escapeHtml(system.systemId) + '">' + tr('refresh') + '</button></div>';
+
+        card.innerHTML = html;
+
+        var button = card.querySelector('button');
+        button.addEventListener('click', function () {
+          button.disabled = true;
+          api('GET', '/refresh?systemId=' + encodeURIComponent(system.systemId))
+            .then(loadSystems)
+            .catch(function (err) { Homey.alert(err.message || String(err)); })
+            .then(function () { button.disabled = false; });
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // -- Debug ----------------------------------------------------------------
+
+    function renderDebugOptions() {
+      var select = document.getElementById('debug-select');
+      select.innerHTML = '';
+      systems.forEach(function (system) {
+        var option = document.createElement('option');
+        option.value = system.systemId;
+        option.textContent = system.name;
+        select.appendChild(option);
+      });
+    }
+
+    function loadDebug() {
+      var id = document.getElementById('debug-select').value;
+      if (!id) {
+        document.getElementById('debug-out').textContent = tr('none');
+        return;
+      }
+      api('GET', '/debug?systemId=' + encodeURIComponent(id))
+        .then(function (data) {
+          document.getElementById('debug-out').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(function (err) {
+          document.getElementById('debug-out').textContent = String(err.message || err);
+        });
+    }
+
+    function copyDebug() {
+      var text = document.getElementById('debug-out').textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { Homey.alert(tr('copied')); });
+        return;
+      }
+      var area = document.createElement('textarea');
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      try { document.execCommand('copy'); Homey.alert(tr('copied')); } catch (e) { /* ignore */ }
+      document.body.removeChild(area);
+    }
+
+    // -- Log ------------------------------------------------------------------
+
+    function loadLog() {
+      api('GET', '/log')
+        .then(function (entries) {
+          var container = document.getElementById('log-out');
+          if (!entries || !entries.length) {
+            container.innerHTML = '<div class="empty">' + tr('noLog') + '</div>';
+            return;
+          }
+          container.innerHTML = entries.map(function (entry) {
+            return '<div class="log-line ' + (entry.level === 'error' ? 'error' : '') + '">'
+              + '<span class="t">' + escapeHtml(entry.time.replace('T', ' ').slice(0, 19)) + '</span> '
+              + '<span class="s">' + escapeHtml(entry.source) + '</span><br>'
+              + '<span class="m">' + escapeHtml(entry.message) + '</span></div>';
+          }).join('');
+        })
+        .catch(function (err) {
+          document.getElementById('log-out').innerHTML =
+            '<div class="err">' + escapeHtml(err.message || err) + '</div>';
+        });
+    }
+
+    function clearLog() {
+      api('POST', '/log/clear', {}).then(loadLog).catch(function () {});
+    }
+
+    function escapeHtml(value) {
+      return String(value === null || value === undefined ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+
+</body>
+</html>

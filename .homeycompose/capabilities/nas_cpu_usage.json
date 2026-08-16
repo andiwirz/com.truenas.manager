@@ -1,0 +1,19 @@
+{
+  "type": "number",
+  "title": {
+    "en": "CPU Usage",
+    "de": "CPU-Auslastung"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "units": {
+    "en": "%",
+    "de": "%"
+  },
+  "decimals": 1,
+  "min": 0,
+  "max": 100,
+  "icon": "/assets/capabilities/cpu.svg"
+}

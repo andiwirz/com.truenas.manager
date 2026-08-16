@@ -1,0 +1,109 @@
+{
+  "name": {
+    "en": "Disk",
+    "de": "Festplatte"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "measure_temperature",
+    "alarm_generic",
+    "disk_size",
+    "disk_model",
+    "disk_pool"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "Temperature Alarm",
+        "de": "Temperaturalarm"
+      }
+    },
+    "measure_temperature": {
+      "title": {
+        "en": "Disk Temperature",
+        "de": "Festplattentemperatur"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-disk/assets/images/small.png",
+    "large": "/drivers/truenas-disk/assets/images/large.png",
+    "xlarge": "/drivers/truenas-disk/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Temperature",
+        "de": "Temperatur"
+      },
+      "children": [
+        {
+          "id": "temperature_alarm",
+          "type": "number",
+          "label": {
+            "en": "Alarm above (°C)",
+            "de": "Alarm oberhalb (°C)"
+          },
+          "value": 50,
+          "min": 20,
+          "max": 90,
+          "step": 1,
+          "hint": {
+            "en": "Sets the temperature alarm when the disk exceeds this value. Typical limits are 50 °C for hard drives and 65 °C for SSDs.",
+            "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Disk information",
+        "de": "Festplatteninformationen"
+      },
+      "children": [
+        {
+          "id": "info_device",
+          "type": "label",
+          "label": {
+            "en": "Device",
+            "de": "Gerät"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_serial",
+          "type": "label",
+          "label": {
+            "en": "Serial number",
+            "de": "Seriennummer"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_type",
+          "type": "label",
+          "label": {
+            "en": "Type",
+            "de": "Typ"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

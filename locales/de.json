@@ -1,0 +1,57 @@
+{
+  "pair": {
+    "title": "Mit TrueNAS verbinden",
+    "subtitle": "Adresse und API-Schlüssel des NAS eingeben",
+    "info": "Erstelle im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel einen Schlüssel. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die Aktionen, die du nutzen möchtest.",
+    "label_host": "Host oder IP-Adresse",
+    "hint_host": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local.",
+    "label_port": "Port",
+    "hint_port": "443 für HTTPS, 80 für HTTP.",
+    "label_protocol": "Protokoll",
+    "label_api_key": "API-Schlüssel",
+    "hint_api_key": "Im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel → Hinzufügen.",
+    "label_ignore_cert": "Selbstsigniertes Zertifikat akzeptieren",
+    "hint_ignore_cert": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein eigenes Zertifikat installiert ist.",
+    "btn_connect": "Verbinden",
+    "btn_connecting": "Verbinde…",
+    "status_testing": "Verbindung wird geprüft…",
+    "status_adding": "NAS wird hinzugefügt…",
+    "status_done": "Erfolgreich hinzugefügt.",
+    "select_system": "TrueNAS-System auswählen",
+    "no_system": "Zuerst ein TrueNAS-System hinzufügen, danach dieses Gerät.",
+    "err_host_required": "Bitte einen Hostnamen oder eine IP-Adresse eingeben.",
+    "err_port_invalid": "Bitte einen gültigen Port eingeben (1–65535).",
+    "err_key_required": "Bitte einen API-Schlüssel eingeben."
+  },
+  "error": {
+    "unreachable": "TrueNAS nicht erreichbar",
+    "auth_failed": "API-Schlüssel abgelehnt. Prüfe den Schlüssel in TrueNAS unter Anmeldedaten → API-Schlüssel.",
+    "no_websocket": "Dieses TrueNAS bietet die JSON-RPC-API nicht an. Erforderlich ist TrueNAS SCALE 25.04 oder neuer.",
+    "cert_rejected": "Das TLS-Zertifikat wurde abgelehnt. Aktiviere in den Geräteeinstellungen «Selbstsigniertes Zertifikat akzeptieren».",
+    "connection_refused": "Verbindung abgelehnt. Prüfe Adresse, Port und Protokoll.",
+    "timeout": "TrueNAS hat nicht rechtzeitig geantwortet.",
+    "no_system": "Das zugehörige TrueNAS-System existiert nicht mehr. Entferne dieses Gerät und füge es neu hinzu.",
+    "not_found": "Dieser Eintrag existiert auf dem TrueNAS nicht mehr.",
+    "permission_denied": "Dem API-Schlüssel fehlt die Berechtigung für diese Aktion.",
+    "not_connected": "Keine Verbindung zum TrueNAS."
+  },
+  "state": {
+    "unknown": "Unbekannt",
+    "up_to_date": "Aktuell",
+    "update_available": "Update verfügbar",
+    "updating": "Update wird installiert",
+    "no_scrub": "Kein Scrub",
+    "healthy": "In Ordnung",
+    "downloading": "Update wird heruntergeladen",
+    "update_error": "Prüfung fehlgeschlagen"
+  },
+  "settings": {
+    "title": "TrueNAS Manager",
+    "connection": "Verbindung",
+    "systems": "Verbundene Systeme",
+    "no_systems": "Noch kein TrueNAS-System verbunden.",
+    "log": "App-Protokoll",
+    "refresh": "Aktualisieren",
+    "copy": "Kopieren"
+  }
+}

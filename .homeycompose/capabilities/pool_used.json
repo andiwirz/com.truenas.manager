@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Used",
+    "de": "Belegt"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "units": {
+    "en": "TB",
+    "de": "TB"
+  },
+  "decimals": 2,
+  "min": 0,
+  "icon": "/assets/capabilities/pool.svg"
+}

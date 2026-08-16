@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Capacity",
+    "de": "Kapazität"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "units": {
+    "en": "TB",
+    "de": "TB"
+  },
+  "decimals": 2,
+  "min": 0,
+  "icon": "/assets/capabilities/disk.svg"
+}

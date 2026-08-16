@@ -1,0 +1,86 @@
+{
+  "name": {
+    "en": "Storage Pool",
+    "de": "Speicher-Pool"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "alarm_generic",
+    "pool_status",
+    "pool_usage",
+    "pool_free",
+    "pool_used",
+    "pool_total",
+    "scrub_state",
+    "scrub_progress",
+    "pool_scrub_button"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "Pool Problem",
+        "de": "Pool-Problem"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-pool/assets/images/small.png",
+    "large": "/drivers/truenas-pool/assets/images/large.png",
+    "xlarge": "/drivers/truenas-pool/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Pool",
+        "de": "Pool"
+      },
+      "children": [
+        {
+          "id": "show_scrub_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show scrub button",
+            "de": "Scrub-Schaltfläche anzeigen"
+          },
+          "value": true,
+          "hint": {
+            "en": "Shows a button on the device tile that starts a scrub of this pool. A scrub reads every block and can take hours.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern."
+          }
+        },
+        {
+          "id": "info_pool",
+          "type": "label",
+          "label": {
+            "en": "Pool name",
+            "de": "Pool-Name"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_status_detail",
+          "type": "label",
+          "label": {
+            "en": "Status detail",
+            "de": "Statusdetails"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

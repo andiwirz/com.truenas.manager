@@ -1,0 +1,14 @@
+{
+  "id": "vm_restart",
+  "title": {
+    "en": "Restart the virtual machine",
+    "de": "VM neu starten"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-vm"
+    }
+  ]
+}

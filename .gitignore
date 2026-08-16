@@ -1,0 +1,7 @@
+node_modules/
+.homeybuild/
+.homeycompose/.cache/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+env.json

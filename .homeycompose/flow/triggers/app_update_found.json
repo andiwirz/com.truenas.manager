@@ -1,0 +1,32 @@
+{
+  "id": "app_update_found",
+  "title": {
+    "en": "An app update became available",
+    "de": "Ein App-Update ist verfügbar"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "version",
+      "type": "string",
+      "title": {
+        "en": "Version",
+        "de": "Version"
+      }
+    },
+    {
+      "name": "portal",
+      "type": "string",
+      "title": {
+        "en": "Web address",
+        "de": "Webadresse"
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "com.truenas.manager",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "TrueNAS Manager",
+    "de": "TrueNAS Manager"
+  },
+  "description": {
+    "en": "Your storage, pools and services at a glance.",
+    "de": "Speicher, Pools und Dienste immer im Blick."
+  },
+  "category": [
+    "tools"
+  ],
+  "tags": {
+    "en": [
+      "truenas",
+      "nas",
+      "zfs",
+      "storage",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "disk",
+      "smart",
+      "backup",
+      "network storage"
+    ],
+    "de": [
+      "truenas",
+      "nas",
+      "zfs",
+      "speicher",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "festplatte",
+      "smart",
+      "backup",
+      "netzwerkspeicher"
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "brandColor": "#0095D5",
+  "author": {
+    "name": "Andi Wirz",
+    "email": "andi@wirzfamily.ch"
+  },
+  "api": {
+    "getSystems": {
+      "method": "GET",
+      "path": "/systems"
+    },
+    "getDebug": {
+      "method": "GET",
+      "path": "/debug"
+    },
+    "refreshSystem": {
+      "method": "GET",
+      "path": "/refresh"
+    },
+    "getLog": {
+      "method": "GET",
+      "path": "/log"
+    },
+    "clearLog": {
+      "method": "POST",
+      "path": "/log/clear"
+    }
+  },
+  "source": "https://github.com/andiwirz/com.truenas.manager",
+  "bugs": {
+    "url": "https://github.com/andiwirz/com.truenas.manager/issues"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "AndiWirz"
+      }
+    }
+  }
+}

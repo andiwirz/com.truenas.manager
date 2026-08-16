@@ -1,0 +1,49 @@
+{
+  "id": "system_has_alert",
+  "title": {
+    "en": "There !{{is|is no}} alert of level",
+    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe"
+  },
+  "titleFormatted": {
+    "en": "There !{{is|is no}} alert of level [[level]] or higher",
+    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    },
+    {
+      "name": "level",
+      "type": "dropdown",
+      "title": {
+        "en": "Level",
+        "de": "Stufe"
+      },
+      "values": [
+        {
+          "id": "WARNING",
+          "label": {
+            "en": "Warning",
+            "de": "Warnung"
+          }
+        },
+        {
+          "id": "ERROR",
+          "label": {
+            "en": "Error",
+            "de": "Fehler"
+          }
+        },
+        {
+          "id": "CRITICAL",
+          "label": {
+            "en": "Critical",
+            "de": "Kritisch"
+          }
+        }
+      ]
+    }
+  ]
+}

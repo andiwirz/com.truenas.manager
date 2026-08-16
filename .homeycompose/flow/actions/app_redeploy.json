@@ -1,0 +1,18 @@
+{
+  "id": "app_redeploy",
+  "title": {
+    "en": "Redeploy the app",
+    "de": "App neu bereitstellen"
+  },
+  "hint": {
+    "en": "Stops the app, pulls the latest container images and starts it again.",
+    "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Scrub Status",
+    "de": "Scrub-Status"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/scrub.svg"
+}

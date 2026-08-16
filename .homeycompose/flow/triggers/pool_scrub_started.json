@@ -1,0 +1,24 @@
+{
+  "id": "pool_scrub_started",
+  "title": {
+    "en": "Scrub started",
+    "de": "Scrub wurde gestartet"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-pool"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "pool",
+      "type": "string",
+      "title": {
+        "en": "Pool",
+        "de": "Pool"
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "com.truenas.manager",
+  "version": "1.0.0",
+  "description": "TrueNAS Manager for Homey",
+  "main": "app.js",
+  "scripts": {
+    "lint": "eslint --ext .js .",
+    "test": "node test/smoke.js",
+    "validate": "homey app validate",
+    "build": "homey app build",
+    "publish": "homey app publish",
+    "install-clean": "npm install && npm audit fix"
+  },
+  "keywords": [
+    "homey",
+    "truenas",
+    "nas",
+    "zfs",
+    "storage"
+  ],
+  "author": "Andi Wirz",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

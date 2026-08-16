@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add TrueNAS</title>
+
+  <script type="text/javascript">
+    // Defined in the head so it exists before homey.js can call it. When this
+    // lived at the end of <body>, Homey could fire onHomeyReady before the
+    // script had been parsed and nothing was wired up at all.
+    var Homey;
+
+    function whenReady(fn) {
+      // onHomeyReady can fire before the body script has been parsed, so the
+      // helpers it calls may not exist yet.
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+    }
+
+    function onHomeyReady(homeyInstance) {
+      Homey = homeyInstance;
+      // Release the view first; localisation is a bonus, not a prerequisite.
+      Homey.ready();
+      whenReady(function () {
+        try {
+          localise();
+        } catch (err) {
+          // The English text baked into the HTML stays visible.
+        }
+      });
+    }
+  </script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f7fafc;
+      color: #2d3748;
+      padding: 26px 22px 18px;
+    }
+    .tn-head { margin-bottom: 20px; }
+    .tn-head h1 { font-size: 17px; font-weight: 700; color: #1a202c; }
+    .tn-head p { font-size: 12px; color: #718096; margin-top: 3px; }
+
+    .tn-info {
+      background: #e6f6fd;
+      border: 1px solid #b6e3f7;
+      border-radius: 8px;
+      padding: 11px 13px;
+      font-size: 12px;
+      color: #14688f;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .tn-group { margin-bottom: 15px; }
+    .tn-row { display: flex; gap: 10px; }
+    .tn-row .tn-group { flex: 1; }
+    .tn-row .tn-group.tn-narrow { flex: 0 0 96px; }
+
+    .tn-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #cbd5e0;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #2d3748;
+      background: #fff;
+      outline: none;
+    }
+    input:focus { border-color: #0095D5; }
+
+    .tn-hint {
+      display: block;
+      font-size: 11px;
+      color: #8a93a2;
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+
+    .tn-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 13px;
+    }
+    .tn-check input { margin-top: 2px; width: 16px; height: 16px; flex: 0 0 auto; }
+    .tn-check .tn-label { margin: 0; }
+
+    .tn-error {
+      display: none;
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #c53030;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+    .tn-error.tn-visible { display: block; }
+
+    .tn-btn {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: #0095D5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    .tn-btn:hover { background: #007cb0; }
+    .tn-btn:disabled { opacity: .55; cursor: not-allowed; }
+
+    .tn-status {
+      text-align: center;
+      font-size: 12px;
+      color: #718096;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tn-head">
+    <h1 id="t-title">Connect to TrueNAS</h1>
+    <p id="t-subtitle">Enter the address and API key of your NAS</p>
+  </div>
+
+  <div class="tn-info" id="t-info">Create an API key in the TrueNAS web interface under Credentials &rarr; API Keys. The account behind the key needs read access, plus write access for the actions you want to use.</div>
+
+  <div class="tn-row">
+    <div class="tn-group">
+      <label class="tn-label" for="host" id="l-host">Host or IP address</label>
+      <input type="text" id="host" placeholder="192.168.1.50"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
+    <div class="tn-group tn-narrow">
+      <label class="tn-label" for="port" id="l-port">Port</label>
+      <input type="number" id="port" value="443" min="1" max="65535" step="1">
+    </div>
+  </div>
+  <span class="tn-hint" id="h-host" style="margin-top:-9px;margin-bottom:15px">The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local.</span>
+
+  <div class="tn-group">
+    <label class="tn-label" for="apikey" id="l-key">API key</label>
+    <input type="password" id="apikey" placeholder="1-xxxxxxxxxxxxxxxxxxxx"
+           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <span class="tn-hint" id="h-key">Credentials &rarr; API Keys &rarr; Add in the TrueNAS web interface.</span>
+  </div>
+
+  <div class="tn-check">
+    <input type="checkbox" id="usessl" checked onchange="syncPort()">
+    <div>
+      <label class="tn-label" for="usessl">HTTPS</label>
+      <span class="tn-hint" id="h-ssl">443 for HTTPS, 80 for HTTP.</span>
+    </div>
+  </div>
+
+  <div class="tn-check">
+    <input type="checkbox" id="ignorecert" checked>
+    <div>
+      <label class="tn-label" for="ignorecert" id="l-cert">Accept self-signed certificate</label>
+      <span class="tn-hint" id="h-cert">TrueNAS uses a self-signed certificate by default. Leave this on unless you installed your own certificate.</span>
+    </div>
+  </div>
+
+  <div class="tn-error" id="error-msg"></div>
+
+  <button class="tn-btn" id="btn-connect" onclick="connect()">Connect</button>
+  <div class="tn-status" id="status"></div>
+
+  <script type="text/javascript">
+    function t(key, fallback) {
+      try {
+        var value = Homey.__(key);
+        return (value && value !== key) ? value : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function setText(id, key) {
+      var element = document.getElementById(id);
+      if (!element) return;
+      // The HTML already carries readable English; only replace it when the
+      // locale lookup actually returns something.
+      var value = t(key, null);
+      if (value) element.textContent = value;
+    }
+
+    function localise() {
+      setText('t-title', 'pair.title');
+      setText('t-subtitle', 'pair.subtitle');
+      setText('t-info', 'pair.info');
+      setText('l-host', 'pair.label_host');
+      setText('h-host', 'pair.hint_host');
+      setText('l-port', 'pair.label_port');
+      setText('l-key', 'pair.label_api_key');
+      setText('h-key', 'pair.hint_api_key');
+      setText('h-ssl', 'pair.hint_port');
+      setText('l-cert', 'pair.label_ignore_cert');
+      setText('h-cert', 'pair.hint_ignore_cert');
+      setText('btn-connect', 'pair.btn_connect');
+    }
+
+    function syncPort() {
+      var checked = document.getElementById('usessl').checked;
+      var portField = document.getElementById('port');
+      var current = parseInt(portField.value, 10);
+      // Only swap the default; never overwrite a custom port.
+      if (checked && current === 80) portField.value = 443;
+      if (!checked && current === 443) portField.value = 80;
+    }
+
+    function showError(message) {
+      var element = document.getElementById('error-msg');
+      element.textContent = message;
+      element.className = 'tn-error tn-visible';
+    }
+
+    function hideError() {
+      document.getElementById('error-msg').className = 'tn-error';
+    }
+
+    function setStatus(message) {
+      document.getElementById('status').textContent = message || '';
+    }
+
+    function setLoading(loading) {
+      var button = document.getElementById('btn-connect');
+      button.disabled = loading;
+      button.textContent = loading
+        ? t('pair.btn_connecting', 'Connecting…')
+        : t('pair.btn_connect', 'Connect');
+    }
+
+    function connect() {
+      if (!Homey) return;
+
+      var host = document.getElementById('host').value.trim();
+      var port = parseInt(document.getElementById('port').value, 10);
+      var apiKey = document.getElementById('apikey').value.trim();
+      var useSsl = document.getElementById('usessl').checked;
+      var ignoreCert = document.getElementById('ignorecert').checked;
+
+      hideError();
+
+      if (!host) {
+        showError(t('pair.err_host_required', 'Please enter a host name or IP address.'));
+        return;
+      }
+      if (!port || port < 1 || port > 65535) {
+        showError(t('pair.err_port_invalid', 'Please enter a valid port (1–65535).'));
+        return;
+      }
+      if (!apiKey) {
+        showError(t('pair.err_key_required', 'Please enter an API key.'));
+        return;
+      }
+
+      setLoading(true);
+      setStatus(t('pair.status_testing', 'Testing connection…'));
+
+      Homey.emit('connect', {
+        host: host,
+        port: port,
+        apiKey: apiKey,
+        useSsl: useSsl,
+        ignoreCert: ignoreCert
+      })
+        .then(function (device) {
+          if (!device) {
+            // Never fall through to createDevice on an empty result.
+            throw new Error(t('error.unreachable', 'TrueNAS is unreachable'));
+          }
+          setStatus(t('pair.status_adding', 'Adding NAS…'));
+          return Homey.createDevice(device);
+        })
+        .then(function () {
+          setStatus(t('pair.status_done', 'Successfully added.'));
+          return Homey.done();
+        })
+        .catch(function (err) {
+          setLoading(false);
+          setStatus('');
+          showError((err && err.message) ? err.message : String(err));
+        });
+    }
+  </script>
+
+</body>
+</html>

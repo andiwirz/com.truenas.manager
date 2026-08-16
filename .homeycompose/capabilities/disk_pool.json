@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Pool",
+    "de": "Pool"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/pool.svg"
+}

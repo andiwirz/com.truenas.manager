@@ -1,0 +1,14 @@
+{
+  "id": "app_stop",
+  "title": {
+    "en": "Stop the app",
+    "de": "App stoppen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ]
+}

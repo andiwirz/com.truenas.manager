@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Network Received",
+    "de": "Netzwerk empfangen"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "units": {
+    "en": "Mbit/s",
+    "de": "Mbit/s"
+  },
+  "decimals": 2,
+  "min": 0,
+  "icon": "/assets/capabilities/network.svg"
+}

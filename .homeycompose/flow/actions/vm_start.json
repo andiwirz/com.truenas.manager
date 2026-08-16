@@ -1,0 +1,14 @@
+{
+  "id": "vm_start",
+  "title": {
+    "en": "Start the virtual machine",
+    "de": "VM starten"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-vm"
+    }
+  ]
+}

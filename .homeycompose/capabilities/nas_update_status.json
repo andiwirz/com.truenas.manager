@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Update Status",
+    "de": "Update-Status"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/update.svg"
+}

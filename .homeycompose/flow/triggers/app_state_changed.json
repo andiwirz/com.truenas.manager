@@ -1,0 +1,40 @@
+{
+  "id": "app_state_changed",
+  "title": {
+    "en": "App status changed",
+    "de": "App-Status hat gewechselt"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "state",
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      }
+    },
+    {
+      "name": "previous_state",
+      "type": "string",
+      "title": {
+        "en": "Previous status",
+        "de": "Vorheriger Status"
+      }
+    },
+    {
+      "name": "portal",
+      "type": "string",
+      "title": {
+        "en": "Web address",
+        "de": "Webadresse"
+      }
+    }
+  ]
+}

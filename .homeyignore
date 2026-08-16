@@ -1,0 +1,7 @@
+# Developer-only files that must not be shipped to the App Store.
+# The App Store reads readme.txt / readme.de.txt, not README.md.
+
+docs/
+scripts/
+test/
+README.md

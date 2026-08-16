@@ -1,0 +1,44 @@
+{
+  "id": "system_alert_raised",
+  "title": {
+    "en": "An alert was raised",
+    "de": "Eine Meldung ist aufgetreten"
+  },
+  "hint": {
+    "en": "Fires once for every new TrueNAS alert at or above the level set in the device settings.",
+    "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "level",
+      "type": "string",
+      "title": {
+        "en": "Level",
+        "de": "Stufe"
+      }
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "title": {
+        "en": "Message",
+        "de": "Meldung"
+      }
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "title": {
+        "en": "Category",
+        "de": "Kategorie"
+      }
+    }
+  ]
+}

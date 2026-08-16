@@ -1,0 +1,14 @@
+{
+  "id": "system_check_update",
+  "title": {
+    "en": "Check for system updates",
+    "de": "Auf System-Updates prüfen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    }
+  ]
+}

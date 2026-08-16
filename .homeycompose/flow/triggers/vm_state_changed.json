@@ -1,0 +1,32 @@
+{
+  "id": "vm_state_changed",
+  "title": {
+    "en": "Virtual machine status changed",
+    "de": "VM-Status hat gewechselt"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-vm"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "state",
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      }
+    },
+    {
+      "name": "previous_state",
+      "type": "string",
+      "title": {
+        "en": "Previous status",
+        "de": "Vorheriger Status"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "app_upgrade",
+  "title": {
+    "en": "Run the app update",
+    "de": "App-Update ausführen"
+  },
+  "hint": {
+    "en": "Installs whatever update is pending: a catalog version upgrade if one is available, otherwise newer container images. The app restarts. Does nothing when the app is already up to date.",
+    "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-app"
+    }
+  ]
+}

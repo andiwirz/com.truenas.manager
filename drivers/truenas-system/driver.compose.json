@@ -1,0 +1,261 @@
+{
+  "name": {
+    "en": "TrueNAS System",
+    "de": "TrueNAS System"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "alarm_generic",
+    "nas_cpu_usage",
+    "measure_temperature",
+    "nas_memory_usage",
+    "nas_load_1",
+    "nas_load_5",
+    "nas_load_15",
+    "nas_memory_used",
+    "nas_memory_free",
+    "nas_arc_size",
+    "nas_net_rx",
+    "nas_net_tx",
+    "nas_alert_count",
+    "nas_alert_text",
+    "nas_uptime",
+    "nas_version",
+    "nas_update_status",
+    "nas_refresh"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "Critical Alert",
+        "de": "Kritische Meldung"
+      }
+    },
+    "measure_temperature": {
+      "title": {
+        "en": "CPU Temperature",
+        "de": "CPU-Temperatur"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-system/assets/images/small.png",
+    "large": "/drivers/truenas-system/assets/images/large.png",
+    "xlarge": "/drivers/truenas-system/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Connection",
+        "de": "Verbindung"
+      },
+      "children": [
+        {
+          "id": "host",
+          "type": "text",
+          "label": {
+            "en": "Host or IP address",
+            "de": "Host oder IP-Adresse"
+          },
+          "value": "",
+          "hint": {
+            "en": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local. A DHCP reservation in your router is recommended.",
+            "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen."
+          }
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "de": "Port"
+          },
+          "value": 443,
+          "min": 1,
+          "max": 65535,
+          "step": 1,
+          "hint": {
+            "en": "443 for HTTPS, 80 for HTTP.",
+            "de": "443 für HTTPS, 80 für HTTP."
+          }
+        },
+        {
+          "id": "use_ssl",
+          "type": "checkbox",
+          "label": {
+            "en": "Use HTTPS",
+            "de": "HTTPS verwenden"
+          },
+          "value": true,
+          "hint": {
+            "en": "Connects over wss:// instead of ws://. Turn off only if your TrueNAS web interface is reachable over plain HTTP.",
+            "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist."
+          }
+        },
+        {
+          "id": "ignore_cert",
+          "type": "checkbox",
+          "label": {
+            "en": "Accept self-signed certificate",
+            "de": "Selbstsigniertes Zertifikat akzeptieren"
+          },
+          "value": true,
+          "hint": {
+            "en": "TrueNAS uses a self-signed certificate by default. Turn this off only if you installed a certificate that Homey can verify.",
+            "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist."
+          }
+        },
+        {
+          "id": "api_key",
+          "type": "password",
+          "label": {
+            "en": "API key",
+            "de": "API-Schlüssel"
+          },
+          "value": "",
+          "hint": {
+            "en": "Create the key in the TrueNAS web interface under Credentials → API Keys. The account behind the key needs read access, plus write access for the actions you use.",
+            "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Polling",
+        "de": "Abfrage"
+      },
+      "children": [
+        {
+          "id": "poll_interval",
+          "type": "number",
+          "label": {
+            "en": "Poll interval (seconds)",
+            "de": "Abfrageintervall (Sekunden)"
+          },
+          "value": 60,
+          "min": 15,
+          "max": 3600,
+          "step": 5,
+          "hint": {
+            "en": "How often system state, pools, services, apps and virtual machines are read. All devices of this NAS share one request per cycle (default: 60 s).",
+            "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s)."
+          }
+        },
+        {
+          "id": "disk_poll_interval",
+          "type": "number",
+          "label": {
+            "en": "Disk poll interval (seconds)",
+            "de": "Festplatten-Abfrageintervall (Sekunden)"
+          },
+          "value": 300,
+          "min": 60,
+          "max": 86400,
+          "step": 30,
+          "hint": {
+            "en": "Reading disk temperatures queries SMART, which can keep drives from spinning down. Increase this if your drives should stay in standby (default: 300 s).",
+            "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s)."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Alerts",
+        "de": "Meldungen"
+      },
+      "children": [
+        {
+          "id": "alarm_level",
+          "type": "radio",
+          "label": {
+            "en": "Trigger alarm from level",
+            "de": "Alarm auslösen ab Stufe"
+          },
+          "value": "ERROR",
+          "values": [
+            {
+              "id": "WARNING",
+              "label": {
+                "en": "Warning and above",
+                "de": "Warnung und höher"
+              }
+            },
+            {
+              "id": "ERROR",
+              "label": {
+                "en": "Error and above",
+                "de": "Fehler und höher"
+              }
+            },
+            {
+              "id": "CRITICAL",
+              "label": {
+                "en": "Critical and above",
+                "de": "Kritisch und höher"
+              }
+            }
+          ],
+          "hint": {
+            "en": "Which TrueNAS alert level sets the Critical Alert flag and fires the alert flow trigger.",
+            "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "System information",
+        "de": "Systeminformationen"
+      },
+      "children": [
+        {
+          "id": "info_hostname",
+          "type": "label",
+          "label": {
+            "en": "Hostname",
+            "de": "Hostname"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_version",
+          "type": "label",
+          "label": {
+            "en": "TrueNAS version",
+            "de": "TrueNAS-Version"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_product",
+          "type": "label",
+          "label": {
+            "en": "Hardware",
+            "de": "Hardware"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_serial",
+          "type": "label",
+          "label": {
+            "en": "Serial number",
+            "de": "Seriennummer"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "1.0.0": {
+    "en": "Initial release. Monitor and control TrueNAS SCALE from Homey: system health (CPU, load, memory, ARC, temperature, network, uptime, alerts), storage pools with scrub control, disk temperatures, system services, Docker apps and virtual machines. Includes flow cards for pool health, free space, disk temperature, alerts, updates and start/stop control of services, apps and VMs. Requires TrueNAS SCALE 25.04 or newer and an API key.",
+    "de": "Erste Version. TrueNAS SCALE in Homey überwachen und steuern: Systemzustand (CPU, Last, Arbeitsspeicher, ARC, Temperatur, Netzwerk, Laufzeit, Meldungen), Speicher-Pools mit Scrub-Steuerung, Festplattentemperaturen, Systemdienste, Docker-Apps und virtuelle Maschinen. Mit Flow-Karten für Pool-Zustand, freien Speicher, Festplattentemperatur, Meldungen, Updates sowie Start/Stopp von Diensten, Apps und VMs. Voraussetzung: TrueNAS SCALE 25.04 oder neuer und ein API-Schlüssel."
+  }
+}

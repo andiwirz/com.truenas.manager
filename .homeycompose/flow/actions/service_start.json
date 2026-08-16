@@ -1,0 +1,14 @@
+{
+  "id": "service_start",
+  "title": {
+    "en": "Start the service",
+    "de": "Dienst starten"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-service"
+    }
+  ]
+}

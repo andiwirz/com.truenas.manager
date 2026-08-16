@@ -1,0 +1,14 @@
+{
+  "id": "service_stop",
+  "title": {
+    "en": "Stop the service",
+    "de": "Dienst stoppen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-service"
+    }
+  ]
+}
