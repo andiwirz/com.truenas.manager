@@ -84,6 +84,14 @@ class TrueNasServiceDevice extends ChildDevice {
     this._pendingState = true;
   }
 
+  /**
+   * Reload re-reads the service configuration without dropping existing
+   * connections, which a restart would.
+   */
+  async reloadService() {
+    await this._control('RELOAD');
+  }
+
   async _control(verb) {
     const hub = this.requireHub();
     const name = this._requireService().service;

@@ -1,0 +1,14 @@
+{
+  "id": "task_last_run_failed",
+  "title": {
+    "en": "The last run !{{failed|succeeded}}",
+    "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-task"
+    }
+  ]
+}

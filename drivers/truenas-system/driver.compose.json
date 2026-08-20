@@ -22,6 +22,7 @@
     "nas_uptime",
     "nas_version",
     "nas_update_status",
+    "nas_update_button",
     "nas_refresh"
   ],
   "capabilitiesOptions": {
@@ -163,6 +164,28 @@
           "hint": {
             "en": "Reading disk temperatures queries SMART, which can keep drives from spinning down. Increase this if your drives should stay in standby (default: 300 s).",
             "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s)."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Updates",
+        "de": "Updates"
+      },
+      "children": [
+        {
+          "id": "show_update_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show install update button",
+            "de": "Schaltfläche «Update installieren» anzeigen"
+          },
+          "value": false,
+          "hint": {
+            "en": "Shows a button on the device tile that installs a pending TrueNAS update. The button installs without rebooting, so the new version becomes active at the next restart. Off by default so it cannot be pressed by accident.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird."
           }
         }
       ]

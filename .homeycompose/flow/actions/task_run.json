@@ -1,0 +1,18 @@
+{
+  "id": "task_run",
+  "title": {
+    "en": "Run the task now",
+    "de": "Aufgabe jetzt ausführen"
+  },
+  "hint": {
+    "en": "Starts the task immediately. Does nothing when it is already running.",
+    "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-task"
+    }
+  ]
+}

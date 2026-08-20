@@ -1,0 +1,18 @@
+{
+  "id": "service_reload",
+  "title": {
+    "en": "Reload the service",
+    "de": "Dienst neu laden"
+  },
+  "hint": {
+    "en": "Asks the service to re-read its configuration. Unlike a restart this keeps existing connections alive. Not every service supports it.",
+    "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-service"
+    }
+  ]
+}

@@ -195,6 +195,61 @@
         ]
       },
       {
+        "id": "dataset_space_low",
+        "title": {
+          "en": "Free space dropped below",
+          "de": "Freier Speicher ist gefallen unter"
+        },
+        "titleFormatted": {
+          "en": "Free space dropped below [[percent]] %",
+          "de": "Freier Speicher ist unter [[percent]] % gefallen"
+        },
+        "hint": {
+          "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
+          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-dataset"
+          },
+          {
+            "name": "percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            },
+            "min": 1,
+            "max": 99,
+            "step": 1,
+            "placeholder": {
+              "en": "10",
+              "de": "10"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "free_percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            }
+          },
+          {
+            "name": "free_gb",
+            "type": "number",
+            "title": {
+              "en": "Free space (GB)",
+              "de": "Freier Speicher (GB)"
+            }
+          }
+        ]
+      },
+      {
         "id": "disk_temperature_high",
         "title": {
           "en": "Disk temperature rose above",
@@ -497,6 +552,94 @@
         ]
       },
       {
+        "id": "task_failed",
+        "title": {
+          "en": "A task failed",
+          "de": "Eine Aufgabe ist fehlgeschlagen"
+        },
+        "hint": {
+          "en": "Fires only when a run ends in a failed, errored or aborted state. Use this to notice a backup that quietly stopped working.",
+          "de": "Wird nur ausgelöst, wenn ein Lauf fehlgeschlagen, fehlerhaft oder abgebrochen endet. Damit merkst du, wenn ein Backup still stehen geblieben ist."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "task",
+            "type": "string",
+            "title": {
+              "en": "Task",
+              "de": "Aufgabe"
+            }
+          },
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "de": "Ergebnis"
+            }
+          },
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Type",
+              "de": "Typ"
+            }
+          }
+        ]
+      },
+      {
+        "id": "task_finished",
+        "title": {
+          "en": "A task finished",
+          "de": "Eine Aufgabe ist fertig"
+        },
+        "hint": {
+          "en": "Fires when the task leaves the running state, whether it succeeded or not.",
+          "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "task",
+            "type": "string",
+            "title": {
+              "en": "Task",
+              "de": "Aufgabe"
+            }
+          },
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "de": "Ergebnis"
+            }
+          },
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Type",
+              "de": "Typ"
+            }
+          }
+        ]
+      },
+      {
         "id": "vm_state_changed",
         "title": {
           "en": "Virtual machine status changed",
@@ -569,6 +712,39 @@
             "name": "device",
             "type": "device",
             "filter": "driver_id=truenas-app"
+          }
+        ]
+      },
+      {
+        "id": "dataset_free_space_below",
+        "title": {
+          "en": "Free space !{{is|is not}} below",
+          "de": "Freier Speicher !{{ist|ist nicht}} unter"
+        },
+        "titleFormatted": {
+          "en": "Free space !{{is|is not}} below [[percent]] %",
+          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-dataset"
+          },
+          {
+            "name": "percent",
+            "type": "number",
+            "title": {
+              "en": "Free space (%)",
+              "de": "Freier Speicher (%)"
+            },
+            "min": 1,
+            "max": 99,
+            "step": 1,
+            "placeholder": {
+              "en": "10",
+              "de": "10"
+            }
           }
         ]
       },
@@ -777,6 +953,34 @@
         ]
       },
       {
+        "id": "task_is_running",
+        "title": {
+          "en": "The task !{{is|is not}} running",
+          "de": "Die Aufgabe !{{läuft|läuft nicht}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ]
+      },
+      {
+        "id": "task_last_run_failed",
+        "title": {
+          "en": "The last run !{{failed|succeeded}}",
+          "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ]
+      },
+      {
         "id": "vm_is_running",
         "title": {
           "en": "Virtual machine !{{is|is not}} running",
@@ -857,6 +1061,34 @@
         ]
       },
       {
+        "id": "dataset_create_snapshot",
+        "title": {
+          "en": "Create a snapshot",
+          "de": "Snapshot erstellen"
+        },
+        "hint": {
+          "en": "Creates a snapshot named after the prefix and the current time, configured in the device settings.",
+          "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-dataset"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "name",
+            "type": "string",
+            "title": {
+              "en": "Snapshot name",
+              "de": "Snapshot-Name"
+            }
+          }
+        ]
+      },
+      {
         "id": "pool_start_scrub",
         "title": {
           "en": "Start a scrub",
@@ -885,6 +1117,24 @@
             "name": "device",
             "type": "device",
             "filter": "driver_id=truenas-pool"
+          }
+        ]
+      },
+      {
+        "id": "service_reload",
+        "title": {
+          "en": "Reload the service",
+          "de": "Dienst neu laden"
+        },
+        "hint": {
+          "en": "Asks the service to re-read its configuration. Unlike a restart this keeps existing connections alive. Not every service supports it.",
+          "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-service"
           }
         ]
       },
@@ -941,6 +1191,52 @@
             "name": "device",
             "type": "device",
             "filter": "driver_id=truenas-system"
+          }
+        ]
+      },
+      {
+        "id": "system_install_update",
+        "title": {
+          "en": "Install the system update",
+          "de": "System-Update installieren"
+        },
+        "titleFormatted": {
+          "en": "Install the system update, reboot [[reboot]]",
+          "de": "System-Update installieren, Neustart [[reboot]]"
+        },
+        "hint": {
+          "en": "Downloads and applies a pending TrueNAS update into a new boot environment. Without a reboot the new version only becomes active the next time the NAS restarts, so you can install now and restart at a quiet moment. Does nothing when no update is pending.",
+          "de": "Lädt ein wartendes TrueNAS-Update und installiert es in eine neue Boot-Umgebung. Ohne Neustart wird die neue Version erst beim nächsten Hochfahren aktiv, du kannst also jetzt installieren und zu einem ruhigen Zeitpunkt neu starten. Tut nichts, wenn kein Update ansteht."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-system"
+          },
+          {
+            "name": "reboot",
+            "type": "dropdown",
+            "title": {
+              "en": "Reboot",
+              "de": "Neustart"
+            },
+            "values": [
+              {
+                "id": "false",
+                "label": {
+                  "en": "Install only",
+                  "de": "Nur installieren"
+                }
+              },
+              {
+                "id": "true",
+                "label": {
+                  "en": "Install and reboot",
+                  "de": "Installieren und neu starten"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1033,6 +1329,42 @@
         ]
       },
       {
+        "id": "task_abort",
+        "title": {
+          "en": "Abort the running task",
+          "de": "Laufende Aufgabe abbrechen"
+        },
+        "hint": {
+          "en": "Only cloud sync tasks can be aborted through the API. Replication and snapshot tasks have to finish.",
+          "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ]
+      },
+      {
+        "id": "task_run",
+        "title": {
+          "en": "Run the task now",
+          "de": "Aufgabe jetzt ausführen"
+        },
+        "hint": {
+          "en": "Starts the task immediately. Does nothing when it is already running.",
+          "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=truenas-task"
+          }
+        ]
+      },
+      {
         "id": "vm_restart",
         "title": {
           "en": "Restart the virtual machine",
@@ -1057,8 +1389,40 @@
             "name": "device",
             "type": "device",
             "filter": "driver_id=truenas-vm"
+          },
+          {
+            "name": "overcommit",
+            "type": "dropdown",
+            "title": {
+              "en": "Memory",
+              "de": "Arbeitsspeicher"
+            },
+            "values": [
+              {
+                "id": "false",
+                "label": {
+                  "en": "Require free memory",
+                  "de": "Freien Speicher verlangen"
+                }
+              },
+              {
+                "id": "true",
+                "label": {
+                  "en": "Allow overcommit",
+                  "de": "Überbelegung erlauben"
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "titleFormatted": {
+          "en": "Start the virtual machine, overcommit [[overcommit]]",
+          "de": "VM starten, Überbelegung [[overcommit]]"
+        },
+        "hint": {
+          "en": "Memory overcommitment lets the machine start even when there is not enough free memory left. Use it only when you know the host can cope.",
+          "de": "Speicher-Überbelegung lässt die Maschine auch starten, wenn nicht genug freier Arbeitsspeicher vorhanden ist. Nur verwenden, wenn der Host das verkraftet."
+        }
       },
       {
         "id": "vm_stop",
@@ -1224,6 +1588,122 @@
         }
       ],
       "id": "truenas-app"
+    },
+    {
+      "name": {
+        "en": "Dataset",
+        "de": "Dataset"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "dataset_usage",
+        "dataset_used",
+        "dataset_free",
+        "dataset_quota",
+        "dataset_compression",
+        "dataset_snapshot_button"
+      ],
+      "images": {
+        "small": "/drivers/truenas-dataset/assets/images/small.png",
+        "large": "/drivers/truenas-dataset/assets/images/large.png",
+        "xlarge": "/drivers/truenas-dataset/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Snapshots",
+            "de": "Snapshots"
+          },
+          "children": [
+            {
+              "id": "show_snapshot_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show snapshot button",
+                "de": "Snapshot-Schaltfläche anzeigen"
+              },
+              "value": false,
+              "hint": {
+                "en": "Shows a button on the device tile that creates a snapshot of this dataset. Off by default so snapshots are not created by accident.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen."
+              }
+            },
+            {
+              "id": "snapshot_prefix",
+              "type": "text",
+              "label": {
+                "en": "Snapshot name prefix",
+                "de": "Präfix für Snapshot-Namen"
+              },
+              "value": "homey",
+              "hint": {
+                "en": "Snapshots are named prefix-YYYY-MM-DD-HHMMSS so they sort chronologically and never collide with your periodic snapshot tasks.",
+                "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben."
+              }
+            },
+            {
+              "id": "snapshot_recursive",
+              "type": "checkbox",
+              "label": {
+                "en": "Include child datasets",
+                "de": "Untergeordnete Datasets einbeziehen"
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Dataset information",
+            "de": "Dataset-Informationen"
+          },
+          "children": [
+            {
+              "id": "info_pool",
+              "type": "label",
+              "label": {
+                "en": "Pool",
+                "de": "Pool"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_mountpoint",
+              "type": "label",
+              "label": {
+                "en": "Mount point",
+                "de": "Einhängepunkt"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_encrypted",
+              "type": "label",
+              "label": {
+                "en": "Encrypted",
+                "de": "Verschlüsselt"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-dataset"
     },
     {
       "name": {
@@ -1527,6 +2007,7 @@
         "nas_uptime",
         "nas_version",
         "nas_update_status",
+        "nas_update_button",
         "nas_refresh"
       ],
       "capabilitiesOptions": {
@@ -1675,6 +2156,28 @@
         {
           "type": "group",
           "label": {
+            "en": "Updates",
+            "de": "Updates"
+          },
+          "children": [
+            {
+              "id": "show_update_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show install update button",
+                "de": "Schaltfläche «Update installieren» anzeigen"
+              },
+              "value": false,
+              "hint": {
+                "en": "Shows a button on the device tile that installs a pending TrueNAS update. The button installs without rebooting, so the new version becomes active at the next restart. Off by default so it cannot be pressed by accident.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
             "en": "Alerts",
             "de": "Meldungen"
           },
@@ -1767,6 +2270,89 @@
     },
     {
       "name": {
+        "en": "Backup Task",
+        "de": "Backup-Aufgabe"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_generic",
+        "task_state",
+        "task_progress",
+        "task_last_run",
+        "task_run_button"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Last Run Failed",
+            "de": "Letzter Lauf fehlgeschlagen"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/truenas-task/assets/images/small.png",
+        "large": "/drivers/truenas-task/assets/images/large.png",
+        "xlarge": "/drivers/truenas-task/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Task",
+            "de": "Aufgabe"
+          },
+          "children": [
+            {
+              "id": "show_run_button",
+              "type": "checkbox",
+              "label": {
+                "en": "Show run button",
+                "de": "Schaltfläche «Jetzt ausführen» anzeigen"
+              },
+              "value": false,
+              "hint": {
+                "en": "Shows a button on the device tile that starts this task immediately. Off by default so a backup cannot be kicked off by accident.",
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft."
+              }
+            },
+            {
+              "id": "info_type",
+              "type": "label",
+              "label": {
+                "en": "Task type",
+                "de": "Aufgabentyp"
+              },
+              "value": "-"
+            },
+            {
+              "id": "info_target",
+              "type": "label",
+              "label": {
+                "en": "Path or target",
+                "de": "Pfad oder Ziel"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ],
+      "id": "truenas-task"
+    },
+    {
+      "name": {
         "en": "Virtual Machine",
         "de": "Virtuelle Maschine"
       },
@@ -1830,6 +2416,19 @@
               "hint": {
                 "en": "Off sends a graceful shutdown request to the guest operating system. On cuts power immediately, which can lose unsaved data.",
                 "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können."
+              }
+            },
+            {
+              "id": "allow_overcommit",
+              "type": "checkbox",
+              "label": {
+                "en": "Allow memory overcommit",
+                "de": "Speicher-Überbelegung erlauben"
+              },
+              "value": false,
+              "hint": {
+                "en": "Lets the machine start even when the host has less free memory than the machine is assigned. Applies when starting from the device tile; a flow can decide per run.",
+                "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden."
               }
             },
             {
@@ -2077,6 +2676,102 @@
       "uiComponent": "sensor",
       "insights": false,
       "icon": "/assets/capabilities/info.svg"
+    },
+    "dataset_compression": {
+      "type": "string",
+      "title": {
+        "en": "Compression Ratio",
+        "de": "Kompressionsrate"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/info.svg"
+    },
+    "dataset_free": {
+      "type": "number",
+      "title": {
+        "en": "Free",
+        "de": "Frei"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/dataset.svg"
+    },
+    "dataset_quota": {
+      "type": "number",
+      "title": {
+        "en": "Quota",
+        "de": "Kontingent"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/dataset.svg"
+    },
+    "dataset_snapshot_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Create Snapshot",
+        "de": "Snapshot erstellen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/camera.svg"
+    },
+    "dataset_usage": {
+      "type": "number",
+      "title": {
+        "en": "Used Space",
+        "de": "Belegter Speicher"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 1,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/dataset.svg"
+    },
+    "dataset_used": {
+      "type": "number",
+      "title": {
+        "en": "Used",
+        "de": "Belegt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "decimals": 1,
+      "min": 0,
+      "icon": "/assets/capabilities/dataset.svg"
     },
     "disk_model": {
       "type": "string",
@@ -2327,6 +3022,17 @@
       "uiComponent": "button",
       "icon": "/assets/capabilities/refresh.svg"
     },
+    "nas_update_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Install Update",
+        "de": "Update installieren"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/update.svg"
+    },
     "nas_update_status": {
       "type": "string",
       "title": {
@@ -2524,6 +3230,60 @@
       "uiComponent": "sensor",
       "insights": false,
       "icon": "/assets/capabilities/service.svg"
+    },
+    "task_last_run": {
+      "type": "string",
+      "title": {
+        "en": "Last Run",
+        "de": "Letzter Lauf"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/clock.svg"
+    },
+    "task_progress": {
+      "type": "number",
+      "title": {
+        "en": "Progress",
+        "de": "Fortschritt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "icon": "/assets/capabilities/task.svg"
+    },
+    "task_run_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Run Now",
+        "de": "Jetzt ausführen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/capabilities/task.svg"
+    },
+    "task_state": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "de": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/task.svg"
     },
     "vm_memory": {
       "type": "number",

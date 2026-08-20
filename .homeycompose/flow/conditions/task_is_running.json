@@ -1,0 +1,14 @@
+{
+  "id": "task_is_running",
+  "title": {
+    "en": "The task !{{is|is not}} running",
+    "de": "Die Aufgabe !{{läuft|läuft nicht}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-task"
+    }
+  ]
+}

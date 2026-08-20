@@ -1,0 +1,115 @@
+{
+  "name": {
+    "en": "Dataset",
+    "de": "Dataset"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "dataset_usage",
+    "dataset_used",
+    "dataset_free",
+    "dataset_quota",
+    "dataset_compression",
+    "dataset_snapshot_button"
+  ],
+  "images": {
+    "small": "/drivers/truenas-dataset/assets/images/small.png",
+    "large": "/drivers/truenas-dataset/assets/images/large.png",
+    "xlarge": "/drivers/truenas-dataset/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Snapshots",
+        "de": "Snapshots"
+      },
+      "children": [
+        {
+          "id": "show_snapshot_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show snapshot button",
+            "de": "Snapshot-Schaltfläche anzeigen"
+          },
+          "value": false,
+          "hint": {
+            "en": "Shows a button on the device tile that creates a snapshot of this dataset. Off by default so snapshots are not created by accident.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen."
+          }
+        },
+        {
+          "id": "snapshot_prefix",
+          "type": "text",
+          "label": {
+            "en": "Snapshot name prefix",
+            "de": "Präfix für Snapshot-Namen"
+          },
+          "value": "homey",
+          "hint": {
+            "en": "Snapshots are named prefix-YYYY-MM-DD-HHMMSS so they sort chronologically and never collide with your periodic snapshot tasks.",
+            "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben."
+          }
+        },
+        {
+          "id": "snapshot_recursive",
+          "type": "checkbox",
+          "label": {
+            "en": "Include child datasets",
+            "de": "Untergeordnete Datasets einbeziehen"
+          },
+          "value": false
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Dataset information",
+        "de": "Dataset-Informationen"
+      },
+      "children": [
+        {
+          "id": "info_pool",
+          "type": "label",
+          "label": {
+            "en": "Pool",
+            "de": "Pool"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_mountpoint",
+          "type": "label",
+          "label": {
+            "en": "Mount point",
+            "de": "Einhängepunkt"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_encrypted",
+          "type": "label",
+          "label": {
+            "en": "Encrypted",
+            "de": "Verschlüsselt"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

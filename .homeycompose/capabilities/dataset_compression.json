@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Compression Ratio",
+    "de": "Kompressionsrate"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/info.svg"
+}

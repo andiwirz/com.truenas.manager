@@ -35,7 +35,9 @@
     "not_connected": "Not connected to TrueNAS.",
     "redirected": "The NAS redirected the connection, which usually means it only accepts HTTPS. Turn on \"Use HTTPS\" in the device settings and set the port to 443.",
     "host_not_found": "The address could not be resolved. Homey often cannot look up .local names, so use the IP address of the NAS instead.",
-    "wrong_protocol": "Protocol mismatch. If \"Use HTTPS\" is on, the port should normally be 443; if it is off, 80."
+    "wrong_protocol": "Protocol mismatch. If \"Use HTTPS\" is on, the port should normally be 443; if it is off, 80.",
+    "update_unsupported": "Installing system updates needs TrueNAS SCALE 25.10 or newer. Install it in the TrueNAS web interface instead.",
+    "abort_unsupported": "Only cloud sync tasks can be aborted. Replication and snapshot tasks have to run to completion."
   },
   "state": {
     "unknown": "Unknown",

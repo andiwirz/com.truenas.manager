@@ -1,0 +1,18 @@
+{
+  "id": "task_abort",
+  "title": {
+    "en": "Abort the running task",
+    "de": "Laufende Aufgabe abbrechen"
+  },
+  "hint": {
+    "en": "Only cloud sync tasks can be aborted through the API. Replication and snapshot tasks have to finish.",
+    "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-task"
+    }
+  ]
+}

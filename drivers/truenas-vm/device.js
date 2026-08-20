@@ -96,13 +96,18 @@ class TrueNasVmDevice extends ChildDevice {
   // Flow actions
   // ---------------------------------------------------------------------------
 
-  async setVmState(running, force = false) {
+  async setVmState(running, force = false, overcommit = null) {
     const hub = this.requireHub();
     const vm = this._requireVm();
 
     if (running) {
-      this.log(`Starting VM ${vm.name}`);
-      await hub.call('vm.start', [vm.id, {}]);
+      // A flow can decide per run; the tile toggle falls back to the setting.
+      const allow = overcommit === null
+        ? this.getSetting('allow_overcommit') === true
+        : Boolean(overcommit);
+
+      this.log(`Starting VM ${vm.name}${allow ? ' with memory overcommit' : ''}`);
+      await hub.call('vm.start', [vm.id, { overcommit: allow }]);
     } else if (force) {
       this.log(`Powering off VM ${vm.name}`);
       await hub.call('vm.poweroff', [vm.id]);

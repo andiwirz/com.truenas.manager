@@ -1,0 +1,44 @@
+{
+  "id": "task_finished",
+  "title": {
+    "en": "A task finished",
+    "de": "Eine Aufgabe ist fertig"
+  },
+  "hint": {
+    "en": "Fires when the task leaves the running state, whether it succeeded or not.",
+    "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-task"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "task",
+      "type": "string",
+      "title": {
+        "en": "Task",
+        "de": "Aufgabe"
+      }
+    },
+    {
+      "name": "state",
+      "type": "string",
+      "title": {
+        "en": "Result",
+        "de": "Ergebnis"
+      }
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "title": {
+        "en": "Type",
+        "de": "Typ"
+      }
+    }
+  ]
+}

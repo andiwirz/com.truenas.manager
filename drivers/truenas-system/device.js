@@ -6,6 +6,16 @@ const { toGiB, toNumber } = require('../../lib/util');
 
 const ALERT_LEVELS = ['INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY'];
 
+/**
+ * Homey destroys a device's Insights logs before it calls onDeleted, so a
+ * write already in flight comes back as a missing LogLocal. That is the
+ * device going away, not a fault worth reporting.
+ */
+function isGoneError(err) {
+  const message = String((err && err.message) || err);
+  return /not found|loglocal|invalid_device|no such device/i.test(message);
+}
+
 class TrueNasSystemDevice extends Device {
 
   async onInit() {
@@ -20,6 +30,9 @@ class TrueNasSystemDevice extends Device {
       await this.refreshNow();
       return false;
     });
+
+    this._registerUpdateListener();
+    await this._applyUpdateButtonVisibility(this.getSetting('show_update_button') === true);
 
     this._triggerAlert = this.homey.flow.getDeviceTriggerCard('system_alert_raised');
     this._triggerUpdate = this.homey.flow.getDeviceTriggerCard('system_update_found');
@@ -51,13 +64,34 @@ class TrueNasSystemDevice extends Device {
     });
 
     this._hub.on('data', () => {
-      this._handleData().catch((err) => this.error('Update failed:', err.message));
+      if (this.isGone()) return;
+      this._handleData().catch((err) => {
+        if (isGoneError(err)) return;
+        this.error('Update failed:', err.message);
+      });
     });
     this._hub.on('unavailable', (i18n) => {
+      if (this.isGone()) return;
       this.setUnavailable(this.homey.__(i18n || 'error.unreachable')).catch(() => {});
     });
 
     this.homey.app.registerHub(this.systemId, this._hub);
+  }
+
+  /**
+   * Homey removes the device from its driver and destroys the Insights logs
+   * before calling onDeleted, so a write landing in that window is reported
+   * by Homey itself. The write must simply not happen.
+   */
+  isGone() {
+    if (this._destroyed) return true;
+    try {
+      const { driver } = this;
+      if (!driver || typeof driver.getDevices !== 'function') return false;
+      return !driver.getDevices().includes(this);
+    } catch (_err) {
+      return false;
+    }
   }
 
   get hub() {
@@ -206,11 +240,16 @@ class TrueNasSystemDevice extends Device {
   }
 
   async _set(capability, value) {
+    // Writes run in sequence; a deletion part way through must not land on
+    // a device Homey has already torn down.
+    if (this.isGone()) return;
     if (!this.hasCapability(capability)) return;
     if (value === null || value === undefined) return;
     if (this.getCapabilityValue(capability) === value) return;
-    await this.setCapabilityValue(capability, value)
-      .catch((err) => this.error(`Could not set ${capability}:`, err.message));
+    await this.setCapabilityValue(capability, value).catch((err) => {
+      if (isGoneError(err)) return;
+      this.error(`Could not set ${capability}:`, err.message);
+    });
   }
 
   // ---------------------------------------------------------------------------
@@ -250,6 +289,49 @@ class TrueNasSystemDevice extends Device {
     await hub.call('system.shutdown', ['Homey flow', { delay: seconds }]);
   }
 
+  _registerUpdateListener() {
+    if (!this.hasCapability('nas_update_button')) return;
+    this.registerCapabilityListener('nas_update_button', async () => {
+      // The tile button never reboots; that stays an explicit flow choice.
+      await this.installUpdate(false);
+      return false;
+    });
+  }
+
+  async _applyUpdateButtonVisibility(visible) {
+    if (visible && !this.hasCapability('nas_update_button')) {
+      await this.addCapability('nas_update_button').catch(() => {});
+      this._registerUpdateListener();
+    } else if (!visible && this.hasCapability('nas_update_button')) {
+      await this.removeCapability('nas_update_button').catch(() => {});
+    }
+  }
+
+  /**
+   * Installs a pending TrueNAS update.
+   *
+   * Only `update.run` is used. In 25.10 `update.update` writes the update
+   * *configuration*, while on older releases the same name performed the
+   * install — falling back to it could silently rewrite the user's settings.
+   */
+  async installUpdate(reboot = false) {
+    const hub = this.requireHub();
+
+    if (!hub.data.update.available) {
+      this.log('No system update pending, nothing to install');
+      return;
+    }
+
+    this.log(`Installing system update${reboot ? ' and rebooting' : ' without rebooting'}`);
+    try {
+      await hub.call('update.run', [{ reboot: Boolean(reboot) }]);
+    } catch (err) {
+      if (err.methodMissing) throw new Error(this.homey.__('error.update_unsupported'));
+      throw err;
+    }
+    hub.scheduleRefresh(15000);
+  }
+
   async checkForUpdate() {
     const hub = this.requireHub();
     hub.forceUpdateCheck();
@@ -268,6 +350,10 @@ class TrueNasSystemDevice extends Device {
   async onSettings({ newSettings, changedKeys }) {
     const connectionKeys = ['host', 'port', 'use_ssl', 'ignore_cert', 'api_key'];
     const pollKeys = ['poll_interval', 'disk_poll_interval'];
+
+    if (changedKeys.includes('show_update_button')) {
+      await this._applyUpdateButtonVisibility(newSettings.show_update_button === true);
+    }
 
     if (!changedKeys.some((key) => [...connectionKeys, ...pollKeys].includes(key))) return;
     if (!this._hub) return;
@@ -292,6 +378,7 @@ class TrueNasSystemDevice extends Device {
   }
 
   _teardown() {
+    this._destroyed = true;
     if (this._hub) {
       this._hub.removeAllListeners();
       this._hub.stop();

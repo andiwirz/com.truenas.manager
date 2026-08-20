@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Quota",
+    "de": "Kontingent"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "units": {
+    "en": "GB",
+    "de": "GB"
+  },
+  "decimals": 1,
+  "min": 0,
+  "icon": "/assets/capabilities/dataset.svg"
+}

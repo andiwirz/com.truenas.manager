@@ -119,6 +119,7 @@ class TrueNasApp extends App {
     action('system_reboot', async (args) => args.device.rebootSystem(args.delay));
     action('system_shutdown', async (args) => args.device.shutdownSystem(args.delay));
     action('system_check_update', async (args) => args.device.checkForUpdate());
+    action('system_install_update', async (args) => args.device.installUpdate(args.reboot === 'true'));
     action('system_refresh', async (args) => args.device.refreshNow());
 
     // --- Pool ---
@@ -137,6 +138,7 @@ class TrueNasApp extends App {
     action('service_start', async (args) => args.device.setServiceState(true));
     action('service_stop', async (args) => args.device.setServiceState(false));
     action('service_restart', async (args) => args.device.restartService());
+    action('service_reload', async (args) => args.device.reloadService());
 
     // --- App ---
     condition('app_is_running', async (args) => args.device.isRunning());
@@ -147,9 +149,19 @@ class TrueNasApp extends App {
     action('app_redeploy', async (args) => args.device.redeployApp());
     action('app_upgrade', async (args) => args.device.upgradeApp());
 
+    // --- Task ---
+    condition('task_is_running', async (args) => args.device.isRunning());
+    condition('task_last_run_failed', async (args) => args.device.lastRunFailed());
+    action('task_run', async (args) => args.device.runTask());
+    action('task_abort', async (args) => args.device.abortTask());
+
+    // --- Dataset ---
+    condition('dataset_free_space_below', async (args) => args.device.isFreeSpaceBelow(args.percent));
+    action('dataset_create_snapshot', async (args) => ({ name: await args.device.createSnapshot() }));
+
     // --- VM ---
     condition('vm_is_running', async (args) => args.device.isRunning());
-    action('vm_start', async (args) => args.device.setVmState(true));
+    action('vm_start', async (args) => args.device.setVmState(true, false, args.overcommit === 'true'));
     action('vm_stop', async (args) => args.device.setVmState(false, args.force === 'true'));
     action('vm_restart', async (args) => args.device.restartVm());
   }

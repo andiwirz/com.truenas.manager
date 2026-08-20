@@ -1,0 +1,46 @@
+{
+  "id": "system_install_update",
+  "title": {
+    "en": "Install the system update",
+    "de": "System-Update installieren"
+  },
+  "titleFormatted": {
+    "en": "Install the system update, reboot [[reboot]]",
+    "de": "System-Update installieren, Neustart [[reboot]]"
+  },
+  "hint": {
+    "en": "Downloads and applies a pending TrueNAS update into a new boot environment. Without a reboot the new version only becomes active the next time the NAS restarts, so you can install now and restart at a quiet moment. Does nothing when no update is pending.",
+    "de": "Lädt ein wartendes TrueNAS-Update und installiert es in eine neue Boot-Umgebung. Ohne Neustart wird die neue Version erst beim nächsten Hochfahren aktiv, du kannst also jetzt installieren und zu einem ruhigen Zeitpunkt neu starten. Tut nichts, wenn kein Update ansteht."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-system"
+    },
+    {
+      "name": "reboot",
+      "type": "dropdown",
+      "title": {
+        "en": "Reboot",
+        "de": "Neustart"
+      },
+      "values": [
+        {
+          "id": "false",
+          "label": {
+            "en": "Install only",
+            "de": "Nur installieren"
+          }
+        },
+        {
+          "id": "true",
+          "label": {
+            "en": "Install and reboot",
+            "de": "Installieren und neu starten"
+          }
+        }
+      ]
+    }
+  ]
+}

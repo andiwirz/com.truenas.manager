@@ -50,7 +50,10 @@ const RESPONSES = {
     status_detail: null, size: 100 * GIB, allocated: 20 * GIB, free: 80 * GIB,
     scan: { function: 'SCRUB', state: 'FINISHED', percentage: 100, errors: 0 },
   },
-  'service.query': [{ id: 1, service: 'cifs', enable: true, state: 'RUNNING', pids: [1] }],
+  'service.query': [
+    { id: 1, service: 'cifs', enable: true, state: 'RUNNING', pids: [1] },
+    { id: 2, service: 'nfs', enable: false, state: 'STOPPED', pids: [] },
+  ],
   'app.query': [{
     id: 'plex', name: 'plex', state: 'RUNNING', upgrade_available: true,
     latest_version: '2.0.0', image_updates_available: true, custom_app: false,
@@ -80,6 +83,36 @@ const RESPONSES = {
     bus: 'ATA', pool: 'tank', description: '',
   }],
   'disk.temperatures': { sda: 41 },
+  'cloudsync.query': [{
+    id: 3, description: 'Backblaze photos', direction: 'PUSH', path: '/mnt/tank/photos',
+    enabled: true, transfer_mode: 'SYNC', snapshot: false,
+    job: { state: 'SUCCESS', time_finished: { $date: 1700000000000 }, progress: { percent: 100, description: 'done' } },
+  }, {
+    id: 4, description: 'Offsite docs', direction: 'PUSH', path: '/mnt/tank/docs', enabled: true,
+    job: { state: 'FAILED', time_finished: { $date: 1700000500000 }, progress: { percent: 12, description: 'auth error' } },
+  }],
+  'replication.query': [{
+    id: 9, name: 'tank to backup', source_datasets: ['tank/data'], target_dataset: 'backup/data',
+    enabled: true, direction: 'PUSH', transport: 'SSH',
+    job: { state: 'RUNNING', time_finished: null, progress: { percent: 42, description: 'sending' } },
+  }],
+  'pool.snapshottask.query': [{
+    id: 2, dataset: 'tank/vm', recursive: true, enabled: true, naming_schema: 'auto-%Y%m%d',
+    state: { state: 'FINISHED', datetime: { $date: 1700000900000 } },
+  }],
+  'pool.dataset.query': [{
+    id: 'tank/data', name: 'tank/data', pool: 'tank', type: 'FILESYSTEM', mountpoint: '/mnt/tank/data',
+    used: { parsed: 200 * GIB }, available: { parsed: 300 * GIB }, quota: { parsed: 0 },
+    compression: { parsed: 'lz4' }, compressratio: { parsed: '1.75x' }, encryption_algorithm: { parsed: null },
+  }, {
+    id: 'tank/vmdisk', name: 'tank/vmdisk', pool: 'tank', type: 'VOLUME', mountpoint: null,
+    used: { parsed: 50 * GIB }, available: { parsed: 100 * GIB },
+  }],
+  'cloudsync.sync': null,
+  'cloudsync.abort': null,
+  'replication.run': null,
+  'pool.snapshottask.run': null,
+  'pool.snapshot.create': { name: 'ok' },
   'update.status': {
     code: 'NORMAL',
     status: {
@@ -113,6 +146,7 @@ const RESPONSES = {
   'boot.scrub': null,
   'system.reboot': null,
   'system.shutdown': null,
+  'update.run': true,
 };
 
 const rpcCalls = [];
@@ -276,6 +310,7 @@ const drivers = new Map();
 const homey = {
   app: null,
   manifest: { version: '1.0.0' },
+  clock: { getTimezone: () => 'Europe/Zurich' },
   settings: { set() {}, get() { return null; } },
   __: (key) => key,
   setTimeout: (fn, ms) => setTimeout(fn, ms),
@@ -310,6 +345,10 @@ const ServiceDevice = require(path.join(ROOT, 'drivers/truenas-service/device.js
 const AppDevice = require(path.join(ROOT, 'drivers/truenas-app/device.js'));
 const VmDevice = require(path.join(ROOT, 'drivers/truenas-vm/device.js'));
 const PoolDriver = require(path.join(ROOT, 'drivers/truenas-pool/driver.js'));
+const TaskDevice = require(path.join(ROOT, 'drivers/truenas-task/device.js'));
+const DatasetDevice = require(path.join(ROOT, 'drivers/truenas-dataset/device.js'));
+const TaskDriver = require(path.join(ROOT, 'drivers/truenas-task/driver.js'));
+const DatasetDriver = require(path.join(ROOT, 'drivers/truenas-dataset/driver.js'));
 const manifest = require(path.join(ROOT, 'app.json'));
 
 function capsOf(driverId) {
@@ -329,6 +368,16 @@ function settingsOf(driverId) {
 }
 
 function makeChild(Cls, driverId, entity) {
+  const device = buildChild(Cls, driverId, entity);
+  const driver = drivers.get(driverId);
+  if (driver) {
+    driver._devices.push(device);
+    device.driver = driver;
+  }
+  return device;
+}
+
+function buildChild(Cls, driverId, entity) {
   const type = driverId.replace('truenas-', '');
   return new Cls({
     homey,
@@ -361,6 +410,10 @@ function makeChild(Cls, driverId, entity) {
     capabilities: capsOf('truenas-system'),
   });
   drivers.set('truenas-system', new Driver({ homey, devices: [system] }));
+  system.driver = drivers.get('truenas-system');
+  for (const id of ['truenas-service', 'truenas-app', 'truenas-vm', 'truenas-pool', 'truenas-disk', 'truenas-task', 'truenas-dataset']) {
+    drivers.set(id, new Driver({ homey, devices: [] }));
+  }
   await system.onInit();
   await wait(400);
 
@@ -454,6 +507,87 @@ function makeChild(Cls, driverId, entity) {
   check('onoff', vm.getCapabilityValue('onoff'), true);
   check('memory MB', vm.getCapabilityValue('vm_memory'), 8192);
 
+  note('Task devices');
+  const cloudOk = makeChild(TaskDevice, 'truenas-task', 'cloudsync:3');
+  const cloudBad = makeChild(TaskDevice, 'truenas-task', 'cloudsync:4');
+  const repl = makeChild(TaskDevice, 'truenas-task', 'replication:9');
+  const snap = makeChild(TaskDevice, 'truenas-task', 'snapshot:2');
+  for (const d of [cloudOk, cloudBad, repl, snap]) await d.onInit(); // eslint-disable-line no-await-in-loop
+  await wait(200);
+
+  check('cloudsync ok state', cloudOk.getCapabilityValue('task_state'), 'Success');
+  check('cloudsync ok not alarmed', cloudOk.getCapabilityValue('alarm_generic'), false);
+  check('failed task alarms', cloudBad.getCapabilityValue('alarm_generic'), true);
+  check('failed task state', cloudBad.getCapabilityValue('task_state'), 'Failed');
+  check('running replication progress', repl.getCapabilityValue('task_progress'), 42);
+  check('replication state', repl.getCapabilityValue('task_state'), 'Running');
+  // Snapshot tasks report under state/state, not job/state.
+  check('snapshot task state', snap.getCapabilityValue('task_state'), 'Finished');
+  check('last run formatted', /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(cloudOk.getCapabilityValue('task_last_run')), true);
+  check('run button hidden by default', cloudOk.hasCapability('task_run_button'), false);
+  check('no invalid writes', [cloudOk, cloudBad, repl, snap].flatMap((d) => d.invalidCapabilityWrites), []);
+
+  note('Dataset device');
+  const dataset = makeChild(DatasetDevice, 'truenas-dataset', 'tank/data');
+  await dataset.onInit();
+  await wait(200);
+  check('available', dataset.getAvailable(), true);
+  check('no invalid writes', dataset.invalidCapabilityWrites, []);
+  check('usage %', dataset.getCapabilityValue('dataset_usage'), 40);
+  check('used GB', dataset.getCapabilityValue('dataset_used'), 200);
+  check('free GB', dataset.getCapabilityValue('dataset_free'), 300);
+  check('compression ratio', dataset.getCapabilityValue('dataset_compression'), '1.75x');
+  check('snapshot button hidden by default', dataset.hasCapability('dataset_snapshot_button'), false);
+  check('pool in settings', dataset.getSetting('info_pool'), 'tank');
+
+  note('Task and dataset actions');
+  {
+    let mark = rpcCalls.length;
+    await cloudOk.runTask();
+    check('cloudsync run', rpcCalls.slice(mark).map((c) => c.method), ['cloudsync.sync']);
+
+    mark = rpcCalls.length;
+    await snap.runTask();
+    check('snapshot task run', rpcCalls.slice(mark).map((c) => c.method), ['pool.snapshottask.run']);
+
+    // The replication job is RUNNING, so running it again must be a no-op.
+    mark = rpcCalls.length;
+    await repl.runTask();
+    check('running task not restarted', rpcCalls.slice(mark).map((c) => c.method), []);
+
+    let rejected = null;
+    await repl.abortTask().catch((err) => { rejected = err.message; });
+    check('only cloudsync can abort', rejected, 'error.abort_unsupported');
+
+    mark = rpcCalls.length;
+    const name = await dataset.createSnapshot();
+    check('snapshot created', rpcCalls.slice(mark).map((c) => c.method), ['pool.snapshot.create']);
+    const params = rpcCalls[rpcCalls.length - 1].params[0];
+    check('snapshot targets the dataset', params.dataset, 'tank/data');
+    check('snapshot name is timestamped', /^homey-\d{4}-\d{2}-\d{2}-\d{6}$/.test(params.name), true);
+    check('name returned as token', name, params.name);
+    check('not recursive by default', params.recursive, false);
+  }
+
+  note('Task pairing');
+  {
+    const taskDriver = new TaskDriver({ homey });
+    taskDriver.homey = homey;
+    const found = await taskDriver.discoverDevices();
+    check('all four tasks discovered', found.map((d) => d.name), [
+      'Cloud Sync: Backblaze photos',
+      'Cloud Sync: Offsite docs',
+      'Replication: tank to backup',
+      'Snapshot: tank/vm',
+    ]);
+
+    const dsDriver = new DatasetDriver({ homey });
+    dsDriver.homey = homey;
+    const datasets = await dsDriver.discoverDevices();
+    // The zvol backs a VM disk and is deliberately left out.
+    check('zvol excluded', datasets.map((d) => d.name), ['tank/data']);
+  }
+
   note('Actions produce the right RPC calls');
   const since = () => rpcCalls.length;
   const called = (from) => rpcCalls.slice(from).map((c) => c.method);
@@ -466,6 +600,16 @@ function makeChild(Cls, driverId, entity) {
 
   await service.triggerCapability('service_restart_button', true);
   check('service restart verb', lastParams()[0], 'RESTART');
+
+  await service.reloadService();
+  check('service reload verb', lastParams()[0], 'RELOAD');
+
+  mark = since();
+  await vm.setVmState(true);
+  check('vm start respects the setting', lastParams()[1], { overcommit: false });
+  await vm.setVmState(true, false, true);
+  check('flow can allow overcommit', lastParams()[1], { overcommit: true });
+  check('start calls vm.start', called(mark), ['vm.start', 'vm.start']);
 
   mark = since();
   await appDev.triggerCapability('app_upgrade_button', true);
@@ -494,6 +638,60 @@ function makeChild(Cls, driverId, entity) {
   mark = since();
   await system.rebootSystem(0);
   check('reboot', called(mark), ['system.reboot']);
+
+  mark = since();
+  await system.installUpdate(false);
+  check('install update', called(mark), ['update.run']);
+  check('does not reboot by default', lastParams()[0], { reboot: false });
+
+  mark = since();
+  await system.installUpdate(true);
+  check('install and reboot', lastParams()[0], { reboot: true });
+  check('never touches update.update', called(mark).includes('update.update'), false);
+
+  note('System update guards');
+  {
+    // Nothing pending must not fire an install.
+    const withUpdate = RESPONSES['update.status'];
+    RESPONSES['update.status'] = {
+      code: 'NORMAL',
+      status: {
+        current_version: { train: 'GOLDEYE', profile: 'GENERAL', matches_profile: true },
+        new_version: null,
+      },
+      error: null,
+      update_download_progress: null,
+    };
+    system.hub.forceUpdateCheck();
+    await system.refreshNow();
+    await wait(200);
+
+    check('status reads up to date', system.getCapabilityValue('nas_update_status'), 'state.up_to_date');
+
+    const mark = rpcCalls.length;
+    await system.installUpdate(false);
+    check('no update, no call', rpcCalls.slice(mark).map((c) => c.method), []);
+
+    RESPONSES['update.status'] = withUpdate;
+    system.hub.forceUpdateCheck();
+    await system.refreshNow();
+    await wait(200);
+  }
+
+  note('Update button visibility');
+  check('hidden by default', system.hasCapability('nas_update_button'), false);
+  await system.onSettings({
+    newSettings: { show_update_button: true },
+    changedKeys: ['show_update_button'],
+  });
+  check('appears when enabled', system.hasCapability('nas_update_button'), true);
+  {
+    const mark = rpcCalls.length;
+    await system.triggerCapability('nas_update_button', true);
+    check('button installs without reboot', rpcCalls[rpcCalls.length - 1].params[0], { reboot: false });
+    check('one call only', rpcCalls.slice(mark).map((c) => c.method), ['update.run']);
+  }
+  check('no duplicate listeners after toggle', system.duplicateListeners, []);
 
   note('Flow conditions');
   const cond = (id, args) => flowCards.conditions.get(id).runListener(args);
@@ -639,8 +837,48 @@ function makeChild(Cls, driverId, entity) {
   check('unavailable on refused connection', brokenSystem.getAvailable(), false);
   await brokenSystem.onDeleted();
 
+  note('Deleting a device mid-update');
+  {
+    // Homey destroys the Insights logs before calling onDeleted, so any write
+    // still in flight fails with "Not Found: LogLocal". Reproduce that by
+    // deleting the device while handleData is part way through its writes.
+    const victim = makeChild(ServiceDevice, 'truenas-service', 'nfs');
+    await victim.onInit();
+    await wait(150);
+
+    // Real ordering: Homey drops the device from its driver and destroys the
+    // Insights logs FIRST, and only calls onDeleted afterwards. So the writes
+    // have to stop without onDeleted having run yet.
+    let attemptedWrites = 0;
+    victim.setCapabilityValue = async (cap) => {
+      attemptedWrites += 1;
+      throw new Error(`Not Found: LogLocal with ID homey:device:abc:${cap}`);
+    };
+
+    // Stale the cached values so the next run genuinely has something to write;
+    // otherwise setCapability skips them as unchanged and the test proves
+    // nothing.
+    for (const cap of victim.getCapabilities()) victim._caps.set(cap, '__stale__');
+
+    const driverDevices = drivers.get('truenas-service');
+    driverDevices._devices = driverDevices._devices.filter((d) => d !== victim);
+
+    let surfaced = null;
+    victim.error = (...args) => { surfaced = args.join(' '); };
+
+    // A poll landing after the device was unpaired must write nothing at all.
+    victim._service = null;
+    victim._onData();
+    await wait(150);
+
+    check('no write attempted once unpaired', attemptedWrites, 0);
+    check('no error surfaced to the user', surfaced, null);
+
+    await victim.onDeleted();
+  }
+
   note('Teardown');
-  for (const device of [pool, bootPool, disk, service, appDev, vm]) {
+  for (const device of [pool, bootPool, disk, service, appDev, vm, cloudOk, cloudBad, repl, snap, dataset]) {
     await device.onDeleted(); // eslint-disable-line no-await-in-loop
   }
   await system.onDeleted();

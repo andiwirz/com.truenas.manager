@@ -9,6 +9,38 @@
       "name": "device",
       "type": "device",
       "filter": "driver_id=truenas-vm"
+    },
+    {
+      "name": "overcommit",
+      "type": "dropdown",
+      "title": {
+        "en": "Memory",
+        "de": "Arbeitsspeicher"
+      },
+      "values": [
+        {
+          "id": "false",
+          "label": {
+            "en": "Require free memory",
+            "de": "Freien Speicher verlangen"
+          }
+        },
+        {
+          "id": "true",
+          "label": {
+            "en": "Allow overcommit",
+            "de": "Überbelegung erlauben"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "titleFormatted": {
+    "en": "Start the virtual machine, overcommit [[overcommit]]",
+    "de": "VM starten, Überbelegung [[overcommit]]"
+  },
+  "hint": {
+    "en": "Memory overcommitment lets the machine start even when there is not enough free memory left. Use it only when you know the host can cope.",
+    "de": "Speicher-Überbelegung lässt die Maschine auch starten, wenn nicht genug freier Arbeitsspeicher vorhanden ist. Nur verwenden, wenn der Host das verkraftet."
+  }
 }

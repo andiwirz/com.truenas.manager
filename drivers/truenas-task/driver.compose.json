@@ -1,0 +1,82 @@
+{
+  "name": {
+    "en": "Backup Task",
+    "de": "Backup-Aufgabe"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "alarm_generic",
+    "task_state",
+    "task_progress",
+    "task_last_run",
+    "task_run_button"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "Last Run Failed",
+        "de": "Letzter Lauf fehlgeschlagen"
+      }
+    }
+  },
+  "images": {
+    "small": "/drivers/truenas-task/assets/images/small.png",
+    "large": "/drivers/truenas-task/assets/images/large.png",
+    "xlarge": "/drivers/truenas-task/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Task",
+        "de": "Aufgabe"
+      },
+      "children": [
+        {
+          "id": "show_run_button",
+          "type": "checkbox",
+          "label": {
+            "en": "Show run button",
+            "de": "Schaltfläche «Jetzt ausführen» anzeigen"
+          },
+          "value": false,
+          "hint": {
+            "en": "Shows a button on the device tile that starts this task immediately. Off by default so a backup cannot be kicked off by accident.",
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft."
+          }
+        },
+        {
+          "id": "info_type",
+          "type": "label",
+          "label": {
+            "en": "Task type",
+            "de": "Aufgabentyp"
+          },
+          "value": "-"
+        },
+        {
+          "id": "info_target",
+          "type": "label",
+          "label": {
+            "en": "Path or target",
+            "de": "Pfad oder Ziel"
+          },
+          "value": "-"
+        }
+      ]
+    }
+  ]
+}

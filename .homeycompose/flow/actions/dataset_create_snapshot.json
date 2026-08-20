@@ -1,0 +1,28 @@
+{
+  "id": "dataset_create_snapshot",
+  "title": {
+    "en": "Create a snapshot",
+    "de": "Snapshot erstellen"
+  },
+  "hint": {
+    "en": "Creates a snapshot named after the prefix and the current time, configured in the device settings.",
+    "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=truenas-dataset"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "name",
+      "type": "string",
+      "title": {
+        "en": "Snapshot name",
+        "de": "Snapshot-Name"
+      }
+    }
+  ]
+}

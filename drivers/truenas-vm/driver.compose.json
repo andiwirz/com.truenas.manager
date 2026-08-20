@@ -66,6 +66,19 @@
           }
         },
         {
+          "id": "allow_overcommit",
+          "type": "checkbox",
+          "label": {
+            "en": "Allow memory overcommit",
+            "de": "Speicher-Überbelegung erlauben"
+          },
+          "value": false,
+          "hint": {
+            "en": "Lets the machine start even when the host has less free memory than the machine is assigned. Applies when starting from the device tile; a flow can decide per run.",
+            "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden."
+          }
+        },
+        {
           "id": "show_restart_button",
           "type": "checkbox",
           "label": {
