@@ -2,7 +2,7 @@
 
 const { Device } = require('homey');
 const TrueNasHub = require('../../lib/TrueNasHub');
-const { toGiB } = require('../../lib/util');
+const { toGiB, toNumber } = require('../../lib/util');
 
 const ALERT_LEVELS = ['INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY'];
 
@@ -152,14 +152,18 @@ class TrueNasSystemDevice extends Device {
       available, version, status, downloadProgress,
     } = hub.data.update;
 
+    // Not a plain Number() check: update_download_progress is null unless a
+    // download is actually running, and Number(null) is 0.
+    const progress = toNumber(downloadProgress);
+
     let label;
     if (status === 'ERROR') {
       label = this.homey.__('state.update_error');
     } else if (status === null || status === undefined) {
       label = this.homey.__('state.unknown');
-    } else if (available && Number.isFinite(Number(downloadProgress))) {
+    } else if (available && progress !== null) {
       // The NAS is already pulling the image; show how far it has got.
-      label = `${this.homey.__('state.downloading')} (${Math.round(downloadProgress)} %)`;
+      label = `${this.homey.__('state.downloading')} (${Math.round(progress)} %)`;
     } else if (available) {
       label = this.homey.__('state.update_available');
     } else {
@@ -223,9 +227,9 @@ class TrueNasSystemDevice extends Device {
   }
 
   async isCpuUsageAbove(percent) {
-    const value = this.requireHub().data.system.cpuUsage;
-    if (!Number.isFinite(Number(value))) return false;
-    return Number(value) > Number(percent);
+    const value = toNumber(this.requireHub().data.system.cpuUsage);
+    if (value === null) return false;
+    return value > Number(percent);
   }
 
   // ---------------------------------------------------------------------------

@@ -8,7 +8,8 @@ disks, services, Docker apps and virtual machines.
 - **TrueNAS SCALE 25.04 (Fangtooth) or newer.** The app speaks JSON-RPC 2.0 over the
   WebSocket endpoint `/api/current`, which was introduced in 25.04.
 - An API key from **Credentials → API Keys** in the TrueNAS web interface.
-- Homey Pro on the same local network as the NAS.
+- Homey Pro on the same local network as the NAS, firmware **12.3.0 or newer**
+  (the dashboard widget sets that floor via its `devices` binding).
 
 ### Why not the REST API
 

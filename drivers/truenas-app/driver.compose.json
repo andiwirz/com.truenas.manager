@@ -76,7 +76,7 @@
             "en": "Show redeploy button",
             "de": "Schaltfläche «Neu bereitstellen» anzeigen"
           },
-          "value": true,
+          "value": false,
           "hint": {
             "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
             "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."

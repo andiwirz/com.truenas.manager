@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { width: 100%; overflow: hidden; }
+
+    body {
+      /* The dashboard paints the background behind the widget. */
+      background: transparent;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--homey-text-color, rgba(255, 255, 255, .9));
+      padding: 10px 12px 12px;
+      font-size: 13px;
+      line-height: 1.3;
+
+      /* Neutral greys read correctly on both the light and the dark dashboard. */
+      --tn-accent: #0095D5;
+      --tn-ok: #34c759;
+      --tn-warn: #ff9f0a;
+      --tn-alarm: #ff453a;
+      --tn-surface: rgba(128, 128, 128, .14);
+      --tn-track: rgba(128, 128, 128, .28);
+      --tn-muted: color-mix(in srgb, currentColor 55%, transparent);
+    }
+
+    /* Fallback for renderers without color-mix. */
+    @supports not (color: color-mix(in srgb, red 50%, blue)) {
+      body { --tn-muted: rgba(128, 128, 128, .95); }
+    }
+
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      min-height: 20px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--tn-ok);
+      flex: 0 0 auto;
+    }
+    .dot.off { background: var(--tn-alarm); }
+    .name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .meta {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--tn-muted);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .tiles {
+      display: grid;
+      /* Fixed 2x2, widening to a single row of four. auto-fit would land on
+         three columns at common widths and leave the last tile stranded. */
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 11px;
+    }
+    @media (min-width: 480px) {
+      .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    .tile {
+      background: var(--tn-surface);
+      border-radius: 10px;
+      padding: 8px 9px 9px;
+      min-width: 0;
+    }
+    .tile .label {
+      font-size: 10px;
+      color: var(--tn-muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile .value {
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+    .tile .value .unit {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--tn-muted);
+      margin-left: 2px;
+    }
+
+    .bar {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--tn-track);
+      margin-top: 7px;
+      overflow: hidden;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--tn-accent);
+      transition: width .4s ease;
+    }
+    .bar > span.warn { background: var(--tn-warn); }
+    .bar > span.alarm { background: var(--tn-alarm); }
+    .bar > span.ok { background: var(--tn-ok); }
+
+    .pools { display: flex; flex-direction: column; gap: 9px; }
+    .pool { min-width: 0; }
+    .pool .row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .pool .pname {
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .pool .psize {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--tn-muted);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding: 1px 5px;
+      border-radius: 4px;
+      flex: 0 0 auto;
+    }
+    .badge.bad { background: var(--tn-alarm); color: #fff; }
+    .badge.scrub { background: var(--tn-accent); color: #fff; }
+
+    .apps {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      /* A hairline keeps the app rows from running straight into the pool bars. */
+      margin-top: 12px;
+      padding-top: 11px;
+      border-top: 1px solid var(--tn-track);
+    }
+    .app {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .app .sdot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+      background: var(--tn-ok);
+    }
+    .app .sdot.stopped { background: var(--tn-track); box-shadow: inset 0 0 0 1.5px var(--tn-muted); }
+    .app .sdot.crashed { background: var(--tn-alarm); }
+    .app .aname {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .app .badge { margin-left: auto; }
+    button.badge.upd {
+      background: var(--tn-accent);
+      color: #fff;
+      border: none;
+      font: inherit;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding: 3px 7px;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+    button.badge.upd:active { opacity: .6; }
+    button.badge.upd:disabled { opacity: .5; cursor: default; }
+    button.badge.upd.busy { background: var(--tn-muted); }
+    button.badge.upd.failed { background: var(--tn-alarm); }
+    .more {
+      font-size: 11px;
+      color: var(--tn-muted);
+      padding-left: 14px;
+    }
+
+    .alert {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 10px;
+      padding: 7px 9px;
+      border-radius: 9px;
+      background: rgba(255, 69, 58, .16);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+    .alert.info { background: rgba(0, 149, 213, .16); }
+    .alert svg { flex: 0 0 auto; }
+    .alert span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 90px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--tn-muted);
+      padding: 0 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="root"><div class="state" id="state">…</div></div>
+
+  <script type="text/javascript">
+    var HomeyRef = null;
+    var deviceId = null;
+    var settings = {};
+    var timer = null;
+
+    var TEXT = {
+      storage: ['Storage', 'Speicher'],
+      cpu: ['CPU', 'CPU'],
+      memory: ['Memory', 'Speicher'],
+      network: ['Network', 'Netzwerk'],
+      noSystem: ['Add a TrueNAS system first.', 'Zuerst ein TrueNAS-System hinzufügen.'],
+      offline: ['NAS unreachable', 'NAS nicht erreichbar'],
+      noPools: ['No pools', 'Keine Pools'],
+      degraded: ['Degraded', 'Fehler'],
+      scrub: ['Scrub', 'Scrub'],
+      update: ['Update available', 'Update verfügbar'],
+      alerts: ['alerts', 'Meldungen'],
+      noApps: ['No apps running', 'Keine Apps aktiv'],
+      more: ['more', 'weitere'],
+      // Short forms for the badge beside an app name.
+      updShort: ['Update', 'Update'],
+      updBusy: ['…', '…'],
+      updFailed: ['Failed', 'Fehler']
+    };
+
+    var isGerman = (navigator.language || 'en').toLowerCase().indexOf('de') === 0;
+    function t(key) {
+      var entry = TEXT[key];
+      return entry ? entry[isGerman ? 1 : 0] : key;
+    }
+
+    function el(tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined && text !== null) node.textContent = String(text);
+      return node;
+    }
+
+    function severity(pct) {
+      var warn = Number(settings.warn_percent);
+      var alarm = Number(settings.alarm_percent);
+      if (!isFinite(warn)) warn = 75;
+      if (!isFinite(alarm)) alarm = 90;
+      if (pct === null || pct === undefined) return '';
+      if (pct >= alarm) return 'alarm';
+      if (pct >= warn) return 'warn';
+      return '';
+    }
+
+    function bar(pct, cls) {
+      var track = el('div', 'bar');
+      var fill = el('span', cls || severity(pct));
+      var value = (pct === null || pct === undefined) ? 0 : Math.max(0, Math.min(100, pct));
+      fill.style.width = value + '%';
+      track.appendChild(fill);
+      return track;
+    }
+
+    function tile(label, value, unit, pct, barClass) {
+      var node = el('div', 'tile');
+      node.appendChild(el('div', 'label', label));
+
+      var line = el('div', 'value', value === null || value === undefined ? '–' : value);
+      if (unit) line.appendChild(el('span', 'unit', unit));
+      node.appendChild(line);
+
+      node.appendChild(bar(pct, barClass));
+      return node;
+    }
+
+    function showState(message) {
+      var root = document.getElementById('root');
+      root.innerHTML = '';
+      root.appendChild(el('div', 'state', message));
+    }
+
+    function render(data) {
+      if (!data || !data.ok) {
+        if (data && data.reason === 'unavailable') {
+          var root = document.getElementById('root');
+          root.innerHTML = '';
+          var head = el('div', 'head');
+          head.appendChild(el('span', 'dot off'));
+          head.appendChild(el('span', 'name', data.name || 'TrueNAS'));
+          root.appendChild(head);
+          root.appendChild(el('div', 'state', t('offline')));
+          return;
+        }
+        showState(t('noSystem'));
+        return;
+      }
+
+      var root = document.getElementById('root');
+      root.innerHTML = '';
+
+      // Header
+      var head = el('div', 'head');
+      head.appendChild(el('span', 'dot'));
+      head.appendChild(el('span', 'name', data.name));
+      var meta = [];
+      if (data.version) meta.push(data.version);
+      if (data.uptime) meta.push(data.uptime);
+      if (meta.length) head.appendChild(el('span', 'meta', meta.join(' · ')));
+      root.appendChild(head);
+
+      // Statistics tiles
+      if (settings.show_tiles !== false) {
+        var tiles = el('div', 'tiles');
+
+        var storageValue = data.storage.used.value;
+        tiles.appendChild(tile(
+          t('storage'),
+          storageValue === null ? null : storageValue,
+          data.storage.used.unit + ' / ' + (data.storage.total.value || 0) + ' ' + data.storage.total.unit,
+          data.storage.percent
+        ));
+
+        tiles.appendChild(tile(
+          t('cpu'),
+          data.cpu.percent === null ? null : Math.round(data.cpu.percent),
+          '%',
+          data.cpu.percent
+        ));
+
+        tiles.appendChild(tile(
+          t('memory'),
+          data.memory.percent === null ? null : Math.round(data.memory.percent),
+          '% / ' + (data.memory.totalGb || 0) + ' GB',
+          data.memory.percent
+        ));
+
+        // Throughput has no natural maximum, so the bar is scaled logarithmically
+        // up to 10 Gbit/s and always drawn in the accent colour.
+        var mbit = data.network.totalMbit || 0;
+        var netValue = mbit >= 1000 ? (mbit / 1000).toFixed(1) : Math.round(mbit);
+        var netUnit = mbit >= 1000 ? 'Gbps' : 'Mbps';
+        var netPct = mbit <= 0 ? 0 : Math.min(100, (Math.log10(mbit + 1) / 4) * 100);
+        tiles.appendChild(tile(t('network'), netValue, netUnit, netPct, 'ok'));
+
+        root.appendChild(tiles);
+      }
+
+      // Pools
+      if (settings.show_pools !== false) {
+        var pools = el('div', 'pools');
+        if (!data.pools.length) {
+          pools.appendChild(el('div', 'state', t('noPools')));
+        }
+        data.pools.forEach(function (pool) {
+          var wrap = el('div', 'pool');
+          var row = el('div', 'row');
+          row.appendChild(el('span', 'pname', pool.name));
+          if (!pool.healthy) row.appendChild(el('span', 'badge bad', t('degraded')));
+          else if (pool.scrubbing) row.appendChild(el('span', 'badge scrub', t('scrub')));
+          row.appendChild(el('span', 'psize',
+            pool.used.value + ' ' + pool.used.unit + ' / ' + pool.total.value + ' ' + pool.total.unit));
+          wrap.appendChild(row);
+          wrap.appendChild(bar(pool.percent, pool.healthy ? undefined : 'alarm'));
+          pools.appendChild(wrap);
+        });
+        root.appendChild(pools);
+      }
+
+      // Apps
+      if (settings.show_apps !== false) {
+        renderApps(root, data.apps || []);
+      }
+
+      // Alerts and pending updates
+      if (settings.show_alerts !== false) {
+        if (data.alerts.critical > 0) {
+          root.appendChild(alertBox('alert', data.alerts.text
+            || (data.alerts.critical + ' ' + t('alerts'))));
+        } else if (data.updateAvailable) {
+          root.appendChild(alertBox('alert info', t('update')));
+        }
+      }
+    }
+
+    function renderApps(root, allApps) {
+      var list = settings.apps_only_running === false
+        ? allApps.slice()
+        : allApps.filter(function (a) { return a.running; });
+
+      if (!list.length) {
+        var empty = el('div', 'apps');
+        empty.appendChild(el('div', 'more', t('noApps')));
+        root.appendChild(empty);
+        return;
+      }
+
+      // Anything waiting for an update goes first, so it survives the cut-off.
+      list.sort(function (a, b) {
+        if (a.update !== b.update) return a.update ? -1 : 1;
+        return String(a.name).localeCompare(String(b.name));
+      });
+
+      var limit = Number(settings.max_apps);
+      if (!isFinite(limit) || limit < 1) limit = 8;
+      var shown = list.slice(0, limit);
+
+      var wrap = el('div', 'apps');
+      shown.forEach(function (app) {
+        var row = el('div', 'app');
+
+        var state = 'stopped';
+        if (app.running) state = '';
+        else if (app.state === 'CRASHED') state = 'crashed';
+        row.appendChild(el('span', 'sdot ' + state));
+
+        row.appendChild(el('span', 'aname', app.name));
+        if (app.update) row.appendChild(updateButton(app));
+        wrap.appendChild(row);
+      });
+
+      if (list.length > shown.length) {
+        wrap.appendChild(el('div', 'more', '+' + (list.length - shown.length) + ' ' + t('more')));
+      }
+      root.appendChild(wrap);
+    }
+
+    /**
+     * The badge doubles as the install button. Upgrading takes a while and the
+     * app goes through DEPLOYING, so the button stays disabled and the widget
+     * refreshes once the NAS has had time to settle.
+     */
+    function updateButton(app) {
+      var button = el('button', 'badge upd', t('updShort'));
+      button.type = 'button';
+      if (app.latestVersion) button.title = app.latestVersion;
+
+      button.addEventListener('click', function () {
+        if (button.disabled) return;
+        button.disabled = true;
+        button.className = 'badge upd busy';
+        button.textContent = t('updBusy');
+
+        apiPost('/app/upgrade', { app: app.name, deviceId: deviceId })
+          .then(function () {
+            // Give TrueNAS time to pull and redeploy before re-reading.
+            setTimeout(load, 8000);
+          })
+          .catch(function (err) {
+            button.className = 'badge upd failed';
+            button.textContent = t('updFailed');
+            button.title = String((err && err.message) || err);
+            setTimeout(load, 6000);
+          });
+      });
+
+      return button;
+    }
+
+    function alertBox(className, message) {
+      var box = el('div', className);
+      box.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" '
+        + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        + '<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>';
+      box.appendChild(el('span', null, message));
+      return box;
+    }
+
+    /**
+     * In widgets Homey.api() returns a Promise, unlike the callback form used
+     * on app settings pages. Both are accepted here so the widget cannot break
+     * on that difference again.
+     */
+    function apiGet(url) {
+      try {
+        var maybePromise = HomeyRef.api('GET', url);
+        if (maybePromise && typeof maybePromise.then === 'function') return maybePromise;
+      } catch (e) {
+        // Falls through to the callback form below.
+      }
+      return new Promise(function (resolve, reject) {
+        HomeyRef.api('GET', url, null, function (err, data) {
+          if (err) reject(err);
+          else resolve(data);
+        });
+      });
+    }
+
+    function apiPost(url, body) {
+      try {
+        var maybePromise = HomeyRef.api('POST', url, body);
+        if (maybePromise && typeof maybePromise.then === 'function') return maybePromise;
+      } catch (e) {
+        // Falls through to the callback form below.
+      }
+      return new Promise(function (resolve, reject) {
+        HomeyRef.api('POST', url, body, function (err, data) {
+          if (err) reject(err);
+          else resolve(data);
+        });
+      });
+    }
+
+    function load() {
+      if (!HomeyRef) return;
+
+      var url = '/overview?includeBoot=' + (settings.include_boot_pool === true ? 'true' : 'false');
+      if (deviceId) url += '&deviceId=' + encodeURIComponent(deviceId);
+
+      apiGet(url)
+        .then(function (result) { render(result); })
+        .catch(function (err) {
+          showState(String((err && err.message) || err));
+        });
+    }
+
+    function onHomeyReady(Homey) {
+      HomeyRef = Homey;
+
+      try {
+        settings = Homey.getSettings() || {};
+      } catch (e) {
+        settings = {};
+      }
+      try {
+        var ids = Homey.getDeviceIds();
+        deviceId = (ids && ids.length) ? ids[0] : null;
+      } catch (e) {
+        deviceId = null;
+      }
+
+      Homey.ready();
+      load();
+
+      timer = setInterval(load, 30000);
+    }
+
+    window.onHomeyReady = onHomeyReady;
+  </script>
+
+</body>
+</html>

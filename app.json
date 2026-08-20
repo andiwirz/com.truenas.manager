@@ -1,8 +1,8 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.truenas.manager",
-  "version": "1.0.0",
-  "compatibility": ">=5.0.0",
+  "version": "0.0.1",
+  "compatibility": ">=12.3.0",
   "sdk": 3,
   "platforms": [
     "local"
@@ -1187,7 +1187,7 @@
                 "en": "Show redeploy button",
                 "de": "Schaltfläche «Neu bereitstellen» anzeigen"
               },
-              "value": true,
+              "value": false,
               "hint": {
                 "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
                 "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."
@@ -1860,6 +1860,139 @@
       "id": "truenas-vm"
     }
   ],
+  "widgets": {
+    "nas-overview": {
+      "name": {
+        "en": "NAS Overview",
+        "de": "NAS-Übersicht"
+      },
+      "height": "100%",
+      "devices": {
+        "type": "app",
+        "singular": true
+      },
+      "settings": [
+        {
+          "id": "show_tiles",
+          "type": "checkbox",
+          "label": {
+            "en": "Show statistics tiles",
+            "de": "Statistik-Kacheln anzeigen"
+          },
+          "value": true
+        },
+        {
+          "id": "show_pools",
+          "type": "checkbox",
+          "label": {
+            "en": "Show storage pools",
+            "de": "Speicher-Pools anzeigen"
+          },
+          "value": true
+        },
+        {
+          "id": "include_boot_pool",
+          "type": "checkbox",
+          "label": {
+            "en": "Include the boot pool",
+            "de": "Boot-Pool einbeziehen"
+          },
+          "value": false,
+          "hint": {
+            "en": "The boot pool is small and rarely changes, so it is hidden by default and left out of the total storage figure.",
+            "de": "Der Boot-Pool ist klein und ändert sich selten. Er wird daher standardmässig ausgeblendet und nicht in den Gesamtspeicher eingerechnet."
+          }
+        },
+        {
+          "id": "show_apps",
+          "type": "checkbox",
+          "label": {
+            "en": "Show apps",
+            "de": "Apps anzeigen"
+          },
+          "value": true
+        },
+        {
+          "id": "apps_only_running",
+          "type": "checkbox",
+          "label": {
+            "en": "Running apps only",
+            "de": "Nur laufende Apps"
+          },
+          "value": true,
+          "hint": {
+            "en": "Off also lists stopped and crashed apps, so you can see at a glance if something is not running that should be.",
+            "de": "Aus listet auch gestoppte und abgestürzte Apps, damit du auf einen Blick siehst, wenn etwas nicht läuft."
+          }
+        },
+        {
+          "id": "max_apps",
+          "type": "number",
+          "label": {
+            "en": "Maximum apps shown",
+            "de": "Maximal angezeigte Apps"
+          },
+          "value": 8,
+          "min": 1,
+          "max": 40,
+          "hint": {
+            "en": "Apps waiting for an update are listed first, so they stay visible even when the list is cut off. Tap the update badge to install it.",
+            "de": "Apps mit wartendem Update stehen zuoberst und bleiben daher sichtbar, auch wenn die Liste gekürzt wird. Zum Installieren auf die Update-Marke tippen."
+          }
+        },
+        {
+          "id": "show_alerts",
+          "type": "checkbox",
+          "label": {
+            "en": "Show alerts",
+            "de": "Meldungen anzeigen"
+          },
+          "value": true
+        },
+        {
+          "id": "warn_percent",
+          "type": "number",
+          "label": {
+            "en": "Amber above (%)",
+            "de": "Gelb ab (%)"
+          },
+          "value": 75,
+          "min": 1,
+          "max": 99,
+          "hint": {
+            "en": "Usage bars turn amber above this level.",
+            "de": "Balken werden oberhalb dieses Werts gelb dargestellt."
+          }
+        },
+        {
+          "id": "alarm_percent",
+          "type": "number",
+          "label": {
+            "en": "Red above (%)",
+            "de": "Rot ab (%)"
+          },
+          "value": 90,
+          "min": 1,
+          "max": 100,
+          "hint": {
+            "en": "Usage bars turn red above this level.",
+            "de": "Balken werden oberhalb dieses Werts rot dargestellt."
+          }
+        }
+      ],
+      "api": {
+        "getOverview": {
+          "method": "GET",
+          "path": "/overview"
+        },
+        "upgradeApp": {
+          "method": "POST",
+          "path": "/app/upgrade"
+        }
+      },
+      "id": "nas-overview"
+    }
+  },
   "capabilities": {
     "app_containers": {
       "type": "number",

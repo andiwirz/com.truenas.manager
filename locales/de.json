@@ -32,7 +32,10 @@
     "not_found": "Dieser Eintrag existiert auf dem TrueNAS nicht mehr.",
     "permission_denied": "Dem API-Schlüssel fehlt die Berechtigung für diese Aktion.",
     "not_connected": "Keine Verbindung zum TrueNAS.",
-    "boot_scrub_stop": "Ein Scrub des Boot-Pools kann nach dem Start nicht gestoppt werden."
+    "boot_scrub_stop": "Ein Scrub des Boot-Pools kann nach dem Start nicht gestoppt werden.",
+    "redirected": "Das NAS hat die Verbindung umgeleitet, was meist bedeutet, dass es nur HTTPS akzeptiert. Aktiviere «HTTPS verwenden» in den Geräteeinstellungen und setze den Port auf 443.",
+    "host_not_found": "Die Adresse konnte nicht aufgelöst werden. Homey kann .local-Namen oft nicht nachschlagen, verwende daher die IP-Adresse des NAS.",
+    "wrong_protocol": "Protokoll passt nicht. Ist «HTTPS verwenden» aktiv, gehört normalerweise Port 443 dazu, sonst Port 80."
   },
   "state": {
     "unknown": "Unbekannt",

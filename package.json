@@ -1,11 +1,11 @@
 {
   "name": "com.truenas.manager",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "TrueNAS Manager for Homey",
   "main": "app.js",
   "scripts": {
     "lint": "eslint --ext .js .",
-    "test": "node test/smoke.js",
+    "test": "node test/smoke.js && node test/devices.js",
     "validate": "homey app validate",
     "build": "homey app build",
     "publish": "homey app publish",

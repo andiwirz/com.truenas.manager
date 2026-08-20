@@ -1,7 +1,7 @@
 {
   "id": "com.truenas.manager",
-  "version": "1.0.0",
-  "compatibility": ">=5.0.0",
+  "version": "0.0.1",
+  "compatibility": ">=12.3.0",
   "sdk": 3,
   "platforms": [
     "local"
