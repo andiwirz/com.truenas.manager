@@ -1,0 +1,50 @@
+{
+  "pair": {
+    "title": "Verbinden met TrueNAS",
+    "subtitle": "Voer het adres en de API-sleutel van je NAS in",
+    "info": "Maak in de TrueNAS-webinterface onder Credentials → API Keys een sleutel aan. Het account achter de sleutel heeft leesrechten nodig, plus schrijfrechten voor de acties die je wilt gebruiken.",
+    "label_host": "Host of IP-adres",
+    "hint_host": "Het lokale adres van je TrueNAS, bijvoorbeeld 192.168.1.50 of truenas.local.",
+    "label_port": "Poort",
+    "hint_port": "443 voor HTTPS, 80 voor HTTP.",
+    "label_api_key": "API-sleutel",
+    "hint_api_key": "In de TrueNAS-webinterface onder Credentials → API Keys → Add.",
+    "label_ignore_cert": "Zelfondertekend certificaat accepteren",
+    "hint_ignore_cert": "TrueNAS gebruikt standaard een zelfondertekend certificaat. Zet dit alleen uit als je een eigen certificaat hebt geïnstalleerd.",
+    "btn_connect": "Verbinden",
+    "btn_connecting": "Verbinden…",
+    "status_testing": "Verbinding wordt getest…",
+    "status_adding": "NAS wordt toegevoegd…",
+    "status_done": "Succesvol toegevoegd.",
+    "no_system": "Voeg eerst een TrueNAS-systeem toe en daarna dit apparaat.",
+    "err_host_required": "Voer een hostnaam of IP-adres in.",
+    "err_port_invalid": "Voer een geldige poort in (1–65535).",
+    "err_key_required": "Voer een API-sleutel in."
+  },
+  "error": {
+    "unreachable": "TrueNAS is onbereikbaar",
+    "auth_failed": "API-sleutel geweigerd. Controleer de sleutel in TrueNAS onder Credentials → API Keys.",
+    "no_websocket": "Deze TrueNAS biedt de JSON-RPC-API niet aan. TrueNAS SCALE 25.04 of nieuwer is vereist.",
+    "cert_rejected": "Het TLS-certificaat is geweigerd. Zet 'Zelfondertekend certificaat accepteren' aan bij de apparaatinstellingen.",
+    "connection_refused": "Verbinding geweigerd. Controleer adres, poort en protocol.",
+    "timeout": "TrueNAS heeft niet op tijd geantwoord.",
+    "no_system": "Het TrueNAS-systeem van dit apparaat bestaat niet meer. Verwijder dit apparaat en voeg het opnieuw toe.",
+    "not_found": "Dit item bestaat niet meer op de TrueNAS.",
+    "permission_denied": "De API-sleutel heeft geen rechten voor deze actie.",
+    "not_connected": "Geen verbinding met TrueNAS.",
+    "boot_scrub_stop": "Een scrub van de boot-pool kan na de start niet meer worden gestopt.",
+    "redirected": "De NAS heeft de verbinding omgeleid, wat meestal betekent dat hij alleen HTTPS accepteert. Zet 'HTTPS gebruiken' aan bij de apparaatinstellingen en stel de poort in op 443.",
+    "host_not_found": "Het adres kon niet worden omgezet. Homey kan .local-namen vaak niet opzoeken, gebruik daarom het IP-adres van de NAS.",
+    "wrong_protocol": "Het protocol komt niet overeen. Staat 'HTTPS gebruiken' aan, dan hoort daar normaal poort 443 bij; staat het uit, dan poort 80.",
+    "update_unsupported": "Het installeren van systeemupdates vereist TrueNAS SCALE 25.10 of nieuwer. Installeer de update in plaats daarvan via de TrueNAS-webinterface.",
+    "abort_unsupported": "Alleen cloudsynchronisatietaken kunnen worden afgebroken. Replicatie- en snapshottaken moeten aflopen."
+  },
+  "state": {
+    "unknown": "Onbekend",
+    "up_to_date": "Up-to-date",
+    "update_available": "Update beschikbaar",
+    "no_scrub": "Geen scrub",
+    "downloading": "Update wordt gedownload",
+    "update_error": "Controle mislukt"
+  }
+}

@@ -2,11 +2,13 @@
   "id": "app_image_update_found",
   "title": {
     "en": "A container image update became available",
-    "de": "Ein Container-Image-Update ist verfügbar"
+    "de": "Ein Container-Image-Update ist verfügbar",
+    "nl": "Er is een container-image-update beschikbaar gekomen"
   },
   "hint": {
     "en": "Fires when a newer Docker image is available for this app. This is separate from a catalog version upgrade — either can be pending without the other.",
-    "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen."
+    "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen.",
+    "nl": "Wordt geactiveerd wanneer er een nieuwer Docker-image voor deze app klaarstaat. Dit staat los van een catalogusupdate — beide kunnen los van elkaar klaarstaan."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Web address",
-        "de": "Webadresse"
+        "de": "Webadresse",
+        "nl": "Webadres"
       }
     }
   ]

@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Redeploy",
-    "de": "Neu bereitstellen"
+    "de": "Neu bereitstellen",
+    "nl": "Opnieuw uitrollen"
   },
   "getable": false,
   "setable": true,

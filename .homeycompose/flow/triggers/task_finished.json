@@ -2,11 +2,13 @@
   "id": "task_finished",
   "title": {
     "en": "A task finished",
-    "de": "Eine Aufgabe ist fertig"
+    "de": "Eine Aufgabe ist fertig",
+    "nl": "Een taak is klaar"
   },
   "hint": {
     "en": "Fires when the task leaves the running state, whether it succeeded or not.",
-    "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht."
+    "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht.",
+    "nl": "Wordt geactiveerd wanneer de taak niet langer loopt, of hij nu geslaagd is of niet."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Task",
-        "de": "Aufgabe"
+        "de": "Aufgabe",
+        "nl": "Taak"
       }
     },
     {
@@ -29,7 +32,8 @@
       "type": "string",
       "title": {
         "en": "Result",
-        "de": "Ergebnis"
+        "de": "Ergebnis",
+        "nl": "Resultaat"
       }
     },
     {
@@ -37,7 +41,8 @@
       "type": "string",
       "title": {
         "en": "Type",
-        "de": "Typ"
+        "de": "Typ",
+        "nl": "Type"
       }
     }
   ]

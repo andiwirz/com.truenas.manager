@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "ZFS ARC Size",
-    "de": "ZFS-ARC-Grösse"
+    "de": "ZFS-ARC-Grösse",
+    "nl": "ZFS ARC-grootte"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "GB",
-    "de": "GB"
+    "de": "GB",
+    "nl": "GB"
   },
   "decimals": 1,
   "min": 0,

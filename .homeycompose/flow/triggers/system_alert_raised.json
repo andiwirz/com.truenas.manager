@@ -2,11 +2,13 @@
   "id": "system_alert_raised",
   "title": {
     "en": "An alert was raised",
-    "de": "Eine Meldung ist aufgetreten"
+    "de": "Eine Meldung ist aufgetreten",
+    "nl": "Er is een melding binnengekomen"
   },
   "hint": {
     "en": "Fires once for every new TrueNAS alert at or above the level set in the device settings.",
-    "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst."
+    "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst.",
+    "nl": "Wordt eenmaal geactiveerd voor elke nieuwe TrueNAS-melding op of boven het niveau dat in de apparaatinstellingen is ingesteld."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Level",
-        "de": "Stufe"
+        "de": "Stufe",
+        "nl": "Niveau"
       }
     },
     {
@@ -29,7 +32,8 @@
       "type": "string",
       "title": {
         "en": "Message",
-        "de": "Meldung"
+        "de": "Meldung",
+        "nl": "Bericht"
       }
     },
     {
@@ -37,7 +41,8 @@
       "type": "string",
       "title": {
         "en": "Category",
-        "de": "Kategorie"
+        "de": "Kategorie",
+        "nl": "Categorie"
       }
     }
   ]

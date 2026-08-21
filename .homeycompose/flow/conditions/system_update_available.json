@@ -2,7 +2,8 @@
   "id": "system_update_available",
   "title": {
     "en": "A system update !{{is|is not}} available",
-    "de": "Ein System-Update !{{ist|ist nicht}} verfügbar"
+    "de": "Ein System-Update !{{ist|ist nicht}} verfügbar",
+    "nl": "Een systeemupdate !{{is|is niet}} beschikbaar"
   },
   "args": [
     {

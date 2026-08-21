@@ -2,15 +2,18 @@
   "id": "system_shutdown",
   "title": {
     "en": "Shut down the NAS",
-    "de": "NAS herunterfahren"
+    "de": "NAS herunterfahren",
+    "nl": "De NAS afsluiten"
   },
   "titleFormatted": {
     "en": "Shut down the NAS after [[delay]] s",
-    "de": "NAS nach [[delay]] s herunterfahren"
+    "de": "NAS nach [[delay]] s herunterfahren",
+    "nl": "De NAS na [[delay]] s afsluiten"
   },
   "hint": {
     "en": "Powers off the whole TrueNAS system. It cannot be switched back on from Homey.",
-    "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden."
+    "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden.",
+    "nl": "Schakelt het hele TrueNAS-systeem uit. Vanuit Homey kan het niet weer worden ingeschakeld."
   },
   "args": [
     {
@@ -23,14 +26,16 @@
       "type": "number",
       "title": {
         "en": "Delay (seconds)",
-        "de": "Verzögerung (Sekunden)"
+        "de": "Verzögerung (Sekunden)",
+        "nl": "Vertraging (seconden)"
       },
       "min": 0,
       "max": 3600,
       "step": 1,
       "placeholder": {
         "en": "0",
-        "de": "0"
+        "de": "0",
+        "nl": "0"
       }
     }
   ]

@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Used Space",
-    "de": "Belegter Speicher"
+    "de": "Belegter Speicher",
+    "nl": "Gebruikte ruimte"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "%",
-    "de": "%"
+    "de": "%",
+    "nl": "%"
   },
   "decimals": 1,
   "min": 0,

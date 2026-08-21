@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Install Update",
-    "de": "Update installieren"
+    "de": "Update installieren",
+    "nl": "Update installeren"
   },
   "getable": false,
   "setable": true,

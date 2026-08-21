@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Scrub Progress",
-    "de": "Scrub-Fortschritt"
+    "de": "Scrub-Fortschritt",
+    "nl": "Scrub-voortgang"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "%",
-    "de": "%"
+    "de": "%",
+    "nl": "%"
   },
   "decimals": 1,
   "min": 0,

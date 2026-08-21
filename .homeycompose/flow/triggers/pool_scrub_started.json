@@ -2,7 +2,8 @@
   "id": "pool_scrub_started",
   "title": {
     "en": "Scrub started",
-    "de": "Scrub wurde gestartet"
+    "de": "Scrub wurde gestartet",
+    "nl": "Scrub gestart"
   },
   "args": [
     {
@@ -17,7 +18,8 @@
       "type": "string",
       "title": {
         "en": "Pool",
-        "de": "Pool"
+        "de": "Pool",
+        "nl": "Pool"
       }
     }
   ]

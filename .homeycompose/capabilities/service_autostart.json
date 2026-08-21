@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Starts on Boot",
-    "de": "Startet beim Hochfahren"
+    "de": "Startet beim Hochfahren",
+    "nl": "Start bij opstarten"
   },
   "getable": true,
   "setable": false,

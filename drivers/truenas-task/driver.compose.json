@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Backup Task",
-    "de": "Backup-Aufgabe"
+    "de": "Backup-Aufgabe",
+    "nl": "Back-uptaak"
   },
   "class": "sensor",
   "capabilities": [
@@ -15,7 +16,8 @@
     "alarm_generic": {
       "title": {
         "en": "Last Run Failed",
-        "de": "Letzter Lauf fehlgeschlagen"
+        "de": "Letzter Lauf fehlgeschlagen",
+        "nl": "Laatste uitvoering mislukt"
       }
     }
   },
@@ -42,7 +44,8 @@
       "type": "group",
       "label": {
         "en": "Task",
-        "de": "Aufgabe"
+        "de": "Aufgabe",
+        "nl": "Taak"
       },
       "children": [
         {
@@ -50,12 +53,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show run button",
-            "de": "Schaltfläche «Jetzt ausführen» anzeigen"
+            "de": "Schaltfläche «Jetzt ausführen» anzeigen",
+            "nl": "Uitvoerknop tonen"
           },
           "value": false,
           "hint": {
             "en": "Shows a button on the device tile that starts this task immediately. Off by default so a backup cannot be kicked off by accident.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft.",
+            "nl": "Toont een knop op de apparaattegel die deze taak direct start. Standaard uit, zodat er niet per ongeluk een back-up wordt gestart."
           }
         },
         {
@@ -63,7 +68,8 @@
           "type": "label",
           "label": {
             "en": "Task type",
-            "de": "Aufgabentyp"
+            "de": "Aufgabentyp",
+            "nl": "Taaktype"
           },
           "value": "-"
         },
@@ -72,7 +78,8 @@
           "type": "label",
           "label": {
             "en": "Path or target",
-            "de": "Pfad oder Ziel"
+            "de": "Pfad oder Ziel",
+            "nl": "Pad of doel"
           },
           "value": "-"
         }

@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Pool Status",
-    "de": "Pool-Status"
+    "de": "Pool-Status",
+    "nl": "Poolstatus"
   },
   "getable": true,
   "setable": false,

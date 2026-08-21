@@ -249,30 +249,40 @@
     var settings = {};
     var timer = null;
 
+    // Each entry is [en, de, nl], indexed by LANG.
     var TEXT = {
-      storage: ['Storage', 'Speicher'],
-      cpu: ['CPU', 'CPU'],
-      memory: ['Memory', 'Speicher'],
-      network: ['Network', 'Netzwerk'],
-      noSystem: ['Add a TrueNAS system first.', 'Zuerst ein TrueNAS-System hinzufügen.'],
-      offline: ['NAS unreachable', 'NAS nicht erreichbar'],
-      noPools: ['No pools', 'Keine Pools'],
-      degraded: ['Degraded', 'Fehler'],
-      scrub: ['Scrub', 'Scrub'],
-      update: ['Update available', 'Update verfügbar'],
-      alerts: ['alerts', 'Meldungen'],
-      noApps: ['No apps running', 'Keine Apps aktiv'],
-      more: ['more', 'weitere'],
+      storage: ['Storage', 'Speicher', 'Opslag'],
+      cpu: ['CPU', 'CPU', 'CPU'],
+      memory: ['Memory', 'Speicher', 'Geheugen'],
+      network: ['Network', 'Netzwerk', 'Netwerk'],
+      noSystem: ['Add a TrueNAS system first.', 'Zuerst ein TrueNAS-System hinzufügen.', 'Voeg eerst een TrueNAS-systeem toe.'],
+      offline: ['NAS unreachable', 'NAS nicht erreichbar', 'NAS onbereikbaar'],
+      noPools: ['No pools', 'Keine Pools', 'Geen pools'],
+      degraded: ['Degraded', 'Fehler', 'Probleem'],
+      scrub: ['Scrub', 'Scrub', 'Scrub'],
+      update: ['Update available', 'Update verfügbar', 'Update beschikbaar'],
+      alerts: ['alerts', 'Meldungen', 'meldingen'],
+      noApps: ['No apps running', 'Keine Apps aktiv', 'Geen apps actief'],
+      more: ['more', 'weitere', 'meer'],
       // Short forms for the badge beside an app name.
-      updShort: ['Update', 'Update'],
-      updBusy: ['…', '…'],
-      updFailed: ['Failed', 'Fehler']
+      updShort: ['Update', 'Update', 'Update'],
+      updBusy: ['…', '…', '…'],
+      updFailed: ['Failed', 'Fehler', 'Mislukt']
     };
 
-    var isGerman = (navigator.language || 'en').toLowerCase().indexOf('de') === 0;
+    // Homey hands the widget the user's locale through the browser, so the
+    // language follows the app rather than needing a setting of its own.
+    var LANG = (function () {
+      var code = (navigator.language || 'en').toLowerCase();
+      if (code.indexOf('de') === 0) return 1;
+      if (code.indexOf('nl') === 0) return 2;
+      return 0;
+    })();
+
     function t(key) {
       var entry = TEXT[key];
-      return entry ? entry[isGerman ? 1 : 0] : key;
+      if (!entry) return key;
+      return entry[LANG] !== undefined ? entry[LANG] : entry[0];
     }
 
     function el(tag, className, text) {

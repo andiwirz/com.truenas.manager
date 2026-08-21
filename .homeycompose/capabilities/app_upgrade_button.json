@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Run Update",
-    "de": "Update ausführen"
+    "de": "Update ausführen",
+    "nl": "Update uitvoeren"
   },
   "getable": false,
   "setable": true,

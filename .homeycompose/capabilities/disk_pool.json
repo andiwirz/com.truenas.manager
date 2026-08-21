@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Pool",
-    "de": "Pool"
+    "de": "Pool",
+    "nl": "Pool"
   },
   "getable": true,
   "setable": false,

@@ -2,11 +2,13 @@
   "id": "service_reload",
   "title": {
     "en": "Reload the service",
-    "de": "Dienst neu laden"
+    "de": "Dienst neu laden",
+    "nl": "De service herladen"
   },
   "hint": {
     "en": "Asks the service to re-read its configuration. Unlike a restart this keeps existing connections alive. Not every service supports it.",
-    "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das."
+    "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das.",
+    "nl": "Vraagt de service zijn configuratie opnieuw in te lezen. Anders dan bij een herstart blijven bestaande verbindingen in stand. Niet elke service ondersteunt dit."
   },
   "args": [
     {

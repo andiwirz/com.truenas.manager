@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Storage Pool",
-    "de": "Speicher-Pool"
+    "de": "Speicher-Pool",
+    "nl": "Opslagpool"
   },
   "class": "sensor",
   "capabilities": [
@@ -19,7 +20,8 @@
     "alarm_generic": {
       "title": {
         "en": "Pool Problem",
-        "de": "Pool-Problem"
+        "de": "Pool-Problem",
+        "nl": "Poolprobleem"
       }
     }
   },
@@ -46,7 +48,8 @@
       "type": "group",
       "label": {
         "en": "Pool",
-        "de": "Pool"
+        "de": "Pool",
+        "nl": "Pool"
       },
       "children": [
         {
@@ -54,12 +57,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show scrub button",
-            "de": "Scrub-Schaltfläche anzeigen"
+            "de": "Scrub-Schaltfläche anzeigen",
+            "nl": "Scrubknop tonen"
           },
           "value": true,
           "hint": {
             "en": "Shows a button on the device tile that starts a scrub of this pool. A scrub reads every block and can take hours.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern.",
+            "nl": "Toont een knop op de apparaattegel die een scrub van deze pool start. Een scrub leest elk blok en kan uren duren."
           }
         },
         {
@@ -67,7 +72,8 @@
           "type": "label",
           "label": {
             "en": "Pool name",
-            "de": "Pool-Name"
+            "de": "Pool-Name",
+            "nl": "Poolnaam"
           },
           "value": "-"
         },
@@ -76,7 +82,8 @@
           "type": "label",
           "label": {
             "en": "Status detail",
-            "de": "Statusdetails"
+            "de": "Statusdetails",
+            "nl": "Statusdetails"
           },
           "value": "-"
         }

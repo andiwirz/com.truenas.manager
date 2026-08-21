@@ -2,15 +2,18 @@
   "id": "vm_stop",
   "title": {
     "en": "Stop the virtual machine",
-    "de": "VM stoppen"
+    "de": "VM stoppen",
+    "nl": "De virtuele machine stoppen"
   },
   "titleFormatted": {
     "en": "Stop the virtual machine, force [[force]]",
-    "de": "VM stoppen, erzwingen [[force]]"
+    "de": "VM stoppen, erzwingen [[force]]",
+    "nl": "De virtuele machine stoppen, forceren [[force]]"
   },
   "hint": {
     "en": "Graceful asks the guest operating system to shut down. Forced cuts power immediately and can lose unsaved data.",
-    "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren."
+    "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren.",
+    "nl": "Netjes vraagt het gastbesturingssysteem om af te sluiten. Geforceerd haalt direct de stroom eraf, waardoor niet-opgeslagen gegevens verloren kunnen gaan."
   },
   "args": [
     {
@@ -23,21 +26,24 @@
       "type": "dropdown",
       "title": {
         "en": "Method",
-        "de": "Methode"
+        "de": "Methode",
+        "nl": "Methode"
       },
       "values": [
         {
           "id": "false",
           "label": {
             "en": "Graceful",
-            "de": "Regulär"
+            "de": "Regulär",
+            "nl": "Netjes"
           }
         },
         {
           "id": "true",
           "label": {
             "en": "Forced",
-            "de": "Erzwungen"
+            "de": "Erzwungen",
+            "nl": "Geforceerd"
           }
         }
       ]

@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Create Snapshot",
-    "de": "Snapshot erstellen"
+    "de": "Snapshot erstellen",
+    "nl": "Snapshot maken"
   },
   "getable": false,
   "setable": true,

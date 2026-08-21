@@ -2,11 +2,13 @@
   "id": "pool_start_scrub",
   "title": {
     "en": "Start a scrub",
-    "de": "Scrub starten"
+    "de": "Scrub starten",
+    "nl": "Een scrub starten"
   },
   "hint": {
     "en": "Verifies every block in the pool. This takes hours on large pools and slows down other access.",
-    "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe."
+    "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe.",
+    "nl": "Controleert elk blok in de pool. Dat duurt uren bij grote pools en vertraagt andere toegang."
   },
   "args": [
     {

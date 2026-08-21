@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Progress",
-    "de": "Fortschritt"
+    "de": "Fortschritt",
+    "nl": "Voortgang"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "%",
-    "de": "%"
+    "de": "%",
+    "nl": "%"
   },
   "decimals": 0,
   "min": 0,

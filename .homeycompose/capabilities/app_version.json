@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Version",
-    "de": "Version"
+    "de": "Version",
+    "nl": "Versie"
   },
   "getable": true,
   "setable": false,

@@ -2,7 +2,8 @@
   "id": "vm_restart",
   "title": {
     "en": "Restart the virtual machine",
-    "de": "VM neu starten"
+    "de": "VM neu starten",
+    "nl": "De virtuele machine herstarten"
   },
   "args": [
     {

@@ -2,11 +2,13 @@
   "id": "system_cpu_usage_above",
   "title": {
     "en": "CPU usage !{{is|is not}} above",
-    "de": "CPU-Auslastung !{{ist|ist nicht}} über"
+    "de": "CPU-Auslastung !{{ist|ist nicht}} über",
+    "nl": "CPU-gebruik !{{is|is niet}} boven"
   },
   "titleFormatted": {
     "en": "CPU usage !{{is|is not}} above [[percent]] %",
-    "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %"
+    "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %",
+    "nl": "CPU-gebruik !{{is|is niet}} boven [[percent]] %"
   },
   "args": [
     {
@@ -19,14 +21,16 @@
       "type": "number",
       "title": {
         "en": "Usage (%)",
-        "de": "Auslastung (%)"
+        "de": "Auslastung (%)",
+        "nl": "Gebruik (%)"
       },
       "min": 0,
       "max": 100,
       "step": 1,
       "placeholder": {
         "en": "80",
-        "de": "80"
+        "de": "80",
+        "nl": "80"
       }
     }
   ]

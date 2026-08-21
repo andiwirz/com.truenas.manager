@@ -2,7 +2,8 @@
   "id": "system_check_update",
   "title": {
     "en": "Check for system updates",
-    "de": "Auf System-Updates prüfen"
+    "de": "Auf System-Updates prüfen",
+    "nl": "Op systeemupdates controleren"
   },
   "args": [
     {

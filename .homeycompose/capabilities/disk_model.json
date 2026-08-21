@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Model",
-    "de": "Modell"
+    "de": "Modell",
+    "nl": "Model"
   },
   "getable": true,
   "setable": false,

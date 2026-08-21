@@ -2,11 +2,13 @@
   "id": "app_upgrade",
   "title": {
     "en": "Run the app update",
-    "de": "App-Update ausführen"
+    "de": "App-Update ausführen",
+    "nl": "De app-update uitvoeren"
   },
   "hint": {
     "en": "Installs whatever update is pending: a catalog version upgrade if one is available, otherwise newer container images. The app restarts. Does nothing when the app is already up to date.",
-    "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist."
+    "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist.",
+    "nl": "Installeert de update die klaarstaat: een catalogusversie als die beschikbaar is, anders nieuwere container-images. De app start opnieuw. Doet niets als de app al up-to-date is."
   },
   "args": [
     {

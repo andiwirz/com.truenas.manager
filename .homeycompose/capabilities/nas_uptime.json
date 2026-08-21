@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Uptime",
-    "de": "Laufzeit"
+    "de": "Laufzeit",
+    "nl": "Bedrijfsduur"
   },
   "getable": true,
   "setable": false,

@@ -2,7 +2,8 @@
   "id": "service_start",
   "title": {
     "en": "Start the service",
-    "de": "Dienst starten"
+    "de": "Dienst starten",
+    "nl": "De service starten"
   },
   "args": [
     {

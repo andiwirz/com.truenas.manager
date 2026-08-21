@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrueNAS Manager</title>
+
   <script type="text/javascript">
     // Defined before homey.js loads, so the callback always exists when it
     // fires. The body script may not be parsed yet at that point, hence the
@@ -25,125 +26,266 @@
       // Release the spinner before any other work, so a later failure still
       // leaves a usable page behind.
       Homey.ready();
-      whenReady(boot);
+      // Wrapped, not passed directly: boot() is declared in the body script,
+      // which has not been parsed yet when homey.js fires this from the head.
+      whenReady(function () { boot(); });
     }
   </script>
   <!-- Required on app settings pages: without it onHomeyReady never fires and
        Homey keeps showing its loading spinner forever. -->
   <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Lets the browser theme scrollbars and form controls, and re-styles the
+         page correctly when the system switches theme while it is open. */
+      color-scheme: light dark;
+
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --ink: #1a202c;
+      --muted: #5c636e;
+      --line: #e4e7eb;
+      --track: #e9edf1;
+      /* --accent paints fills and borders, where its brightness is the point.
+         As text it only reaches 3.3:1 on white, so type uses --accent-text. */
+      --accent: #0095d5;
+      --accent-text: #0075ad;
+      --accent-btn: #0077b0;
+      --accent-soft: #e6f6fd;
+      --ok: #145f36;
+      --warn: #7a4707;
+      --alarm: #c22a1e;
+      --alarm-soft: #fdf0ef;
+      --radius: 12px;
+      --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181c;
+        --card: #1f2227;
+        --ink: #e8eaed;
+        --muted: #adb4bf;
+        --line: #2c3037;
+        --track: #2c3037;
+        --accent-text: #4cc2f2;
+        --accent-soft: #10303e;
+        --ok: #4ecb8a;
+        --warn: #e8b04a;
+        --alarm: #ff9b93;
+        --alarm-soft: #3a1e1c;
+        --shadow: none;
+      }
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f7fafc;
-      color: #2d3748;
-      padding: 20px 18px 40px;
+      background: var(--bg);
+      color: var(--ink);
       font-size: 14px;
+      line-height: 1.5;
+      padding: 16px 14px 48px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .tabs { display: flex; gap: 6px; margin-bottom: 18px; }
+    /* ── tabs ─────────────────────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--track);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
     .tab {
       flex: 1;
-      padding: 9px 10px;
-      border: 1.5px solid #e2e8f0;
-      background: #fff;
-      border-radius: 8px;
+      padding: 8px 6px;
+      border: none;
+      background: transparent;
+      border-radius: 7px;
       font: inherit;
       font-size: 13px;
       font-weight: 600;
-      color: #4a5568;
+      color: var(--muted);
       cursor: pointer;
+      transition: background .15s, color .15s;
     }
-    .tab.active { border-color: #0095D5; color: #0095D5; background: #f0faff; }
+    .tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
 
     .panel { display: none; }
-    .panel.active { display: block; }
+    .panel.active { display: block; animation: fade .18s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
 
+    /* ── cards ────────────────────────────────────────────────────── */
     .card {
-      background: #fff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 14px 15px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 15px 16px;
       margin-bottom: 12px;
     }
-    .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .dot { width: 9px; height: 9px; border-radius: 50%; background: #48bb78; flex: 0 0 auto; }
-    .dot.off { background: #e53e3e; }
-    .card-title { font-size: 15px; font-weight: 700; color: #1a202c; }
-    .card-sub { font-size: 12px; color: #718096; margin-top: 1px; }
+    .card-head { display: flex; align-items: center; gap: 10px; }
+    .card-title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+    .card-sub { font-size: 12px; color: var(--muted); margin-top: 1px; word-break: break-word; }
 
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--ok); flex: 0 0 auto;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent);
+    }
+    .dot.off { background: var(--alarm); box-shadow: 0 0 0 3px color-mix(in srgb, var(--alarm) 22%, transparent); }
+    @supports not (color: color-mix(in srgb, red 50%, blue)) {
+      .dot, .dot.off { box-shadow: none; }
+    }
+
+    /* ── stat grid ────────────────────────────────────────────────── */
+    /* Flex, not grid: seven tiles never divide evenly into a row, so the last
+       row is always short. Grid would leave it hanging at the left edge;
+       flex-wrap with justify-content centres it under the row above. */
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 14px;
     }
+    /* A button, not a div: these open a list, so they need keyboard focus and
+       a real pressed state. */
     .stat {
-      background: #f7fafc;
-      border-radius: 7px;
-      padding: 8px 6px;
-      text-align: center;
+      /* No grow, so every tile stays the same width whichever row it lands in.
+         The basis fits the longest label in all three languages. */
+      flex: 0 1 78px;
+      background: var(--bg); border: 1px solid transparent; border-radius: 9px;
+      padding: 9px 4px; text-align: center;
+      font: inherit; color: inherit;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
     }
-    .stat .v { font-size: 16px; font-weight: 700; color: #1a202c; }
-    .stat .k { font-size: 10px; color: #718096; margin-top: 2px; text-transform: uppercase; letter-spacing: .03em; }
+    .stat:hover:not(:disabled) { border-color: var(--accent); }
+    .stat[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-soft); }
+    .stat:disabled { cursor: default; opacity: .55; }
+    .stat .v { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+    .stat .k { font-size: 10px; color: var(--muted); margin-top: 1px; text-transform: uppercase; letter-spacing: .04em; }
+    .stat.bad .v { color: var(--alarm); }
 
-    .err {
-      background: #fff5f5;
-      border: 1px solid #feb2b2;
-      border-radius: 7px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: #c53030;
-      margin-top: 10px;
-      line-height: 1.45;
+    /* ── detail list ──────────────────────────────────────────────── */
+    .detail { margin-top: 12px; border-top: 1px solid var(--line); }
+    .item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: none; }
+    .item .body { flex: 1; min-width: 0; }
+    .item .name { font-size: 13px; font-weight: 600; word-break: break-word; }
+    .item .meta { font-size: 11.5px; color: var(--muted); margin-top: 1px; word-break: break-word; }
+    .item .badge {
+      flex: 0 0 auto; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .03em;
+      padding: 3px 7px; border-radius: 6px;
+      background: var(--track); color: var(--muted);
+      white-space: nowrap;
+    }
+    .item .badge.ok { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+    .item .badge.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+    .item .badge.alarm { background: var(--alarm-soft); color: var(--alarm); }
+    @supports not (color: color-mix(in srgb, red 50%, blue)) {
+      .item .badge.ok, .item .badge.warn { background: var(--track); }
+    }
+    .item .bar { height: 4px; border-radius: 2px; background: var(--track); margin-top: 5px; overflow: hidden; }
+    .item .bar span { display: block; height: 100%; border-radius: 2px; background: var(--ok); }
+    .item .bar span.warn { background: var(--warn); }
+    .item .bar span.alarm { background: var(--alarm); }
+    .detail .empty { padding: 18px 0; }
+
+    /* ── buttons ──────────────────────────────────────────────────── */
+    .row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    button.act {
+      flex: 1 1 96px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--ink);
+      font: inherit; font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    button.act:hover { border-color: var(--accent); color: var(--accent-text); }
+    button.act.primary { background: var(--accent-btn); border-color: var(--accent-btn); color: #fff; }
+    button.act.primary:hover { filter: brightness(1.08); color: #fff; }
+    button.act:disabled { opacity: .5; cursor: default; }
+
+    /* ── messages ─────────────────────────────────────────────────── */
+    .msg {
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      margin-top: 12px;
       word-break: break-word;
     }
+    .msg.err { background: var(--alarm-soft); color: var(--alarm); }
+    .msg.info { background: var(--accent-soft); color: var(--accent-text); }
 
-    .btn-row { display: flex; gap: 8px; margin-top: 12px; }
-    button.action {
-      flex: 1;
-      padding: 9px;
-      border: none;
-      border-radius: 7px;
-      background: #0095D5;
-      color: #fff;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
+    .empty { color: var(--muted); text-align: center; padding: 34px 16px; font-size: 13px; }
+
+    /* ── diagnostics ──────────────────────────────────────────────── */
+    .check { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .check:last-child { border-bottom: none; }
+    .check .mark { font-weight: 700; flex: 0 0 auto; width: 15px; text-align: center; }
+    .check .mark.ok { color: var(--ok); }
+    .check .mark.no { color: var(--alarm); }
+    .check .body { min-width: 0; flex: 1; }
+    .check .label { font-size: 13px; font-weight: 600; }
+    .check .detail { font-size: 11.5px; color: var(--muted); word-break: break-word; }
+    .check .ms { font-size: 11px; color: var(--muted); flex: 0 0 auto; }
+
+    /* ── help ─────────────────────────────────────────────────────── */
+    h2 { font-size: 14px; font-weight: 700; margin: 0 0 8px; }
+    h3 { font-size: 12.5px; font-weight: 700; margin: 16px 0 5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .card p { font-size: 13px; margin-bottom: 8px; }
+    .card p:last-child { margin-bottom: 0; }
+    ol, ul { margin: 0 0 4px 18px; font-size: 13px; }
+    li { margin-bottom: 5px; }
+    code {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 5px;
+      padding: 1px 5px; font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      word-break: break-word;
     }
-    button.action.ghost { background: #edf2f7; color: #4a5568; }
-    button.action:disabled { opacity: .55; cursor: not-allowed; }
+    .kv { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+    .kv:last-child { border-bottom: none; }
+    .kv .k { flex: 0 0 40%; font-weight: 600; }
+    .kv .v { color: var(--muted); }
+
+    /* ── toggle ───────────────────────────────────────────────────── */
+    .opt { display: flex; align-items: flex-start; gap: 11px; }
+    .opt input { margin-top: 2px; width: 17px; height: 17px; flex: 0 0 auto; accent-color: var(--accent); }
+    .opt .label { font-size: 13px; font-weight: 600; }
+    .opt .hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── log ──────────────────────────────────────────────────────── */
+    .log { padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .log:last-child { border-bottom: none; }
+    .log .meta { font-size: 10.5px; color: var(--muted); }
+    .log .src { color: var(--accent-text); font-weight: 600; }
+    .log.error .text { color: var(--alarm); }
+    .log .text { word-break: break-word; }
 
     pre {
-      background: #1a202c;
-      color: #e2e8f0;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 11px;
-      line-height: 1.5;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      max-height: 460px;
-      overflow-y: auto;
+      background: #10131a; color: #d7dce3;
+      border-radius: 9px; padding: 12px;
+      font-size: 11px; line-height: 1.5;
+      overflow: auto; max-height: 420px;
+      white-space: pre-wrap; word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-
-    .log-line { padding: 5px 0; border-bottom: 1px solid #edf2f7; font-size: 12px; line-height: 1.45; }
-    .log-line:last-child { border-bottom: none; }
-    .log-line .t { color: #a0aec0; font-size: 11px; }
-    .log-line .s { color: #0095D5; font-weight: 600; }
-    .log-line.error .m { color: #c53030; }
-
-    .empty { color: #718096; font-size: 13px; text-align: center; padding: 26px 0; }
     select {
-      width: 100%;
-      padding: 9px 10px;
-      border: 1.5px solid #cbd5e0;
-      border-radius: 8px;
-      font: inherit;
-      font-size: 13px;
-      background: #fff;
+      width: 100%; padding: 9px 10px;
+      border: 1px solid var(--line); border-radius: 8px;
+      font: inherit; font-size: 13px;
+      background: var(--card); color: var(--ink);
       margin-bottom: 10px;
     }
   </style>
@@ -152,7 +294,8 @@
 
   <div class="tabs">
     <button class="tab active" data-panel="p-systems" id="tab-systems">Systems</button>
-    <button class="tab" data-panel="p-debug" id="tab-debug">Data</button>
+    <button class="tab" data-panel="p-help" id="tab-help">Help</button>
+    <button class="tab" data-panel="p-data" id="tab-data">Data</button>
     <button class="tab" data-panel="p-log" id="tab-log">Log</button>
   </div>
 
@@ -160,253 +303,524 @@
     <div id="systems"><div class="empty">…</div></div>
   </div>
 
-  <div class="panel" id="p-debug">
-    <select id="debug-select"></select>
-    <div class="btn-row" style="margin-top:0">
-      <button class="action ghost" id="btn-debug-reload">Reload</button>
-      <button class="action ghost" id="btn-debug-copy">Copy</button>
+  <div class="panel" id="p-help">
+    <div id="help"></div>
+  </div>
+
+  <div class="panel" id="p-data">
+    <div class="card">
+      <div class="card-title" id="l-data">Raw values</div>
+      <div class="card-sub" id="h-data"></div>
     </div>
-    <pre id="debug-out" style="margin-top:12px">–</pre>
+    <select id="data-select"></select>
+    <div class="row" style="margin-top:0">
+      <button class="act" id="btn-data-reload">Reload</button>
+      <button class="act" id="btn-data-copy">Copy</button>
+    </div>
+    <pre id="data-out" style="margin-top:12px">–</pre>
   </div>
 
   <div class="panel" id="p-log">
-    <div class="btn-row" style="margin-top:0">
-      <button class="action ghost" id="btn-log-reload">Reload</button>
-      <button class="action ghost" id="btn-log-clear">Clear</button>
+    <div class="card">
+      <div class="opt">
+        <input type="checkbox" id="verbose">
+        <div>
+          <div class="label" id="l-verbose">Detailed logging</div>
+          <div class="hint" id="h-verbose"></div>
+        </div>
+      </div>
     </div>
-    <div class="card" style="margin-top:12px" id="log-out">
-      <div class="empty">…</div>
+    <div class="row" style="margin-top:0">
+      <button class="act" id="btn-log-reload">Reload</button>
+      <button class="act" id="btn-log-copy">Copy</button>
+      <button class="act" id="btn-log-clear">Clear</button>
     </div>
+    <div class="card" style="margin-top:12px" id="log-out"><div class="empty">…</div></div>
   </div>
 
-  <script>
+  <script type="text/javascript">
     var systems = [];
-    var isGerman = (navigator.language || 'en').toLowerCase().indexOf('de') === 0;
+    var systemsError = null;
+    // Homey renders this page in a browser view, so the user's locale arrives
+    // as navigator.language. LANG indexes every [en, de, nl] entry below.
+    var LANG = (function () {
+      var code = (navigator.language || 'en').toLowerCase();
+      if (code.indexOf('de') === 0) return 1;
+      if (code.indexOf('nl') === 0) return 2;
+      return 0;
+    })();
+    var HELP_LANG = ['en', 'de', 'nl'][LANG];
 
     var TEXT = {
-      systems: ['Systems', 'Systeme'],
-      data: ['Data', 'Daten'],
-      log: ['Log', 'Protokoll'],
-      reload: ['Reload', 'Neu laden'],
-      copy: ['Copy', 'Kopieren'],
-      clear: ['Clear', 'Leeren'],
-      refresh: ['Refresh now', 'Jetzt aktualisieren'],
-      none: ['No TrueNAS system paired yet.', 'Noch kein TrueNAS-System verbunden.'],
-      noLog: ['No log entries yet.', 'Noch keine Protokolleinträge.'],
-      offline: ['offline', 'offline'],
-      online: ['online', 'online'],
-      pools: ['Pools', 'Pools'],
-      disks: ['Disks', 'Platten'],
-      services: ['Services', 'Dienste'],
-      apps: ['Apps', 'Apps'],
-      vms: ['VMs', 'VMs'],
-      alerts: ['Alerts', 'Meldungen'],
-      copied: ['Copied.', 'Kopiert.']
+      systems: ['Systems', 'Systeme', 'Systemen'],
+      help: ['Help', 'Hilfe', 'Help'],
+      data: ['Data', 'Daten', 'Gegevens'],
+      log: ['Log', 'Protokoll', 'Logboek'],
+      reload: ['Reload', 'Neu laden', 'Opnieuw laden'],
+      copy: ['Copy', 'Kopieren', 'Kopiëren'],
+      clear: ['Clear', 'Leeren', 'Wissen'],
+      refresh: ['Refresh now', 'Jetzt aktualisieren', 'Nu vernieuwen'],
+      diagnose: ['Run diagnostics', 'Diagnose starten', 'Diagnose starten'],
+      diagnosing: ['Testing…', 'Teste…', 'Bezig met testen…'],
+      none: [
+        'No TrueNAS system paired yet. Add one under Devices.',
+        'Noch kein TrueNAS-System verbunden. Füge unter Geräte eines hinzu.',
+        'Nog geen TrueNAS-systeem gekoppeld. Voeg er een toe bij Apparaten.'
+      ],
+      noLog: [
+        'No entries. Turn on detailed logging to record the poll cycle.',
+        'Keine Einträge. Aktiviere die ausführliche Protokollierung, um den Abfragezyklus aufzuzeichnen.',
+        'Geen items. Zet uitgebreide logging aan om de opvraagcyclus vast te leggen.'
+      ],
+      offline: ['Unreachable', 'Nicht erreichbar', 'Onbereikbaar'],
+      online: ['Connected', 'Verbunden', 'Verbonden'],
+      copied: ['Copied to clipboard.', 'In die Zwischenablage kopiert.', 'Gekopieerd naar het klembord.'],
+      loadFailed: [
+        'Could not load the systems. Switch back to the Systems tab for the reason.',
+        'Die Systeme konnten nicht geladen werden. Der Grund steht im Reiter Systeme.',
+        'De systemen konden niet worden geladen. De reden staat op het tabblad Systemen.'
+      ],
+      pools: ['Pools', 'Pools', 'Pools'],
+      disks: ['Disks', 'Platten', 'Schijven'],
+      services: ['Services', 'Dienste', 'Services'],
+      apps: ['Apps', 'Apps', 'Apps'],
+      vms: ['VMs', 'VMs', "VM's"],
+      tasks: ['Tasks', 'Aufgaben', 'Taken'],
+      alerts: ['Alerts', 'Meldungen', 'Meldingen'],
+      allOk: ['All checks passed.', 'Alle Prüfungen bestanden.', 'Alle controles geslaagd.'],
+      someFailed: [
+        'check(s) failed. See the details above.',
+        'Prüfung(en) fehlgeschlagen. Details oben.',
+        'controle(s) mislukt. Zie de details hierboven.'
+      ],
+      verboseLabel: ['Detailed logging', 'Ausführliche Protokollierung', 'Uitgebreide logging'],
+      verboseHint: [
+        'Records every poll cycle, not just errors. Useful when reporting a problem — turn it off again afterwards.',
+        'Zeichnet jeden Abfragezyklus auf, nicht nur Fehler. Hilfreich beim Melden eines Problems — danach wieder ausschalten.',
+        'Legt elke opvraagcyclus vast, niet alleen fouten. Handig bij het melden van een probleem — zet het daarna weer uit.'
+      ],
+      loading: ['Loading…', 'Wird geladen…', 'Bezig met laden…'],
+      noItems: ['Nothing here.', 'Nichts vorhanden.', 'Niets aanwezig.'],
+      flag_boot: ['Boot pool', 'Boot-Pool', 'Boot-pool'],
+      flag_autostart: ['Starts on boot', 'Startet beim Hochfahren', 'Start bij opstarten'],
+      flag_update: ['Update available', 'Update verfügbar', 'Update beschikbaar'],
+      flag_image: ['Image update', 'Image-Update', 'Image-update'],
+      flag_disabled: ['Disabled', 'Deaktiviert', 'Uitgeschakeld'],
+      flag_unassigned: ['Not in a pool', 'Keinem Pool zugewiesen', 'Niet in een pool'],
+      dataLabel: ['Raw values', 'Rohwerte', 'Ruwe waarden'],
+      dataHint: [
+        'Exactly what the app read from the NAS, before any conversion. If a reading looks wrong, copy this into your report.',
+        'Genau das, was die App vom NAS gelesen hat, vor jeder Umrechnung. Wirkt ein Wert falsch, kopiere dies in deine Meldung.',
+        'Precies wat de app van de NAS heeft gelezen, vóór elke omrekening. Lijkt een waarde onjuist, kopieer dit dan in je melding.'
+      ]
     };
 
-    function tr(key) {
-      var entry = TEXT[key];
-      return entry ? entry[isGerman ? 1 : 0] : key;
+    function t(key) {
+      var e = TEXT[key];
+      if (!e) return key;
+      return e[LANG] !== undefined ? e[LANG] : e[0];
     }
 
-    // Last resort for the case where homey.js fails to load and onHomeyReady
-    // never fires: show something readable instead of an endless spinner.
-    setTimeout(function () {
-      if (readyFired) return;
-      var container = document.getElementById('systems');
-      if (container) {
-        container.innerHTML = '<div class="err">Could not connect to Homey '
-          + '(homey.js did not load). Close and reopen the app settings.</div>';
-      }
-    }, 12000);
-
-    function boot() {
-      try {
-        setupUi();
-      } catch (err) {
-        document.getElementById('systems').innerHTML =
-          '<div class="err">' + escapeHtml(err.message || err) + '</div>';
-        return;
-      }
-      loadSystems();
-    }
-
-    function setupUi() {
-      document.getElementById('tab-systems').textContent = tr('systems');
-      document.getElementById('tab-debug').textContent = tr('data');
-      document.getElementById('tab-log').textContent = tr('log');
-      document.getElementById('btn-debug-reload').textContent = tr('reload');
-      document.getElementById('btn-debug-copy').textContent = tr('copy');
-      document.getElementById('btn-log-reload').textContent = tr('reload');
-      document.getElementById('btn-log-clear').textContent = tr('clear');
-
-      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tab) {
-        tab.addEventListener('click', function () { showPanel(tab); });
-      });
-
-      document.getElementById('btn-debug-reload').addEventListener('click', loadDebug);
-      document.getElementById('btn-debug-copy').addEventListener('click', copyDebug);
-      document.getElementById('btn-log-reload').addEventListener('click', loadLog);
-      document.getElementById('btn-log-clear').addEventListener('click', clearLog);
-      document.getElementById('debug-select').addEventListener('change', loadDebug);
-    }
-
-    function showPanel(tab) {
-      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) {
-        t.classList.remove('active');
-      });
-      Array.prototype.forEach.call(document.querySelectorAll('.panel'), function (p) {
-        p.classList.remove('active');
-      });
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.panel).classList.add('active');
-
-      if (tab.dataset.panel === 'p-debug') loadDebug();
-      if (tab.dataset.panel === 'p-log') loadLog();
+    function el(tag, cls, text) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text !== undefined && text !== null) n.textContent = String(text);
+      return n;
     }
 
     function api(method, path, body) {
       return new Promise(function (resolve, reject) {
         Homey.api(method, path, body || null, function (err, result) {
-          if (err) return reject(err);
-          resolve(result);
+          if (err) reject(err);
+          else resolve(result);
         });
       });
     }
 
-    // -- Systems --------------------------------------------------------------
+    // ── boot ────────────────────────────────────────────────────────
+    function boot() {
+      try {
+        setupUi();
+      } catch (err) {
+        document.getElementById('systems').innerHTML = '';
+        document.getElementById('systems').appendChild(el('div', 'msg err', String(err.message || err)));
+        return;
+      }
+      loadSystems();
+      renderHelp();
+      loadAppSettings();
+    }
 
+    setTimeout(function () {
+      if (readyFired) return;
+      var c = document.getElementById('systems');
+      if (c) {
+        c.innerHTML = '';
+        c.appendChild(el('div', 'msg err',
+          'Could not connect to Homey (homey.js did not load). Close and reopen the app settings.'));
+      }
+    }, 12000);
+
+    function setupUi() {
+      document.getElementById('tab-systems').textContent = t('systems');
+      document.getElementById('tab-help').textContent = t('help');
+      document.getElementById('tab-data').textContent = t('data');
+      document.getElementById('tab-log').textContent = t('log');
+      document.getElementById('btn-data-reload').textContent = t('reload');
+      document.getElementById('btn-data-copy').textContent = t('copy');
+      document.getElementById('btn-log-reload').textContent = t('reload');
+      document.getElementById('btn-log-copy').textContent = t('copy');
+      document.getElementById('btn-log-clear').textContent = t('clear');
+      document.getElementById('l-verbose').textContent = t('verboseLabel');
+      document.getElementById('h-verbose').textContent = t('verboseHint');
+      document.getElementById('l-data').textContent = t('dataLabel');
+      document.getElementById('h-data').textContent = t('dataHint');
+
+      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tab) {
+        tab.addEventListener('click', function () { showPanel(tab); });
+      });
+
+      document.getElementById('btn-data-reload').addEventListener('click', loadData);
+      document.getElementById('btn-data-copy').addEventListener('click', function () {
+        copy(document.getElementById('data-out').textContent);
+      });
+      document.getElementById('data-select').addEventListener('change', loadData);
+      document.getElementById('btn-log-reload').addEventListener('click', loadLog);
+      document.getElementById('btn-log-clear').addEventListener('click', clearLog);
+      document.getElementById('btn-log-copy').addEventListener('click', copyLog);
+      document.getElementById('verbose').addEventListener('change', saveAppSettings);
+    }
+
+    function showPanel(tab) {
+      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (x) { x.classList.remove('active'); });
+      Array.prototype.forEach.call(document.querySelectorAll('.panel'), function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+      // Otherwise a tab opens mid-page, at whatever offset the previous one
+      // was scrolled to.
+      window.scrollTo(0, 0);
+      if (tab.dataset.panel === 'p-data') loadData();
+      if (tab.dataset.panel === 'p-log') loadLog();
+    }
+
+    // ── systems ─────────────────────────────────────────────────────
     function loadSystems() {
       api('GET', '/systems')
         .then(function (result) {
           systems = result || [];
+          systemsError = null;
           renderSystems();
-          renderDebugOptions();
+          renderDataOptions();
         })
         .catch(function (err) {
-          document.getElementById('systems').innerHTML =
-            '<div class="err">' + escapeHtml(err.message || err) + '</div>';
+          systems = [];
+          systemsError = String(err.message || err);
+          renderDataOptions();
+          var c = document.getElementById('systems');
+          c.innerHTML = '';
+          c.appendChild(el('div', 'msg err', systemsError));
         });
     }
 
     function renderSystems() {
-      var container = document.getElementById('systems');
-      container.innerHTML = '';
+      var c = document.getElementById('systems');
+      c.innerHTML = '';
 
       if (!systems.length) {
-        container.innerHTML = '<div class="empty">' + tr('none') + '</div>';
+        c.appendChild(el('div', 'empty', t('none')));
         return;
       }
 
-      systems.forEach(function (system) {
-        var card = document.createElement('div');
-        card.className = 'card';
+      systems.forEach(function (sys) {
+        var card = el('div', 'card');
 
-        var counts = system.counts || {};
-        var stats = [
-          ['pools', counts.pools], ['disks', counts.disks], ['services', counts.services],
-          ['apps', counts.apps], ['vms', counts.vms], ['alerts', counts.alerts]
-        ];
+        var head = el('div', 'card-head');
+        head.appendChild(el('span', 'dot' + (sys.available ? '' : ' off')));
+        var titles = el('span');
+        titles.appendChild(el('div', 'card-title', sys.name));
+        var sub = [sys.protocol + '://' + sys.host + ':' + sys.port];
+        if (sys.version) sub.push(sys.version);
+        if (sys.uptime) sub.push(sys.uptime);
+        titles.appendChild(el('div', 'card-sub', sub.join('  ·  ')));
+        head.appendChild(titles);
+        card.appendChild(head);
 
-        var html = ''
-          + '<div class="card-head">'
-          + '<span class="dot' + (system.available ? '' : ' off') + '"></span>'
-          + '<span><div class="card-title">' + escapeHtml(system.name) + '</div>'
-          + '<div class="card-sub">' + escapeHtml(system.protocol + '://' + system.host + ':' + system.port)
-          + (system.version ? ' · ' + escapeHtml(system.version) : '')
-          + (system.uptime ? ' · ' + escapeHtml(system.uptime) : '')
-          + '</div></span></div>';
+        var detail = el('div');
 
-        if (system.available) {
-          html += '<div class="grid">' + stats.map(function (s) {
-            return '<div class="stat"><div class="v">'
-              + (s[1] === undefined || s[1] === null ? '–' : s[1])
-              + '</div><div class="k">' + tr(s[0]) + '</div></div>';
-          }).join('') + '</div>';
-        } else if (system.lastError) {
-          html += '<div class="err">' + escapeHtml(system.lastError) + '</div>';
+        if (sys.available && sys.counts) {
+          var grid = el('div', 'grid');
+          var tiles = [];
+
+          [['pools', sys.counts.pools], ['disks', sys.counts.disks], ['services', sys.counts.services],
+            ['apps', sys.counts.apps], ['vms', sys.counts.vms], ['tasks', sys.counts.tasks],
+            ['alerts', sys.counts.alerts]].forEach(function (pair) {
+            var kind = pair[0];
+            var count = pair[1];
+            if (count === undefined || count === null) return;
+
+            // Red only for a real problem: a NAS routinely files successful
+            // backups as INFO alerts, and three of those are not an alarm.
+            var severe = kind === 'alerts' && sys.counts.alertsSevere > 0;
+            var s = el('button', 'stat' + (severe ? ' bad' : ''));
+            s.type = 'button';
+            s.appendChild(el('div', 'v', count));
+            s.appendChild(el('div', 'k', t(kind)));
+            s.setAttribute('aria-expanded', 'false');
+            // Nothing to expand, so the tile stays a plain figure.
+            if (!count) s.disabled = true;
+            else s.addEventListener('click', function () { toggle(kind, s); });
+
+            tiles.push(s);
+            grid.appendChild(s);
+          });
+
+          card.appendChild(grid);
+          card.appendChild(detail);
+
+          var openKind = null;
+
+          function toggle(kind, tile) {
+            tiles.forEach(function (x) { x.setAttribute('aria-expanded', 'false'); });
+            detail.innerHTML = '';
+
+            if (openKind === kind) { openKind = null; return; }
+            openKind = kind;
+            tile.setAttribute('aria-expanded', 'true');
+
+            var pending = el('div', 'detail');
+            pending.appendChild(el('div', 'empty', t('loading')));
+            detail.appendChild(pending);
+
+            api('GET', '/details?systemId=' + encodeURIComponent(sys.systemId)
+              + '&kind=' + encodeURIComponent(kind))
+              .then(function (res) {
+                // A second tap while this was in flight wins.
+                if (openKind !== kind) return;
+                detail.innerHTML = '';
+                detail.appendChild(renderItems(res.items || []));
+              })
+              .catch(function (err) {
+                if (openKind !== kind) return;
+                detail.innerHTML = '';
+                detail.appendChild(el('div', 'msg err', String(err.message || err)));
+              });
+          }
+        } else if (sys.lastError) {
+          card.appendChild(el('div', 'msg err', sys.lastError));
         }
 
-        html += '<div class="btn-row"><button class="action" data-id="'
-          + escapeHtml(system.systemId) + '">' + tr('refresh') + '</button></div>';
+        var row = el('div', 'row');
+        var refresh = el('button', 'act', t('refresh'));
+        var diag = el('button', 'act primary', t('diagnose'));
+        row.appendChild(refresh);
+        row.appendChild(diag);
+        card.appendChild(row);
 
-        card.innerHTML = html;
+        var out = el('div');
+        card.appendChild(out);
 
-        var button = card.querySelector('button');
-        button.addEventListener('click', function () {
-          button.disabled = true;
-          api('GET', '/refresh?systemId=' + encodeURIComponent(system.systemId))
+        refresh.addEventListener('click', function () {
+          refresh.disabled = true;
+          api('GET', '/refresh?systemId=' + encodeURIComponent(sys.systemId))
             .then(loadSystems)
-            .catch(function (err) { Homey.alert(err.message || String(err)); })
-            .then(function () { button.disabled = false; });
+            .catch(function (err) { showIn(out, 'err', err.message || String(err)); })
+            .then(function () { refresh.disabled = false; });
         });
 
-        container.appendChild(card);
+        diag.addEventListener('click', function () {
+          diag.disabled = true;
+          diag.textContent = t('diagnosing');
+          out.innerHTML = '';
+          api('GET', '/diagnostics?systemId=' + encodeURIComponent(sys.systemId))
+            .then(function (res) { renderChecks(out, res); })
+            .catch(function (err) { showIn(out, 'err', err.message || String(err)); })
+            .then(function () {
+              diag.disabled = false;
+              diag.textContent = t('diagnose');
+            });
+        });
+
+        c.appendChild(card);
       });
     }
 
-    // -- Debug ----------------------------------------------------------------
+    /**
+     * One row per pool, disk, app… The subtitle arrives pre-composed from the
+     * API because it is only numbers and units; the flag words are translated
+     * here, and an unrecognised TrueNAS state is shown raw rather than hidden.
+     */
+    function renderItems(items) {
+      var list = el('div', 'detail');
 
-    function renderDebugOptions() {
-      var select = document.getElementById('debug-select');
-      select.innerHTML = '';
-      systems.forEach(function (system) {
-        var option = document.createElement('option');
-        option.value = system.systemId;
-        option.textContent = system.name;
-        select.appendChild(option);
+      if (!items.length) {
+        list.appendChild(el('div', 'empty', t('noItems')));
+        return list;
+      }
+
+      items.forEach(function (item) {
+        var row = el('div', 'item');
+        var body = el('div', 'body');
+        body.appendChild(el('div', 'name', item.title));
+
+        var meta = [];
+        if (item.sub) meta.push(item.sub);
+        if (item.note) meta.push(item.note);
+        (item.flags || []).forEach(function (f) { meta.push(t('flag_' + f)); });
+        if (meta.length) body.appendChild(el('div', 'meta', meta.join('  ·  ')));
+
+        if (item.meter !== null && item.meter !== undefined) {
+          var bar = el('div', 'bar');
+          var fill = el('span', item.tone === 'alarm' ? 'alarm' : (item.meter >= 90 ? 'alarm' : (item.meter >= 75 ? 'warn' : '')));
+          fill.style.width = Math.max(0, Math.min(100, item.meter)) + '%';
+          bar.appendChild(fill);
+          body.appendChild(bar);
+        }
+
+        row.appendChild(body);
+        if (item.state) row.appendChild(el('span', 'badge ' + (item.tone || ''), stateLabel(item.state)));
+        list.appendChild(row);
+      });
+
+      return list;
+    }
+
+    // TrueNAS reports states as uppercase machine values. The common ones get a
+    // readable word; anything else is passed through so a new state is visible
+    // rather than swallowed.
+    var STATE_LABELS = {
+      ONLINE: ['Online', 'Online', 'Online'],
+      DEGRADED: ['Degraded', 'Fehler', 'Probleem'],
+      FAULTED: ['Faulted', 'Ausgefallen', 'Defect'],
+      OFFLINE: ['Offline', 'Offline', 'Offline'],
+      UNAVAIL: ['Unavailable', 'Nicht verfügbar', 'Niet beschikbaar'],
+      SCRUB: ['Scrub', 'Scrub', 'Scrub'],
+      RUNNING: ['Running', 'Läuft', 'Draait'],
+      STOPPED: ['Stopped', 'Gestoppt', 'Gestopt'],
+      CRASHED: ['Crashed', 'Abgestürzt', 'Vastgelopen'],
+      DEPLOYING: ['Deploying', 'Wird bereitgestellt', 'Wordt uitgerold'],
+      PENDING: ['Pending', 'Ausstehend', 'In wachtrij'],
+      SUCCESS: ['Success', 'Erfolgreich', 'Geslaagd'],
+      FINISHED: ['Finished', 'Abgeschlossen', 'Klaar'],
+      FAILED: ['Failed', 'Fehlgeschlagen', 'Mislukt'],
+      ERROR: ['Error', 'Fehler', 'Fout'],
+      ABORTED: ['Aborted', 'Abgebrochen', 'Afgebroken'],
+      WARNING: ['Warning', 'Warnung', 'Waarschuwing'],
+      CRITICAL: ['Critical', 'Kritisch', 'Kritiek'],
+      INFO: ['Info', 'Info', 'Info'],
+      NOTICE: ['Notice', 'Hinweis', 'Let op'],
+      ALERT: ['Alert', 'Alarm', 'Alarm'],
+      EMERGENCY: ['Emergency', 'Notfall', 'Noodgeval'],
+      UNKNOWN: ['Unknown', 'Unbekannt', 'Onbekend']
+    };
+
+    function stateLabel(state) {
+      var entry = STATE_LABELS[state];
+      if (!entry) return state;
+      return entry[LANG] !== undefined ? entry[LANG] : entry[0];
+    }
+
+    function showIn(container, kind, message) {
+      container.innerHTML = '';
+      container.appendChild(el('div', 'msg ' + kind, message));
+    }
+
+    function renderChecks(container, res) {
+      container.innerHTML = '';
+      var wrap = el('div');
+      wrap.style.marginTop = '12px';
+
+      (res.checks || []).forEach(function (c) {
+        var row = el('div', 'check');
+        row.appendChild(el('span', 'mark ' + (c.ok ? 'ok' : 'no'), c.ok ? '✓' : '✕'));
+        var body = el('div', 'body');
+        body.appendChild(el('div', 'label', c.label));
+        if (c.detail) body.appendChild(el('div', 'detail', c.detail));
+        row.appendChild(body);
+        row.appendChild(el('span', 'ms', c.ms + ' ms'));
+        wrap.appendChild(row);
+      });
+
+      container.appendChild(wrap);
+      container.appendChild(el('div', 'msg ' + (res.failed ? 'err' : 'info'),
+        res.failed ? res.failed + ' ' + t('someFailed') : t('allOk')));
+    }
+
+    // ── help ────────────────────────────────────────────────────────
+    function renderHelp() {
+      var c = document.getElementById('help');
+      c.innerHTML = '';
+      HELP[HELP_LANG].forEach(function (section) {
+        var card = el('div', 'card');
+        card.appendChild(el('h2', null, section.title));
+        section.blocks.forEach(function (b) {
+          if (b.p) card.appendChild(el('p', null, b.p));
+          if (b.h) card.appendChild(el('h3', null, b.h));
+          if (b.ol || b.ul) {
+            var list = el(b.ol ? 'ol' : 'ul');
+            (b.ol || b.ul).forEach(function (item) {
+              var li = el('li');
+              li.innerHTML = item;
+              list.appendChild(li);
+            });
+            card.appendChild(list);
+          }
+          if (b.kv) {
+            b.kv.forEach(function (pair) {
+              var row = el('div', 'kv');
+              row.appendChild(el('span', 'k', pair[0]));
+              row.appendChild(el('span', 'v', pair[1]));
+              card.appendChild(row);
+            });
+          }
+        });
+        c.appendChild(card);
       });
     }
 
-    function loadDebug() {
-      var id = document.getElementById('debug-select').value;
+    // ── data ────────────────────────────────────────────────────────
+    function renderDataOptions() {
+      var sel = document.getElementById('data-select');
+      sel.innerHTML = '';
+      systems.forEach(function (sys) {
+        var o = document.createElement('option');
+        o.value = sys.systemId;
+        o.textContent = sys.name;
+        sel.appendChild(o);
+      });
+    }
+
+    function loadData() {
+      var id = document.getElementById('data-select').value;
       if (!id) {
-        document.getElementById('debug-out').textContent = tr('none');
+        document.getElementById('data-out').textContent = systemsError ? t('loadFailed') : t('none');
         return;
       }
       api('GET', '/debug?systemId=' + encodeURIComponent(id))
-        .then(function (data) {
-          document.getElementById('debug-out').textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(function (err) {
-          document.getElementById('debug-out').textContent = String(err.message || err);
-        });
+        .then(function (d) { document.getElementById('data-out').textContent = JSON.stringify(d, null, 2); })
+        .catch(function (err) { document.getElementById('data-out').textContent = String(err.message || err); });
     }
 
-    function copyDebug() {
-      var text = document.getElementById('debug-out').textContent;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { Homey.alert(tr('copied')); });
-        return;
-      }
-      var area = document.createElement('textarea');
-      area.value = text;
-      document.body.appendChild(area);
-      area.select();
-      try { document.execCommand('copy'); Homey.alert(tr('copied')); } catch (e) { /* ignore */ }
-      document.body.removeChild(area);
-    }
-
-    // -- Log ------------------------------------------------------------------
-
+    // ── log ─────────────────────────────────────────────────────────
     function loadLog() {
       api('GET', '/log')
         .then(function (entries) {
-          var container = document.getElementById('log-out');
-          if (!entries || !entries.length) {
-            container.innerHTML = '<div class="empty">' + tr('noLog') + '</div>';
-            return;
-          }
-          container.innerHTML = entries.map(function (entry) {
-            return '<div class="log-line ' + (entry.level === 'error' ? 'error' : '') + '">'
-              + '<span class="t">' + escapeHtml(entry.time.replace('T', ' ').slice(0, 19)) + '</span> '
-              + '<span class="s">' + escapeHtml(entry.source) + '</span><br>'
-              + '<span class="m">' + escapeHtml(entry.message) + '</span></div>';
-          }).join('');
+          var c = document.getElementById('log-out');
+          c.innerHTML = '';
+          if (!entries || !entries.length) { c.appendChild(el('div', 'empty', t('noLog'))); return; }
+          entries.forEach(function (e) {
+            var row = el('div', 'log' + (e.level === 'error' ? ' error' : ''));
+            var meta = el('div', 'meta');
+            meta.appendChild(el('span', null, e.time.replace('T', ' ').slice(0, 19) + '  '));
+            meta.appendChild(el('span', 'src', e.source));
+            row.appendChild(meta);
+            row.appendChild(el('div', 'text', e.message));
+            c.appendChild(row);
+          });
         })
         .catch(function (err) {
-          document.getElementById('log-out').innerHTML =
-            '<div class="err">' + escapeHtml(err.message || err) + '</div>';
+          var c = document.getElementById('log-out');
+          c.innerHTML = '';
+          c.appendChild(el('div', 'msg err', String(err.message || err)));
         });
     }
 
@@ -414,13 +828,242 @@
       api('POST', '/log/clear', {}).then(loadLog).catch(function () {});
     }
 
-    function escapeHtml(value) {
-      return String(value === null || value === undefined ? '' : value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    function copyLog() {
+      api('GET', '/log').then(function (entries) {
+        copy((entries || []).map(function (e) {
+          return e.time + ' [' + e.level + '] ' + e.source + ': ' + e.message;
+        }).join('\n'));
+      }).catch(function () {});
     }
+
+    // ── app settings ────────────────────────────────────────────────
+    function loadAppSettings() {
+      api('GET', '/settings')
+        .then(function (s) { document.getElementById('verbose').checked = !!(s && s.verbose_log); })
+        .catch(function () {});
+    }
+
+    function saveAppSettings() {
+      api('POST', '/settings', { verbose_log: document.getElementById('verbose').checked })
+        .then(loadLog)
+        .catch(function () {});
+    }
+
+    // ── clipboard ───────────────────────────────────────────────────
+    function copy(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { Homey.alert(t('copied')); });
+        return;
+      }
+      var a = document.createElement('textarea');
+      a.value = text;
+      document.body.appendChild(a);
+      a.select();
+      try { document.execCommand('copy'); Homey.alert(t('copied')); } catch (e) { /* ignore */ }
+      document.body.removeChild(a);
+    }
+
+    // ── help content ────────────────────────────────────────────────
+    var HELP = {
+      en: [
+        {
+          title: 'Getting started',
+          blocks: [
+            { p: 'Add the TrueNAS system first. Everything else — pools, disks, services, apps, virtual machines, datasets and backup tasks — is discovered from there, so the API key is only ever entered once.' },
+            { ol: [
+              'In TrueNAS open <b>Credentials → API Keys</b> and add a key.',
+              'In Homey go to <b>Devices → + → TrueNAS Manager → TrueNAS System</b>.',
+              'Enter the address, port and the key.',
+              'Add the other devices; they appear as a list to pick from.'
+            ] }
+          ]
+        },
+        {
+          title: 'Use the IP address',
+          blocks: [
+            { p: 'Enter the numeric IP rather than a host name, and give the NAS a fixed address in your router. Homey resolves .local names unreliably, and a DNS outage will otherwise take the app offline even though the NAS is running.' }
+          ]
+        },
+        {
+          title: 'Requirements',
+          blocks: [
+            { kv: [
+              ['TrueNAS', 'SCALE 25.04 or newer'],
+              ['Homey', 'Pro with firmware 12.3.0 or newer'],
+              ['Network', 'Homey and NAS on the same local network'],
+              ['API key', 'Read access, plus write access for the actions you use']
+            ] },
+            { p: 'The app speaks JSON-RPC over a WebSocket. Older TrueNAS releases only offer the REST API, which TrueNAS itself removed in version 26.' }
+          ]
+        },
+        {
+          title: 'How often the NAS is queried',
+          blocks: [
+            { kv: [
+              ['Every 60 s', 'System, pools, services, apps, VMs, alerts, tasks'],
+              ['Every 300 s', 'Disks, disk temperatures, datasets'],
+              ['Every 12 h', 'Update check']
+            ] },
+            { p: 'All devices of one NAS share a single connection and a single poll cycle. Twenty devices cost one request per interval, not twenty. Both intervals are adjustable in the system device settings.' },
+            { p: 'Reading disk temperatures queries SMART, which can keep drives from spinning down. Raise the disk interval if your drives should stay in standby.' }
+          ]
+        },
+        {
+          title: 'If something is not working',
+          blocks: [
+            { h: 'Device shows unreachable' },
+            { ul: [
+              'Run <b>Diagnostics</b> on the Systems tab — it tests each call and names what fails.',
+              'Check the address, and whether <b>Use HTTPS</b> matches the port (443 for HTTPS, 80 for HTTP).',
+              'TrueNAS redirects plain HTTP to HTTPS by default, and a WebSocket cannot follow a redirect.',
+              'Leave <b>Accept self-signed certificate</b> on unless you installed your own certificate.'
+            ] },
+            { h: 'Readings look wrong' },
+            { ul: [
+              'Processor, temperature, memory and network come from netdata, whose layout differs between versions.',
+              'Open the <b>Data</b> tab, copy the raw values and report them — that is enough to correct the conversion.'
+            ] },
+            { h: 'Reporting a problem' },
+            { ul: [
+              'Turn on <b>Detailed logging</b> on the Log tab, reproduce the problem, then copy the log.',
+              'Turn it off again afterwards; it records every poll cycle.'
+            ] }
+          ]
+        }
+      ],
+      de: [
+        {
+          title: 'Erste Schritte',
+          blocks: [
+            { p: 'Füge zuerst das TrueNAS-System hinzu. Alles Weitere — Pools, Festplatten, Dienste, Apps, virtuelle Maschinen, Datasets und Backup-Aufgaben — wird von dort aus gefunden. Den API-Schlüssel gibst du also nur ein einziges Mal ein.' },
+            { ol: [
+              'In TrueNAS unter <b>Anmeldedaten → API-Schlüssel</b> einen Schlüssel anlegen.',
+              'In Homey auf <b>Geräte → + → TrueNAS Manager → TrueNAS System</b> gehen.',
+              'Adresse, Port und Schlüssel eingeben.',
+              'Die übrigen Geräte hinzufügen; sie erscheinen als Auswahlliste.'
+            ] }
+          ]
+        },
+        {
+          title: 'Verwende die IP-Adresse',
+          blocks: [
+            { p: 'Trage die numerische IP ein statt eines Hostnamens, und vergib im Router eine feste Adresse für das NAS. Homey löst .local-Namen unzuverlässig auf, und eine DNS-Störung nimmt die App sonst offline, obwohl das NAS läuft.' }
+          ]
+        },
+        {
+          title: 'Voraussetzungen',
+          blocks: [
+            { kv: [
+              ['TrueNAS', 'SCALE 25.04 oder neuer'],
+              ['Homey', 'Pro mit Firmware 12.3.0 oder neuer'],
+              ['Netzwerk', 'Homey und NAS im selben lokalen Netz'],
+              ['API-Schlüssel', 'Lesezugriff, plus Schreibzugriff für genutzte Aktionen']
+            ] },
+            { p: 'Die App spricht JSON-RPC über einen WebSocket. Ältere TrueNAS-Versionen bieten nur die REST-API an, die TrueNAS in Version 26 selbst entfernt hat.' }
+          ]
+        },
+        {
+          title: 'Wie oft das NAS abgefragt wird',
+          blocks: [
+            { kv: [
+              ['Alle 60 s', 'System, Pools, Dienste, Apps, VMs, Meldungen, Aufgaben'],
+              ['Alle 300 s', 'Festplatten, Temperaturen, Datasets'],
+              ['Alle 12 h', 'Update-Prüfung']
+            ] },
+            { p: 'Alle Geräte eines NAS teilen sich eine Verbindung und einen Abfragezyklus. Zwanzig Geräte kosten eine Abfrage pro Intervall, nicht zwanzig. Beide Intervalle lassen sich in den Einstellungen des Systemgeräts anpassen.' },
+            { p: 'Das Auslesen der Festplattentemperaturen fragt SMART ab und kann Platten am Herunterfahren hindern. Erhöhe das Festplatten-Intervall, wenn deine Platten im Standby bleiben sollen.' }
+          ]
+        },
+        {
+          title: 'Wenn etwas nicht funktioniert',
+          blocks: [
+            { h: 'Gerät ist nicht erreichbar' },
+            { ul: [
+              'Starte die <b>Diagnose</b> im Reiter Systeme — sie testet jeden Aufruf einzeln und benennt, was scheitert.',
+              'Prüfe die Adresse und ob <b>HTTPS verwenden</b> zum Port passt (443 für HTTPS, 80 für HTTP).',
+              'TrueNAS leitet einfaches HTTP standardmässig auf HTTPS um, und ein WebSocket kann keiner Umleitung folgen.',
+              'Lass <b>Selbstsigniertes Zertifikat akzeptieren</b> aktiv, ausser du hast ein eigenes Zertifikat installiert.'
+            ] },
+            { h: 'Werte wirken falsch' },
+            { ul: [
+              'Prozessor, Temperatur, Arbeitsspeicher und Netzwerk stammen von netdata, dessen Aufbau sich zwischen Versionen unterscheidet.',
+              'Öffne den Reiter <b>Daten</b>, kopiere die Rohwerte und melde sie — das genügt, um die Umrechnung zu korrigieren.'
+            ] },
+            { h: 'Ein Problem melden' },
+            { ul: [
+              'Aktiviere im Reiter Protokoll die <b>ausführliche Protokollierung</b>, stelle das Problem nach und kopiere dann das Protokoll.',
+              'Schalte sie danach wieder aus; sie zeichnet jeden Abfragezyklus auf.'
+            ] }
+          ]
+        }
+      ],
+      nl: [
+        {
+          title: 'Aan de slag',
+          blocks: [
+            { p: 'Voeg eerst het TrueNAS-systeem toe. Al het overige — pools, schijven, services, apps, virtuele machines, datasets en back-uptaken — wordt van daaruit gevonden, dus de API-sleutel voer je maar één keer in.' },
+            { ol: [
+              'Open in TrueNAS <b>Credentials → API Keys</b> en maak een sleutel aan.',
+              'Ga in Homey naar <b>Apparaten → + → TrueNAS Manager → TrueNAS-systeem</b>.',
+              'Voer het adres, de poort en de sleutel in.',
+              'Voeg de overige apparaten toe; die verschijnen als lijst om uit te kiezen.'
+            ] }
+          ]
+        },
+        {
+          title: 'Gebruik het IP-adres',
+          blocks: [
+            { p: 'Voer het numerieke IP-adres in in plaats van een hostnaam, en geef de NAS een vast adres in je router. Homey zoekt .local-namen onbetrouwbaar op, en bij een DNS-storing gaat de app anders offline terwijl de NAS gewoon draait.' }
+          ]
+        },
+        {
+          title: 'Vereisten',
+          blocks: [
+            { kv: [
+              ['TrueNAS', 'SCALE 25.04 of nieuwer'],
+              ['Homey', 'Pro met firmware 12.3.0 of nieuwer'],
+              ['Netwerk', 'Homey en NAS in hetzelfde lokale netwerk'],
+              ['API-sleutel', 'Leesrechten, plus schrijfrechten voor de acties die je gebruikt']
+            ] },
+            { p: 'De app spreekt JSON-RPC via een WebSocket. Oudere TrueNAS-versies bieden alleen de REST-API, die TrueNAS in versie 26 zelf heeft verwijderd.' }
+          ]
+        },
+        {
+          title: 'Hoe vaak de NAS wordt opgevraagd',
+          blocks: [
+            { kv: [
+              ['Elke 60 s', "Systeem, pools, services, apps, VM's, meldingen, taken"],
+              ['Elke 300 s', 'Schijven, schijftemperaturen, datasets'],
+              ['Elke 12 u', 'Updatecontrole']
+            ] },
+            { p: 'Alle apparaten van één NAS delen één verbinding en één opvraagcyclus. Twintig apparaten kosten één aanvraag per interval, niet twintig. Beide intervallen zijn aan te passen bij de instellingen van het systeemapparaat.' },
+            { p: 'Het uitlezen van schijftemperaturen bevraagt SMART, wat kan voorkomen dat schijven tot stilstand komen. Verhoog het schijfinterval als je schijven in stand-by moeten blijven.' }
+          ]
+        },
+        {
+          title: 'Als er iets niet werkt',
+          blocks: [
+            { h: 'Apparaat is onbereikbaar' },
+            { ul: [
+              'Start de <b>diagnose</b> op het tabblad Systemen — die test elke aanroep afzonderlijk en benoemt wat er misgaat.',
+              'Controleer het adres, en of <b>HTTPS gebruiken</b> bij de poort past (443 voor HTTPS, 80 voor HTTP).',
+              'TrueNAS leidt gewoon HTTP standaard om naar HTTPS, en een WebSocket kan een omleiding niet volgen.',
+              'Laat <b>Zelfondertekend certificaat accepteren</b> aan staan, tenzij je een eigen certificaat hebt geïnstalleerd.'
+            ] },
+            { h: 'Waarden lijken onjuist' },
+            { ul: [
+              'Processor, temperatuur, geheugen en netwerk komen van netdata, waarvan de opbouw per versie verschilt.',
+              'Open het tabblad <b>Gegevens</b>, kopieer de ruwe waarden en meld ze — dat is genoeg om de omrekening te corrigeren.'
+            ] },
+            { h: 'Een probleem melden' },
+            { ul: [
+              'Zet op het tabblad Logboek <b>uitgebreide logging</b> aan, roep het probleem opnieuw op en kopieer daarna het logboek.',
+              'Zet het daarna weer uit; het legt elke opvraagcyclus vast.'
+            ] }
+          ]
+        }
+      ]
+    };
   </script>
 
 </body>

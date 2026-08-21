@@ -2,7 +2,8 @@
   "id": "vm_is_running",
   "title": {
     "en": "Virtual machine !{{is|is not}} running",
-    "de": "VM !{{läuft|läuft nicht}}"
+    "de": "VM !{{läuft|läuft nicht}}",
+    "nl": "Virtuele machine !{{draait|draait niet}}"
   },
   "args": [
     {

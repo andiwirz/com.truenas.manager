@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Disk",
-    "de": "Festplatte"
+    "de": "Festplatte",
+    "nl": "Schijf"
   },
   "class": "sensor",
   "capabilities": [
@@ -15,13 +16,15 @@
     "alarm_generic": {
       "title": {
         "en": "Temperature Alarm",
-        "de": "Temperaturalarm"
+        "de": "Temperaturalarm",
+        "nl": "Temperatuuralarm"
       }
     },
     "measure_temperature": {
       "title": {
         "en": "Disk Temperature",
-        "de": "Festplattentemperatur"
+        "de": "Festplattentemperatur",
+        "nl": "Schijftemperatuur"
       }
     }
   },
@@ -48,7 +51,8 @@
       "type": "group",
       "label": {
         "en": "Temperature",
-        "de": "Temperatur"
+        "de": "Temperatur",
+        "nl": "Temperatuur"
       },
       "children": [
         {
@@ -56,7 +60,8 @@
           "type": "number",
           "label": {
             "en": "Alarm above (°C)",
-            "de": "Alarm oberhalb (°C)"
+            "de": "Alarm oberhalb (°C)",
+            "nl": "Alarm boven (°C)"
           },
           "value": 50,
           "min": 20,
@@ -64,7 +69,8 @@
           "step": 1,
           "hint": {
             "en": "Sets the temperature alarm when the disk exceeds this value. Typical limits are 50 °C for hard drives and 65 °C for SSDs.",
-            "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs."
+            "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs.",
+            "nl": "Zet het temperatuuralarm wanneer de schijf deze waarde overschrijdt. Gebruikelijke grenzen zijn 50 °C voor harde schijven en 65 °C voor SSD’s."
           }
         }
       ]
@@ -73,7 +79,8 @@
       "type": "group",
       "label": {
         "en": "Disk information",
-        "de": "Festplatteninformationen"
+        "de": "Festplatteninformationen",
+        "nl": "Schijfgegevens"
       },
       "children": [
         {
@@ -81,7 +88,8 @@
           "type": "label",
           "label": {
             "en": "Device",
-            "de": "Gerät"
+            "de": "Gerät",
+            "nl": "Apparaat"
           },
           "value": "-"
         },
@@ -90,7 +98,8 @@
           "type": "label",
           "label": {
             "en": "Serial number",
-            "de": "Seriennummer"
+            "de": "Seriennummer",
+            "nl": "Serienummer"
           },
           "value": "-"
         },
@@ -99,7 +108,8 @@
           "type": "label",
           "label": {
             "en": "Type",
-            "de": "Typ"
+            "de": "Typ",
+            "nl": "Type"
           },
           "value": "-"
         }

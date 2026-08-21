@@ -2,7 +2,8 @@
   "id": "app_stop",
   "title": {
     "en": "Stop the app",
-    "de": "App stoppen"
+    "de": "App stoppen",
+    "nl": "De app stoppen"
   },
   "args": [
     {

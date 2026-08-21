@@ -2,7 +2,8 @@
   "id": "app_update_available",
   "title": {
     "en": "An app update !{{is|is not}} available",
-    "de": "Ein App-Update !{{ist|ist nicht}} verfügbar"
+    "de": "Ein App-Update !{{ist|ist nicht}} verfügbar",
+    "nl": "Een app-update !{{is|is niet}} beschikbaar"
   },
   "args": [
     {

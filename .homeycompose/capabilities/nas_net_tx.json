@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Network Sent",
-    "de": "Netzwerk gesendet"
+    "de": "Netzwerk gesendet",
+    "nl": "Netwerk verzonden"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "Mbit/s",
-    "de": "Mbit/s"
+    "de": "Mbit/s",
+    "nl": "Mbit/s"
   },
   "decimals": 2,
   "min": 0,

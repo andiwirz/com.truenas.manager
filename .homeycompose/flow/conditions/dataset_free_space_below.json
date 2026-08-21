@@ -2,11 +2,13 @@
   "id": "dataset_free_space_below",
   "title": {
     "en": "Free space !{{is|is not}} below",
-    "de": "Freier Speicher !{{ist|ist nicht}} unter"
+    "de": "Freier Speicher !{{ist|ist nicht}} unter",
+    "nl": "Vrije ruimte !{{is|is niet}} onder"
   },
   "titleFormatted": {
     "en": "Free space !{{is|is not}} below [[percent]] %",
-    "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %"
+    "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %",
+    "nl": "Vrije ruimte !{{is|is niet}} onder [[percent]] %"
   },
   "args": [
     {
@@ -19,14 +21,16 @@
       "type": "number",
       "title": {
         "en": "Free space (%)",
-        "de": "Freier Speicher (%)"
+        "de": "Freier Speicher (%)",
+        "nl": "Vrije ruimte (%)"
       },
       "min": 1,
       "max": 99,
       "step": 1,
       "placeholder": {
         "en": "10",
-        "de": "10"
+        "de": "10",
+        "nl": "10"
       }
     }
   ]

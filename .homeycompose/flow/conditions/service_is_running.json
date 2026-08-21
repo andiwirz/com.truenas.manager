@@ -2,7 +2,8 @@
   "id": "service_is_running",
   "title": {
     "en": "Service !{{is|is not}} running",
-    "de": "Dienst !{{läuft|läuft nicht}}"
+    "de": "Dienst !{{läuft|läuft nicht}}",
+    "nl": "Service !{{draait|draait niet}}"
   },
   "args": [
     {

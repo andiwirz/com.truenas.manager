@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Image Update",
-    "de": "Image-Update"
+    "de": "Image-Update",
+    "nl": "Image-update"
   },
   "getable": true,
   "setable": false,

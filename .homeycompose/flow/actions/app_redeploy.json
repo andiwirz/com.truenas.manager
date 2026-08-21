@@ -2,11 +2,13 @@
   "id": "app_redeploy",
   "title": {
     "en": "Redeploy the app",
-    "de": "App neu bereitstellen"
+    "de": "App neu bereitstellen",
+    "nl": "De app opnieuw uitrollen"
   },
   "hint": {
     "en": "Stops the app, pulls the latest container images and starts it again.",
-    "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder."
+    "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder.",
+    "nl": "Stopt de app, haalt de nieuwste container-images op en start hem opnieuw."
   },
   "args": [
     {

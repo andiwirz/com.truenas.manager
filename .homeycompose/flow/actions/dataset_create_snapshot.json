@@ -2,11 +2,13 @@
   "id": "dataset_create_snapshot",
   "title": {
     "en": "Create a snapshot",
-    "de": "Snapshot erstellen"
+    "de": "Snapshot erstellen",
+    "nl": "Een snapshot maken"
   },
   "hint": {
     "en": "Creates a snapshot named after the prefix and the current time, configured in the device settings.",
-    "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen."
+    "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen.",
+    "nl": "Maakt een snapshot vernoemd naar het voorvoegsel en het huidige tijdstip, in te stellen bij de apparaatinstellingen."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Snapshot name",
-        "de": "Snapshot-Name"
+        "de": "Snapshot-Name",
+        "nl": "Snapshotnaam"
       }
     }
   ]

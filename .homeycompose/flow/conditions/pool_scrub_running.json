@@ -2,7 +2,8 @@
   "id": "pool_scrub_running",
   "title": {
     "en": "A scrub !{{is|is not}} running",
-    "de": "Ein Scrub !{{läuft|läuft nicht}}"
+    "de": "Ein Scrub !{{läuft|läuft nicht}}",
+    "nl": "Er !{{loopt|loopt geen}} scrub"
   },
   "args": [
     {

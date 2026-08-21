@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Refresh",
-    "de": "Aktualisieren"
+    "de": "Aktualisieren",
+    "nl": "Vernieuwen"
   },
   "getable": false,
   "setable": true,

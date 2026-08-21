@@ -2,15 +2,18 @@
   "id": "system_reboot",
   "title": {
     "en": "Reboot the NAS",
-    "de": "NAS neu starten"
+    "de": "NAS neu starten",
+    "nl": "De NAS opnieuw opstarten"
   },
   "titleFormatted": {
     "en": "Reboot the NAS after [[delay]] s",
-    "de": "NAS nach [[delay]] s neu starten"
+    "de": "NAS nach [[delay]] s neu starten",
+    "nl": "De NAS na [[delay]] s opnieuw opstarten"
   },
   "hint": {
     "en": "Reboots the whole TrueNAS system. All shares, apps and virtual machines go offline. The API key needs write permission.",
-    "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte."
+    "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte.",
+    "nl": "Start het hele TrueNAS-systeem opnieuw op. Alle shares, apps en virtuele machines gaan offline. De API-sleutel heeft schrijfrechten nodig."
   },
   "args": [
     {
@@ -23,14 +26,16 @@
       "type": "number",
       "title": {
         "en": "Delay (seconds)",
-        "de": "Verzögerung (Sekunden)"
+        "de": "Verzögerung (Sekunden)",
+        "nl": "Vertraging (seconden)"
       },
       "min": 0,
       "max": 3600,
       "step": 1,
       "placeholder": {
         "en": "0",
-        "de": "0"
+        "de": "0",
+        "nl": "0"
       }
     }
   ]

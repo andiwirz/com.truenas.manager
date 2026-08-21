@@ -8,11 +8,13 @@
   ],
   "name": {
     "en": "TrueNAS Manager",
-    "de": "TrueNAS Manager"
+    "de": "TrueNAS Manager",
+    "nl": "TrueNAS Manager"
   },
   "description": {
     "en": "Your storage, pools and services at a glance.",
-    "de": "Speicher, Pools und Dienste immer im Blick."
+    "de": "Speicher, Pools und Dienste immer im Blick.",
+    "nl": "Je opslag, pools en services in één oogopslag."
   },
   "category": [
     "tools"
@@ -45,6 +47,20 @@
       "smart",
       "backup",
       "netzwerkspeicher"
+    ],
+    "nl": [
+      "truenas",
+      "nas",
+      "zfs",
+      "opslag",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "schijf",
+      "smart",
+      "back-up",
+      "netwerkopslag"
     ]
   },
   "permissions": [],
@@ -67,9 +83,25 @@
       "method": "GET",
       "path": "/debug"
     },
+    "getSystemDetails": {
+      "method": "GET",
+      "path": "/details"
+    },
     "refreshSystem": {
       "method": "GET",
       "path": "/refresh"
+    },
+    "runDiagnostics": {
+      "method": "GET",
+      "path": "/diagnostics"
+    },
+    "getAppSettings": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "setAppSettings": {
+      "method": "POST",
+      "path": "/settings"
     },
     "getLog": {
       "method": "GET",

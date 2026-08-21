@@ -2,7 +2,8 @@
   "id": "system_update_found",
   "title": {
     "en": "A system update became available",
-    "de": "Ein System-Update ist verfügbar"
+    "de": "Ein System-Update ist verfügbar",
+    "nl": "Er is een systeemupdate beschikbaar gekomen"
   },
   "args": [
     {
@@ -17,7 +18,8 @@
       "type": "string",
       "title": {
         "en": "Version",
-        "de": "Version"
+        "de": "Version",
+        "nl": "Versie"
       }
     }
   ]

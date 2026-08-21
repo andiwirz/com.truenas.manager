@@ -2,7 +2,8 @@
   "id": "pool_is_healthy",
   "title": {
     "en": "Pool !{{is|is not}} healthy",
-    "de": "Pool !{{ist|ist nicht}} in Ordnung"
+    "de": "Pool !{{ist|ist nicht}} in Ordnung",
+    "nl": "Pool !{{is|is niet}} gezond"
   },
   "args": [
     {

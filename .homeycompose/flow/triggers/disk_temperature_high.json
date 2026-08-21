@@ -2,15 +2,18 @@
   "id": "disk_temperature_high",
   "title": {
     "en": "Disk temperature rose above",
-    "de": "Festplattentemperatur ist gestiegen über"
+    "de": "Festplattentemperatur ist gestiegen über",
+    "nl": "Schijftemperatuur is gestegen boven"
   },
   "titleFormatted": {
     "en": "Disk temperature rose above [[temperature]] °C",
-    "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen"
+    "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen",
+    "nl": "Schijftemperatuur is gestegen boven [[temperature]] °C"
   },
   "hint": {
     "en": "Fires once each time the temperature crosses the threshold upwards, not on every reading above it.",
-    "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber."
+    "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber.",
+    "nl": "Wordt eenmaal geactiveerd telkens wanneer de temperatuur de drempel opwaarts passeert, niet bij elke meting erboven."
   },
   "args": [
     {
@@ -23,14 +26,16 @@
       "type": "number",
       "title": {
         "en": "Temperature (°C)",
-        "de": "Temperatur (°C)"
+        "de": "Temperatur (°C)",
+        "nl": "Temperatuur (°C)"
       },
       "min": 20,
       "max": 90,
       "step": 1,
       "placeholder": {
         "en": "50",
-        "de": "50"
+        "de": "50",
+        "nl": "50"
       }
     }
   ],
@@ -40,7 +45,8 @@
       "type": "number",
       "title": {
         "en": "Temperature",
-        "de": "Temperatur"
+        "de": "Temperatur",
+        "nl": "Temperatuur"
       }
     },
     {
@@ -48,7 +54,8 @@
       "type": "string",
       "title": {
         "en": "Disk",
-        "de": "Festplatte"
+        "de": "Festplatte",
+        "nl": "Schijf"
       }
     }
   ]

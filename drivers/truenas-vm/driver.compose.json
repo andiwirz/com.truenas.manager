@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Virtual Machine",
-    "de": "Virtuelle Maschine"
+    "de": "Virtuelle Maschine",
+    "nl": "Virtuele Machine"
   },
   "class": "other",
   "capabilities": [
@@ -14,15 +15,18 @@
     "onoff": {
       "title": {
         "en": "Running",
-        "de": "Läuft"
+        "de": "Läuft",
+        "nl": "Draait"
       },
       "insightsTitleTrue": {
         "en": "VM started",
-        "de": "VM gestartet"
+        "de": "VM gestartet",
+        "nl": "VM gestart"
       },
       "insightsTitleFalse": {
         "en": "VM stopped",
-        "de": "VM gestoppt"
+        "de": "VM gestoppt",
+        "nl": "VM gestopt"
       }
     }
   },
@@ -49,7 +53,8 @@
       "type": "group",
       "label": {
         "en": "Virtual machine",
-        "de": "Virtuelle Maschine"
+        "de": "Virtuelle Maschine",
+        "nl": "Virtuele machine"
       },
       "children": [
         {
@@ -57,12 +62,14 @@
           "type": "checkbox",
           "label": {
             "en": "Force stop",
-            "de": "Erzwungenes Stoppen"
+            "de": "Erzwungenes Stoppen",
+            "nl": "Geforceerd stoppen"
           },
           "value": false,
           "hint": {
             "en": "Off sends a graceful shutdown request to the guest operating system. On cuts power immediately, which can lose unsaved data.",
-            "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können."
+            "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können.",
+            "nl": "Uit stuurt een nette afsluitopdracht naar het gastbesturingssysteem. Aan haalt direct de stroom eraf, waardoor niet-opgeslagen gegevens verloren kunnen gaan."
           }
         },
         {
@@ -70,12 +77,14 @@
           "type": "checkbox",
           "label": {
             "en": "Allow memory overcommit",
-            "de": "Speicher-Überbelegung erlauben"
+            "de": "Speicher-Überbelegung erlauben",
+            "nl": "Geheugenovercommit toestaan"
           },
           "value": false,
           "hint": {
             "en": "Lets the machine start even when the host has less free memory than the machine is assigned. Applies when starting from the device tile; a flow can decide per run.",
-            "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden."
+            "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden.",
+            "nl": "Laat de machine ook starten wanneer de host minder vrij geheugen heeft dan aan de machine is toegewezen. Geldt bij starten vanaf de apparaattegel; een flow kan het per keer bepalen."
           }
         },
         {
@@ -83,12 +92,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show restart button",
-            "de": "Neustart-Schaltfläche anzeigen"
+            "de": "Neustart-Schaltfläche anzeigen",
+            "nl": "Herstartknop tonen"
           },
           "value": true,
           "hint": {
             "en": "Shows a button on the device tile that restarts this virtual machine.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet.",
+            "nl": "Toont een knop op de apparaattegel die deze virtuele machine herstart."
           }
         },
         {
@@ -96,7 +107,8 @@
           "type": "label",
           "label": {
             "en": "Virtual CPUs",
-            "de": "Virtuelle CPUs"
+            "de": "Virtuelle CPUs",
+            "nl": "Virtuele CPU’s"
           },
           "value": "-"
         }

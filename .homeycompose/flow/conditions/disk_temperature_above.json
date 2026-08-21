@@ -2,11 +2,13 @@
   "id": "disk_temperature_above",
   "title": {
     "en": "Temperature !{{is|is not}} above",
-    "de": "Temperatur !{{ist|ist nicht}} über"
+    "de": "Temperatur !{{ist|ist nicht}} über",
+    "nl": "Temperatuur !{{is|is niet}} boven"
   },
   "titleFormatted": {
     "en": "Temperature !{{is|is not}} above [[temperature]] °C",
-    "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C"
+    "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C",
+    "nl": "Temperatuur !{{is|is niet}} boven [[temperature]] °C"
   },
   "args": [
     {
@@ -19,14 +21,16 @@
       "type": "number",
       "title": {
         "en": "Temperature (°C)",
-        "de": "Temperatur (°C)"
+        "de": "Temperatur (°C)",
+        "nl": "Temperatuur (°C)"
       },
       "min": 20,
       "max": 90,
       "step": 1,
       "placeholder": {
         "en": "50",
-        "de": "50"
+        "de": "50",
+        "nl": "50"
       }
     }
   ]

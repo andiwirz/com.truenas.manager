@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "TrueNAS System",
-    "de": "TrueNAS System"
+    "de": "TrueNAS System",
+    "nl": "TrueNAS-systeem"
   },
   "class": "sensor",
   "capabilities": [
@@ -29,13 +30,15 @@
     "alarm_generic": {
       "title": {
         "en": "Critical Alert",
-        "de": "Kritische Meldung"
+        "de": "Kritische Meldung",
+        "nl": "Kritieke melding"
       }
     },
     "measure_temperature": {
       "title": {
         "en": "CPU Temperature",
-        "de": "CPU-Temperatur"
+        "de": "CPU-Temperatur",
+        "nl": "CPU-temperatuur"
       }
     }
   },
@@ -54,7 +57,8 @@
       "type": "group",
       "label": {
         "en": "Connection",
-        "de": "Verbindung"
+        "de": "Verbindung",
+        "nl": "Verbinding"
       },
       "children": [
         {
@@ -62,12 +66,14 @@
           "type": "text",
           "label": {
             "en": "Host or IP address",
-            "de": "Host oder IP-Adresse"
+            "de": "Host oder IP-Adresse",
+            "nl": "Host of IP-adres"
           },
           "value": "",
           "hint": {
             "en": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local. A DHCP reservation in your router is recommended.",
-            "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen."
+            "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen.",
+            "nl": "Het lokale adres van je TrueNAS, bijvoorbeeld 192.168.1.50 of truenas.local. Een DHCP-reservering in je router wordt aangeraden."
           }
         },
         {
@@ -75,7 +81,8 @@
           "type": "number",
           "label": {
             "en": "Port",
-            "de": "Port"
+            "de": "Port",
+            "nl": "Poort"
           },
           "value": 443,
           "min": 1,
@@ -83,7 +90,8 @@
           "step": 1,
           "hint": {
             "en": "443 for HTTPS, 80 for HTTP.",
-            "de": "443 für HTTPS, 80 für HTTP."
+            "de": "443 für HTTPS, 80 für HTTP.",
+            "nl": "443 voor HTTPS, 80 voor HTTP."
           }
         },
         {
@@ -91,12 +99,14 @@
           "type": "checkbox",
           "label": {
             "en": "Use HTTPS",
-            "de": "HTTPS verwenden"
+            "de": "HTTPS verwenden",
+            "nl": "HTTPS gebruiken"
           },
           "value": true,
           "hint": {
             "en": "Connects over wss:// instead of ws://. Turn off only if your TrueNAS web interface is reachable over plain HTTP.",
-            "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist."
+            "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist.",
+            "nl": "Maakt verbinding via wss:// in plaats van ws://. Zet dit alleen uit als je TrueNAS-webinterface via gewoon HTTP bereikbaar is."
           }
         },
         {
@@ -104,12 +114,14 @@
           "type": "checkbox",
           "label": {
             "en": "Accept self-signed certificate",
-            "de": "Selbstsigniertes Zertifikat akzeptieren"
+            "de": "Selbstsigniertes Zertifikat akzeptieren",
+            "nl": "Zelfondertekend certificaat accepteren"
           },
           "value": true,
           "hint": {
             "en": "TrueNAS uses a self-signed certificate by default. Turn this off only if you installed a certificate that Homey can verify.",
-            "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist."
+            "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist.",
+            "nl": "TrueNAS gebruikt standaard een zelfondertekend certificaat. Zet dit alleen uit als je een certificaat hebt geïnstalleerd dat Homey kan verifiëren."
           }
         },
         {
@@ -117,12 +129,14 @@
           "type": "password",
           "label": {
             "en": "API key",
-            "de": "API-Schlüssel"
+            "de": "API-Schlüssel",
+            "nl": "API-sleutel"
           },
           "value": "",
           "hint": {
             "en": "Create the key in the TrueNAS web interface under Credentials → API Keys. The account behind the key needs read access, plus write access for the actions you use.",
-            "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen."
+            "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen.",
+            "nl": "Maak de sleutel aan in de TrueNAS-webinterface onder Credentials → API Keys. Het account achter de sleutel heeft leesrechten nodig, plus schrijfrechten voor de acties die je gebruikt."
           }
         }
       ]
@@ -131,7 +145,8 @@
       "type": "group",
       "label": {
         "en": "Polling",
-        "de": "Abfrage"
+        "de": "Abfrage",
+        "nl": "Opvragen"
       },
       "children": [
         {
@@ -139,7 +154,8 @@
           "type": "number",
           "label": {
             "en": "Poll interval (seconds)",
-            "de": "Abfrageintervall (Sekunden)"
+            "de": "Abfrageintervall (Sekunden)",
+            "nl": "Opvraaginterval (seconden)"
           },
           "value": 60,
           "min": 15,
@@ -147,7 +163,8 @@
           "step": 5,
           "hint": {
             "en": "How often system state, pools, services, apps and virtual machines are read. All devices of this NAS share one request per cycle (default: 60 s).",
-            "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s)."
+            "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s).",
+            "nl": "Hoe vaak systeemstatus, pools, services, apps en virtuele machines worden gelezen. Alle apparaten van deze NAS delen één aanvraag per cyclus (standaard: 60 s)."
           }
         },
         {
@@ -155,7 +172,8 @@
           "type": "number",
           "label": {
             "en": "Disk poll interval (seconds)",
-            "de": "Festplatten-Abfrageintervall (Sekunden)"
+            "de": "Festplatten-Abfrageintervall (Sekunden)",
+            "nl": "Opvraaginterval schijven (seconden)"
           },
           "value": 300,
           "min": 60,
@@ -163,7 +181,8 @@
           "step": 30,
           "hint": {
             "en": "Reading disk temperatures queries SMART, which can keep drives from spinning down. Increase this if your drives should stay in standby (default: 300 s).",
-            "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s)."
+            "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s).",
+            "nl": "Het uitlezen van schijftemperaturen bevraagt SMART, wat kan voorkomen dat schijven tot stilstand komen. Verhoog dit als je schijven in stand-by moeten blijven (standaard: 300 s)."
           }
         }
       ]
@@ -172,7 +191,8 @@
       "type": "group",
       "label": {
         "en": "Updates",
-        "de": "Updates"
+        "de": "Updates",
+        "nl": "Updates"
       },
       "children": [
         {
@@ -180,12 +200,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show install update button",
-            "de": "Schaltfläche «Update installieren» anzeigen"
+            "de": "Schaltfläche «Update installieren» anzeigen",
+            "nl": "Knop voor update installeren tonen"
           },
           "value": false,
           "hint": {
             "en": "Shows a button on the device tile that installs a pending TrueNAS update. The button installs without rebooting, so the new version becomes active at the next restart. Off by default so it cannot be pressed by accident.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird.",
+            "nl": "Toont een knop op de apparaattegel die een klaarstaande TrueNAS-update installeert. De knop installeert zonder opnieuw op te starten, dus de nieuwe versie wordt bij de volgende herstart actief. Standaard uit, zodat er niet per ongeluk op wordt gedrukt."
           }
         }
       ]
@@ -194,7 +216,8 @@
       "type": "group",
       "label": {
         "en": "Alerts",
-        "de": "Meldungen"
+        "de": "Meldungen",
+        "nl": "Meldingen"
       },
       "children": [
         {
@@ -202,7 +225,8 @@
           "type": "radio",
           "label": {
             "en": "Trigger alarm from level",
-            "de": "Alarm auslösen ab Stufe"
+            "de": "Alarm auslösen ab Stufe",
+            "nl": "Alarm vanaf niveau"
           },
           "value": "ERROR",
           "values": [
@@ -210,27 +234,31 @@
               "id": "WARNING",
               "label": {
                 "en": "Warning and above",
-                "de": "Warnung und höher"
+                "de": "Warnung und höher",
+                "nl": "Waarschuwing en hoger"
               }
             },
             {
               "id": "ERROR",
               "label": {
                 "en": "Error and above",
-                "de": "Fehler und höher"
+                "de": "Fehler und höher",
+                "nl": "Fout en hoger"
               }
             },
             {
               "id": "CRITICAL",
               "label": {
                 "en": "Critical and above",
-                "de": "Kritisch und höher"
+                "de": "Kritisch und höher",
+                "nl": "Kritiek en hoger"
               }
             }
           ],
           "hint": {
             "en": "Which TrueNAS alert level sets the Critical Alert flag and fires the alert flow trigger.",
-            "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird."
+            "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird.",
+            "nl": "Welk TrueNAS-meldingsniveau de vlag Kritieke melding zet en de flow-trigger voor meldingen activeert."
           }
         }
       ]
@@ -239,7 +267,8 @@
       "type": "group",
       "label": {
         "en": "System information",
-        "de": "Systeminformationen"
+        "de": "Systeminformationen",
+        "nl": "Systeemgegevens"
       },
       "children": [
         {
@@ -247,7 +276,8 @@
           "type": "label",
           "label": {
             "en": "Hostname",
-            "de": "Hostname"
+            "de": "Hostname",
+            "nl": "Hostnaam"
           },
           "value": "-"
         },
@@ -256,7 +286,8 @@
           "type": "label",
           "label": {
             "en": "TrueNAS version",
-            "de": "TrueNAS-Version"
+            "de": "TrueNAS-Version",
+            "nl": "TrueNAS-versie"
           },
           "value": "-"
         },
@@ -265,7 +296,8 @@
           "type": "label",
           "label": {
             "en": "Hardware",
-            "de": "Hardware"
+            "de": "Hardware",
+            "nl": "Hardware"
           },
           "value": "-"
         },
@@ -274,7 +306,8 @@
           "type": "label",
           "label": {
             "en": "Serial number",
-            "de": "Seriennummer"
+            "de": "Seriennummer",
+            "nl": "Serienummer"
           },
           "value": "-"
         }

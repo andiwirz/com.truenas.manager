@@ -9,11 +9,13 @@
   ],
   "name": {
     "en": "TrueNAS Manager",
-    "de": "TrueNAS Manager"
+    "de": "TrueNAS Manager",
+    "nl": "TrueNAS Manager"
   },
   "description": {
     "en": "Your storage, pools and services at a glance.",
-    "de": "Speicher, Pools und Dienste immer im Blick."
+    "de": "Speicher, Pools und Dienste immer im Blick.",
+    "nl": "Je opslag, pools en services in één oogopslag."
   },
   "category": [
     "tools"
@@ -46,6 +48,20 @@
       "smart",
       "backup",
       "netzwerkspeicher"
+    ],
+    "nl": [
+      "truenas",
+      "nas",
+      "zfs",
+      "opslag",
+      "server",
+      "scale",
+      "ixsystems",
+      "pool",
+      "schijf",
+      "smart",
+      "back-up",
+      "netwerkopslag"
     ]
   },
   "permissions": [],
@@ -68,9 +84,25 @@
       "method": "GET",
       "path": "/debug"
     },
+    "getSystemDetails": {
+      "method": "GET",
+      "path": "/details"
+    },
     "refreshSystem": {
       "method": "GET",
       "path": "/refresh"
+    },
+    "runDiagnostics": {
+      "method": "GET",
+      "path": "/diagnostics"
+    },
+    "getAppSettings": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "setAppSettings": {
+      "method": "POST",
+      "path": "/settings"
     },
     "getLog": {
       "method": "GET",
@@ -98,11 +130,13 @@
         "id": "app_image_update_found",
         "title": {
           "en": "A container image update became available",
-          "de": "Ein Container-Image-Update ist verfügbar"
+          "de": "Ein Container-Image-Update ist verfügbar",
+          "nl": "Er is een container-image-update beschikbaar gekomen"
         },
         "hint": {
           "en": "Fires when a newer Docker image is available for this app. This is separate from a catalog version upgrade — either can be pending without the other.",
-          "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen."
+          "de": "Wird ausgelöst, wenn ein neueres Docker-Image für diese App bereitsteht. Das ist unabhängig vom Katalog-Update — beides kann einzeln anstehen.",
+          "nl": "Wordt geactiveerd wanneer er een nieuwer Docker-image voor deze app klaarstaat. Dit staat los van een catalogusupdate — beide kunnen los van elkaar klaarstaan."
         },
         "args": [
           {
@@ -117,7 +151,8 @@
             "type": "string",
             "title": {
               "en": "Web address",
-              "de": "Webadresse"
+              "de": "Webadresse",
+              "nl": "Webadres"
             }
           }
         ]
@@ -126,7 +161,8 @@
         "id": "app_state_changed",
         "title": {
           "en": "App status changed",
-          "de": "App-Status hat gewechselt"
+          "de": "App-Status hat gewechselt",
+          "nl": "App-status gewijzigd"
         },
         "args": [
           {
@@ -141,7 +177,8 @@
             "type": "string",
             "title": {
               "en": "Status",
-              "de": "Status"
+              "de": "Status",
+              "nl": "Status"
             }
           },
           {
@@ -149,7 +186,8 @@
             "type": "string",
             "title": {
               "en": "Previous status",
-              "de": "Vorheriger Status"
+              "de": "Vorheriger Status",
+              "nl": "Vorige status"
             }
           },
           {
@@ -157,7 +195,8 @@
             "type": "string",
             "title": {
               "en": "Web address",
-              "de": "Webadresse"
+              "de": "Webadresse",
+              "nl": "Webadres"
             }
           }
         ]
@@ -166,7 +205,8 @@
         "id": "app_update_found",
         "title": {
           "en": "An app update became available",
-          "de": "Ein App-Update ist verfügbar"
+          "de": "Ein App-Update ist verfügbar",
+          "nl": "Er is een app-update beschikbaar gekomen"
         },
         "args": [
           {
@@ -181,7 +221,8 @@
             "type": "string",
             "title": {
               "en": "Version",
-              "de": "Version"
+              "de": "Version",
+              "nl": "Versie"
             }
           },
           {
@@ -189,7 +230,8 @@
             "type": "string",
             "title": {
               "en": "Web address",
-              "de": "Webadresse"
+              "de": "Webadresse",
+              "nl": "Webadres"
             }
           }
         ]
@@ -198,15 +240,18 @@
         "id": "dataset_space_low",
         "title": {
           "en": "Free space dropped below",
-          "de": "Freier Speicher ist gefallen unter"
+          "de": "Freier Speicher ist gefallen unter",
+          "nl": "Vrije ruimte is gedaald onder"
         },
         "titleFormatted": {
           "en": "Free space dropped below [[percent]] %",
-          "de": "Freier Speicher ist unter [[percent]] % gefallen"
+          "de": "Freier Speicher ist unter [[percent]] % gefallen",
+          "nl": "Vrije ruimte is gedaald onder [[percent]] %"
         },
         "hint": {
           "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
-          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter.",
+          "nl": "Wordt eenmaal geactiveerd telkens wanneer de vrije ruimte de drempel neerwaarts passeert, niet bij elke meting eronder."
         },
         "args": [
           {
@@ -219,14 +264,16 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             },
             "min": 1,
             "max": 99,
             "step": 1,
             "placeholder": {
               "en": "10",
-              "de": "10"
+              "de": "10",
+              "nl": "10"
             }
           }
         ],
@@ -236,7 +283,8 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             }
           },
           {
@@ -244,7 +292,8 @@
             "type": "number",
             "title": {
               "en": "Free space (GB)",
-              "de": "Freier Speicher (GB)"
+              "de": "Freier Speicher (GB)",
+              "nl": "Vrije ruimte (GB)"
             }
           }
         ]
@@ -253,15 +302,18 @@
         "id": "disk_temperature_high",
         "title": {
           "en": "Disk temperature rose above",
-          "de": "Festplattentemperatur ist gestiegen über"
+          "de": "Festplattentemperatur ist gestiegen über",
+          "nl": "Schijftemperatuur is gestegen boven"
         },
         "titleFormatted": {
           "en": "Disk temperature rose above [[temperature]] °C",
-          "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen"
+          "de": "Festplattentemperatur ist über [[temperature]] °C gestiegen",
+          "nl": "Schijftemperatuur is gestegen boven [[temperature]] °C"
         },
         "hint": {
           "en": "Fires once each time the temperature crosses the threshold upwards, not on every reading above it.",
-          "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber."
+          "de": "Wird jeweils einmal beim Überschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darüber.",
+          "nl": "Wordt eenmaal geactiveerd telkens wanneer de temperatuur de drempel opwaarts passeert, niet bij elke meting erboven."
         },
         "args": [
           {
@@ -274,14 +326,16 @@
             "type": "number",
             "title": {
               "en": "Temperature (°C)",
-              "de": "Temperatur (°C)"
+              "de": "Temperatur (°C)",
+              "nl": "Temperatuur (°C)"
             },
             "min": 20,
             "max": 90,
             "step": 1,
             "placeholder": {
               "en": "50",
-              "de": "50"
+              "de": "50",
+              "nl": "50"
             }
           }
         ],
@@ -291,7 +345,8 @@
             "type": "number",
             "title": {
               "en": "Temperature",
-              "de": "Temperatur"
+              "de": "Temperatur",
+              "nl": "Temperatuur"
             }
           },
           {
@@ -299,7 +354,8 @@
             "type": "string",
             "title": {
               "en": "Disk",
-              "de": "Festplatte"
+              "de": "Festplatte",
+              "nl": "Schijf"
             }
           }
         ]
@@ -308,7 +364,8 @@
         "id": "pool_scrub_finished",
         "title": {
           "en": "Scrub finished",
-          "de": "Scrub ist abgeschlossen"
+          "de": "Scrub ist abgeschlossen",
+          "nl": "Scrub voltooid"
         },
         "args": [
           {
@@ -323,7 +380,8 @@
             "type": "string",
             "title": {
               "en": "Pool",
-              "de": "Pool"
+              "de": "Pool",
+              "nl": "Pool"
             }
           },
           {
@@ -331,7 +389,8 @@
             "type": "number",
             "title": {
               "en": "Errors",
-              "de": "Fehler"
+              "de": "Fehler",
+              "nl": "Fouten"
             }
           }
         ]
@@ -340,7 +399,8 @@
         "id": "pool_scrub_started",
         "title": {
           "en": "Scrub started",
-          "de": "Scrub wurde gestartet"
+          "de": "Scrub wurde gestartet",
+          "nl": "Scrub gestart"
         },
         "args": [
           {
@@ -355,7 +415,8 @@
             "type": "string",
             "title": {
               "en": "Pool",
-              "de": "Pool"
+              "de": "Pool",
+              "nl": "Pool"
             }
           }
         ]
@@ -364,15 +425,18 @@
         "id": "pool_space_low",
         "title": {
           "en": "Free space dropped below",
-          "de": "Freier Speicher ist gefallen unter"
+          "de": "Freier Speicher ist gefallen unter",
+          "nl": "Vrije ruimte is gedaald onder"
         },
         "titleFormatted": {
           "en": "Free space dropped below [[percent]] %",
-          "de": "Freier Speicher ist unter [[percent]] % gefallen"
+          "de": "Freier Speicher ist unter [[percent]] % gefallen",
+          "nl": "Vrije ruimte is gedaald onder [[percent]] %"
         },
         "hint": {
           "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
-          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+          "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter.",
+          "nl": "Wordt eenmaal geactiveerd telkens wanneer de vrije ruimte de drempel neerwaarts passeert, niet bij elke meting eronder."
         },
         "args": [
           {
@@ -385,14 +449,16 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             },
             "min": 1,
             "max": 99,
             "step": 1,
             "placeholder": {
               "en": "10",
-              "de": "10"
+              "de": "10",
+              "nl": "10"
             }
           }
         ],
@@ -402,7 +468,8 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             }
           },
           {
@@ -410,7 +477,8 @@
             "type": "number",
             "title": {
               "en": "Free space (TB)",
-              "de": "Freier Speicher (TB)"
+              "de": "Freier Speicher (TB)",
+              "nl": "Vrije ruimte (TB)"
             }
           }
         ]
@@ -419,7 +487,8 @@
         "id": "pool_status_changed",
         "title": {
           "en": "Pool status changed",
-          "de": "Pool-Status hat gewechselt"
+          "de": "Pool-Status hat gewechselt",
+          "nl": "Poolstatus gewijzigd"
         },
         "args": [
           {
@@ -434,7 +503,8 @@
             "type": "string",
             "title": {
               "en": "Status",
-              "de": "Status"
+              "de": "Status",
+              "nl": "Status"
             }
           },
           {
@@ -442,7 +512,8 @@
             "type": "string",
             "title": {
               "en": "Previous status",
-              "de": "Vorheriger Status"
+              "de": "Vorheriger Status",
+              "nl": "Vorige status"
             }
           }
         ]
@@ -451,11 +522,13 @@
         "id": "pool_unhealthy",
         "title": {
           "en": "Pool became unhealthy",
-          "de": "Pool ist nicht mehr in Ordnung"
+          "de": "Pool ist nicht mehr in Ordnung",
+          "nl": "Pool is niet meer gezond"
         },
         "hint": {
           "en": "Fires when the pool leaves the healthy state, for example on DEGRADED or FAULTED.",
-          "de": "Wird ausgelöst, wenn der Pool den fehlerfreien Zustand verlässt, etwa bei DEGRADED oder FAULTED."
+          "de": "Wird ausgelöst, wenn der Pool den fehlerfreien Zustand verlässt, etwa bei DEGRADED oder FAULTED.",
+          "nl": "Wordt geactiveerd wanneer de pool de gezonde toestand verlaat, bijvoorbeeld bij DEGRADED of FAULTED."
         },
         "args": [
           {
@@ -470,7 +543,8 @@
             "type": "string",
             "title": {
               "en": "Status",
-              "de": "Status"
+              "de": "Status",
+              "nl": "Status"
             }
           },
           {
@@ -478,7 +552,8 @@
             "type": "string",
             "title": {
               "en": "Detail",
-              "de": "Details"
+              "de": "Details",
+              "nl": "Details"
             }
           }
         ]
@@ -487,11 +562,13 @@
         "id": "system_alert_raised",
         "title": {
           "en": "An alert was raised",
-          "de": "Eine Meldung ist aufgetreten"
+          "de": "Eine Meldung ist aufgetreten",
+          "nl": "Er is een melding binnengekomen"
         },
         "hint": {
           "en": "Fires once for every new TrueNAS alert at or above the level set in the device settings.",
-          "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst."
+          "de": "Wird für jede neue TrueNAS-Meldung ab der in den Geräteeinstellungen gewählten Stufe einmal ausgelöst.",
+          "nl": "Wordt eenmaal geactiveerd voor elke nieuwe TrueNAS-melding op of boven het niveau dat in de apparaatinstellingen is ingesteld."
         },
         "args": [
           {
@@ -506,7 +583,8 @@
             "type": "string",
             "title": {
               "en": "Level",
-              "de": "Stufe"
+              "de": "Stufe",
+              "nl": "Niveau"
             }
           },
           {
@@ -514,7 +592,8 @@
             "type": "string",
             "title": {
               "en": "Message",
-              "de": "Meldung"
+              "de": "Meldung",
+              "nl": "Bericht"
             }
           },
           {
@@ -522,7 +601,8 @@
             "type": "string",
             "title": {
               "en": "Category",
-              "de": "Kategorie"
+              "de": "Kategorie",
+              "nl": "Categorie"
             }
           }
         ]
@@ -531,7 +611,8 @@
         "id": "system_update_found",
         "title": {
           "en": "A system update became available",
-          "de": "Ein System-Update ist verfügbar"
+          "de": "Ein System-Update ist verfügbar",
+          "nl": "Er is een systeemupdate beschikbaar gekomen"
         },
         "args": [
           {
@@ -546,7 +627,8 @@
             "type": "string",
             "title": {
               "en": "Version",
-              "de": "Version"
+              "de": "Version",
+              "nl": "Versie"
             }
           }
         ]
@@ -555,11 +637,13 @@
         "id": "task_failed",
         "title": {
           "en": "A task failed",
-          "de": "Eine Aufgabe ist fehlgeschlagen"
+          "de": "Eine Aufgabe ist fehlgeschlagen",
+          "nl": "Een taak is mislukt"
         },
         "hint": {
           "en": "Fires only when a run ends in a failed, errored or aborted state. Use this to notice a backup that quietly stopped working.",
-          "de": "Wird nur ausgelöst, wenn ein Lauf fehlgeschlagen, fehlerhaft oder abgebrochen endet. Damit merkst du, wenn ein Backup still stehen geblieben ist."
+          "de": "Wird nur ausgelöst, wenn ein Lauf fehlgeschlagen, fehlerhaft oder abgebrochen endet. Damit merkst du, wenn ein Backup still stehen geblieben ist.",
+          "nl": "Wordt alleen geactiveerd wanneer een uitvoering eindigt als mislukt, met fout of afgebroken. Zo merk je een back-up op die stilletjes gestopt is met werken."
         },
         "args": [
           {
@@ -574,7 +658,8 @@
             "type": "string",
             "title": {
               "en": "Task",
-              "de": "Aufgabe"
+              "de": "Aufgabe",
+              "nl": "Taak"
             }
           },
           {
@@ -582,7 +667,8 @@
             "type": "string",
             "title": {
               "en": "Result",
-              "de": "Ergebnis"
+              "de": "Ergebnis",
+              "nl": "Resultaat"
             }
           },
           {
@@ -590,7 +676,8 @@
             "type": "string",
             "title": {
               "en": "Type",
-              "de": "Typ"
+              "de": "Typ",
+              "nl": "Type"
             }
           }
         ]
@@ -599,11 +686,13 @@
         "id": "task_finished",
         "title": {
           "en": "A task finished",
-          "de": "Eine Aufgabe ist fertig"
+          "de": "Eine Aufgabe ist fertig",
+          "nl": "Een taak is klaar"
         },
         "hint": {
           "en": "Fires when the task leaves the running state, whether it succeeded or not.",
-          "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht."
+          "de": "Wird ausgelöst, wenn die Aufgabe den laufenden Zustand verlässt, ob erfolgreich oder nicht.",
+          "nl": "Wordt geactiveerd wanneer de taak niet langer loopt, of hij nu geslaagd is of niet."
         },
         "args": [
           {
@@ -618,7 +707,8 @@
             "type": "string",
             "title": {
               "en": "Task",
-              "de": "Aufgabe"
+              "de": "Aufgabe",
+              "nl": "Taak"
             }
           },
           {
@@ -626,7 +716,8 @@
             "type": "string",
             "title": {
               "en": "Result",
-              "de": "Ergebnis"
+              "de": "Ergebnis",
+              "nl": "Resultaat"
             }
           },
           {
@@ -634,7 +725,8 @@
             "type": "string",
             "title": {
               "en": "Type",
-              "de": "Typ"
+              "de": "Typ",
+              "nl": "Type"
             }
           }
         ]
@@ -643,7 +735,8 @@
         "id": "vm_state_changed",
         "title": {
           "en": "Virtual machine status changed",
-          "de": "VM-Status hat gewechselt"
+          "de": "VM-Status hat gewechselt",
+          "nl": "Status van virtuele machine gewijzigd"
         },
         "args": [
           {
@@ -658,7 +751,8 @@
             "type": "string",
             "title": {
               "en": "Status",
-              "de": "Status"
+              "de": "Status",
+              "nl": "Status"
             }
           },
           {
@@ -666,7 +760,8 @@
             "type": "string",
             "title": {
               "en": "Previous status",
-              "de": "Vorheriger Status"
+              "de": "Vorheriger Status",
+              "nl": "Vorige status"
             }
           }
         ]
@@ -677,7 +772,8 @@
         "id": "app_image_update_available",
         "title": {
           "en": "A container image update !{{is|is not}} available",
-          "de": "Ein Container-Image-Update !{{ist|ist nicht}} verfügbar"
+          "de": "Ein Container-Image-Update !{{ist|ist nicht}} verfügbar",
+          "nl": "Een container-image-update !{{is|is niet}} beschikbaar"
         },
         "args": [
           {
@@ -691,7 +787,8 @@
         "id": "app_is_running",
         "title": {
           "en": "App !{{is|is not}} running",
-          "de": "App !{{läuft|läuft nicht}}"
+          "de": "App !{{läuft|läuft nicht}}",
+          "nl": "App !{{draait|draait niet}}"
         },
         "args": [
           {
@@ -705,7 +802,8 @@
         "id": "app_update_available",
         "title": {
           "en": "An app update !{{is|is not}} available",
-          "de": "Ein App-Update !{{ist|ist nicht}} verfügbar"
+          "de": "Ein App-Update !{{ist|ist nicht}} verfügbar",
+          "nl": "Een app-update !{{is|is niet}} beschikbaar"
         },
         "args": [
           {
@@ -719,11 +817,13 @@
         "id": "dataset_free_space_below",
         "title": {
           "en": "Free space !{{is|is not}} below",
-          "de": "Freier Speicher !{{ist|ist nicht}} unter"
+          "de": "Freier Speicher !{{ist|ist nicht}} unter",
+          "nl": "Vrije ruimte !{{is|is niet}} onder"
         },
         "titleFormatted": {
           "en": "Free space !{{is|is not}} below [[percent]] %",
-          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %"
+          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %",
+          "nl": "Vrije ruimte !{{is|is niet}} onder [[percent]] %"
         },
         "args": [
           {
@@ -736,14 +836,16 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             },
             "min": 1,
             "max": 99,
             "step": 1,
             "placeholder": {
               "en": "10",
-              "de": "10"
+              "de": "10",
+              "nl": "10"
             }
           }
         ]
@@ -752,11 +854,13 @@
         "id": "disk_temperature_above",
         "title": {
           "en": "Temperature !{{is|is not}} above",
-          "de": "Temperatur !{{ist|ist nicht}} über"
+          "de": "Temperatur !{{ist|ist nicht}} über",
+          "nl": "Temperatuur !{{is|is niet}} boven"
         },
         "titleFormatted": {
           "en": "Temperature !{{is|is not}} above [[temperature]] °C",
-          "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C"
+          "de": "Temperatur !{{ist|ist nicht}} über [[temperature]] °C",
+          "nl": "Temperatuur !{{is|is niet}} boven [[temperature]] °C"
         },
         "args": [
           {
@@ -769,14 +873,16 @@
             "type": "number",
             "title": {
               "en": "Temperature (°C)",
-              "de": "Temperatur (°C)"
+              "de": "Temperatur (°C)",
+              "nl": "Temperatuur (°C)"
             },
             "min": 20,
             "max": 90,
             "step": 1,
             "placeholder": {
               "en": "50",
-              "de": "50"
+              "de": "50",
+              "nl": "50"
             }
           }
         ]
@@ -785,11 +891,13 @@
         "id": "pool_free_space_below",
         "title": {
           "en": "Free space !{{is|is not}} below",
-          "de": "Freier Speicher !{{ist|ist nicht}} unter"
+          "de": "Freier Speicher !{{ist|ist nicht}} unter",
+          "nl": "Vrije ruimte !{{is|is niet}} onder"
         },
         "titleFormatted": {
           "en": "Free space !{{is|is not}} below [[percent]] %",
-          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %"
+          "de": "Freier Speicher !{{ist|ist nicht}} unter [[percent]] %",
+          "nl": "Vrije ruimte !{{is|is niet}} onder [[percent]] %"
         },
         "args": [
           {
@@ -802,14 +910,16 @@
             "type": "number",
             "title": {
               "en": "Free space (%)",
-              "de": "Freier Speicher (%)"
+              "de": "Freier Speicher (%)",
+              "nl": "Vrije ruimte (%)"
             },
             "min": 1,
             "max": 99,
             "step": 1,
             "placeholder": {
               "en": "10",
-              "de": "10"
+              "de": "10",
+              "nl": "10"
             }
           }
         ]
@@ -818,7 +928,8 @@
         "id": "pool_is_healthy",
         "title": {
           "en": "Pool !{{is|is not}} healthy",
-          "de": "Pool !{{ist|ist nicht}} in Ordnung"
+          "de": "Pool !{{ist|ist nicht}} in Ordnung",
+          "nl": "Pool !{{is|is niet}} gezond"
         },
         "args": [
           {
@@ -832,7 +943,8 @@
         "id": "pool_scrub_running",
         "title": {
           "en": "A scrub !{{is|is not}} running",
-          "de": "Ein Scrub !{{läuft|läuft nicht}}"
+          "de": "Ein Scrub !{{läuft|läuft nicht}}",
+          "nl": "Er !{{loopt|loopt geen}} scrub"
         },
         "args": [
           {
@@ -846,7 +958,8 @@
         "id": "service_is_running",
         "title": {
           "en": "Service !{{is|is not}} running",
-          "de": "Dienst !{{läuft|läuft nicht}}"
+          "de": "Dienst !{{läuft|läuft nicht}}",
+          "nl": "Service !{{draait|draait niet}}"
         },
         "args": [
           {
@@ -860,11 +973,13 @@
         "id": "system_cpu_usage_above",
         "title": {
           "en": "CPU usage !{{is|is not}} above",
-          "de": "CPU-Auslastung !{{ist|ist nicht}} über"
+          "de": "CPU-Auslastung !{{ist|ist nicht}} über",
+          "nl": "CPU-gebruik !{{is|is niet}} boven"
         },
         "titleFormatted": {
           "en": "CPU usage !{{is|is not}} above [[percent]] %",
-          "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %"
+          "de": "CPU-Auslastung !{{ist|ist nicht}} über [[percent]] %",
+          "nl": "CPU-gebruik !{{is|is niet}} boven [[percent]] %"
         },
         "args": [
           {
@@ -877,14 +992,16 @@
             "type": "number",
             "title": {
               "en": "Usage (%)",
-              "de": "Auslastung (%)"
+              "de": "Auslastung (%)",
+              "nl": "Gebruik (%)"
             },
             "min": 0,
             "max": 100,
             "step": 1,
             "placeholder": {
               "en": "80",
-              "de": "80"
+              "de": "80",
+              "nl": "80"
             }
           }
         ]
@@ -893,11 +1010,13 @@
         "id": "system_has_alert",
         "title": {
           "en": "There !{{is|is no}} alert of level",
-          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe"
+          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe",
+          "nl": "Er !{{is|is geen}} melding van niveau"
         },
         "titleFormatted": {
           "en": "There !{{is|is no}} alert of level [[level]] or higher",
-          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher"
+          "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher",
+          "nl": "Er !{{is|is geen}} melding van niveau [[level]] of hoger"
         },
         "args": [
           {
@@ -910,28 +1029,32 @@
             "type": "dropdown",
             "title": {
               "en": "Level",
-              "de": "Stufe"
+              "de": "Stufe",
+              "nl": "Niveau"
             },
             "values": [
               {
                 "id": "WARNING",
                 "label": {
                   "en": "Warning",
-                  "de": "Warnung"
+                  "de": "Warnung",
+                  "nl": "Waarschuwing"
                 }
               },
               {
                 "id": "ERROR",
                 "label": {
                   "en": "Error",
-                  "de": "Fehler"
+                  "de": "Fehler",
+                  "nl": "Fout"
                 }
               },
               {
                 "id": "CRITICAL",
                 "label": {
                   "en": "Critical",
-                  "de": "Kritisch"
+                  "de": "Kritisch",
+                  "nl": "Kritiek"
                 }
               }
             ]
@@ -942,7 +1065,8 @@
         "id": "system_update_available",
         "title": {
           "en": "A system update !{{is|is not}} available",
-          "de": "Ein System-Update !{{ist|ist nicht}} verfügbar"
+          "de": "Ein System-Update !{{ist|ist nicht}} verfügbar",
+          "nl": "Een systeemupdate !{{is|is niet}} beschikbaar"
         },
         "args": [
           {
@@ -956,7 +1080,8 @@
         "id": "task_is_running",
         "title": {
           "en": "The task !{{is|is not}} running",
-          "de": "Die Aufgabe !{{läuft|läuft nicht}}"
+          "de": "Die Aufgabe !{{läuft|läuft nicht}}",
+          "nl": "De taak !{{loopt|loopt niet}}"
         },
         "args": [
           {
@@ -970,7 +1095,8 @@
         "id": "task_last_run_failed",
         "title": {
           "en": "The last run !{{failed|succeeded}}",
-          "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}"
+          "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}",
+          "nl": "De laatste uitvoering !{{is mislukt|is geslaagd}}"
         },
         "args": [
           {
@@ -984,7 +1110,8 @@
         "id": "vm_is_running",
         "title": {
           "en": "Virtual machine !{{is|is not}} running",
-          "de": "VM !{{läuft|läuft nicht}}"
+          "de": "VM !{{läuft|läuft nicht}}",
+          "nl": "Virtuele machine !{{draait|draait niet}}"
         },
         "args": [
           {
@@ -1000,11 +1127,13 @@
         "id": "app_redeploy",
         "title": {
           "en": "Redeploy the app",
-          "de": "App neu bereitstellen"
+          "de": "App neu bereitstellen",
+          "nl": "De app opnieuw uitrollen"
         },
         "hint": {
           "en": "Stops the app, pulls the latest container images and starts it again.",
-          "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder."
+          "de": "Stoppt die App, lädt die neuesten Container-Images und startet sie wieder.",
+          "nl": "Stopt de app, haalt de nieuwste container-images op en start hem opnieuw."
         },
         "args": [
           {
@@ -1018,7 +1147,8 @@
         "id": "app_start",
         "title": {
           "en": "Start the app",
-          "de": "App starten"
+          "de": "App starten",
+          "nl": "De app starten"
         },
         "args": [
           {
@@ -1032,7 +1162,8 @@
         "id": "app_stop",
         "title": {
           "en": "Stop the app",
-          "de": "App stoppen"
+          "de": "App stoppen",
+          "nl": "De app stoppen"
         },
         "args": [
           {
@@ -1046,11 +1177,13 @@
         "id": "app_upgrade",
         "title": {
           "en": "Run the app update",
-          "de": "App-Update ausführen"
+          "de": "App-Update ausführen",
+          "nl": "De app-update uitvoeren"
         },
         "hint": {
           "en": "Installs whatever update is pending: a catalog version upgrade if one is available, otherwise newer container images. The app restarts. Does nothing when the app is already up to date.",
-          "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist."
+          "de": "Installiert das wartende Update: ein Katalog-Update, falls verfügbar, sonst neuere Container-Images. Die App startet dabei neu. Tut nichts, wenn die App bereits aktuell ist.",
+          "nl": "Installeert de update die klaarstaat: een catalogusversie als die beschikbaar is, anders nieuwere container-images. De app start opnieuw. Doet niets als de app al up-to-date is."
         },
         "args": [
           {
@@ -1064,11 +1197,13 @@
         "id": "dataset_create_snapshot",
         "title": {
           "en": "Create a snapshot",
-          "de": "Snapshot erstellen"
+          "de": "Snapshot erstellen",
+          "nl": "Een snapshot maken"
         },
         "hint": {
           "en": "Creates a snapshot named after the prefix and the current time, configured in the device settings.",
-          "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen."
+          "de": "Erstellt einen Snapshot, benannt nach dem Präfix und der aktuellen Zeit aus den Geräteeinstellungen.",
+          "nl": "Maakt een snapshot vernoemd naar het voorvoegsel en het huidige tijdstip, in te stellen bij de apparaatinstellingen."
         },
         "args": [
           {
@@ -1083,7 +1218,8 @@
             "type": "string",
             "title": {
               "en": "Snapshot name",
-              "de": "Snapshot-Name"
+              "de": "Snapshot-Name",
+              "nl": "Snapshotnaam"
             }
           }
         ]
@@ -1092,11 +1228,13 @@
         "id": "pool_start_scrub",
         "title": {
           "en": "Start a scrub",
-          "de": "Scrub starten"
+          "de": "Scrub starten",
+          "nl": "Een scrub starten"
         },
         "hint": {
           "en": "Verifies every block in the pool. This takes hours on large pools and slows down other access.",
-          "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe."
+          "de": "Prüft jeden Block im Pool. Das dauert bei grossen Pools Stunden und verlangsamt andere Zugriffe.",
+          "nl": "Controleert elk blok in de pool. Dat duurt uren bij grote pools en vertraagt andere toegang."
         },
         "args": [
           {
@@ -1110,7 +1248,8 @@
         "id": "pool_stop_scrub",
         "title": {
           "en": "Stop the scrub",
-          "de": "Scrub stoppen"
+          "de": "Scrub stoppen",
+          "nl": "De scrub stoppen"
         },
         "args": [
           {
@@ -1124,11 +1263,13 @@
         "id": "service_reload",
         "title": {
           "en": "Reload the service",
-          "de": "Dienst neu laden"
+          "de": "Dienst neu laden",
+          "nl": "De service herladen"
         },
         "hint": {
           "en": "Asks the service to re-read its configuration. Unlike a restart this keeps existing connections alive. Not every service supports it.",
-          "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das."
+          "de": "Fordert den Dienst auf, seine Konfiguration neu einzulesen. Anders als ein Neustart bleiben bestehende Verbindungen erhalten. Nicht jeder Dienst unterstützt das.",
+          "nl": "Vraagt de service zijn configuratie opnieuw in te lezen. Anders dan bij een herstart blijven bestaande verbindingen in stand. Niet elke service ondersteunt dit."
         },
         "args": [
           {
@@ -1142,7 +1283,8 @@
         "id": "service_restart",
         "title": {
           "en": "Restart the service",
-          "de": "Dienst neu starten"
+          "de": "Dienst neu starten",
+          "nl": "De service herstarten"
         },
         "args": [
           {
@@ -1156,7 +1298,8 @@
         "id": "service_start",
         "title": {
           "en": "Start the service",
-          "de": "Dienst starten"
+          "de": "Dienst starten",
+          "nl": "De service starten"
         },
         "args": [
           {
@@ -1170,7 +1313,8 @@
         "id": "service_stop",
         "title": {
           "en": "Stop the service",
-          "de": "Dienst stoppen"
+          "de": "Dienst stoppen",
+          "nl": "De service stoppen"
         },
         "args": [
           {
@@ -1184,7 +1328,8 @@
         "id": "system_check_update",
         "title": {
           "en": "Check for system updates",
-          "de": "Auf System-Updates prüfen"
+          "de": "Auf System-Updates prüfen",
+          "nl": "Op systeemupdates controleren"
         },
         "args": [
           {
@@ -1198,15 +1343,18 @@
         "id": "system_install_update",
         "title": {
           "en": "Install the system update",
-          "de": "System-Update installieren"
+          "de": "System-Update installieren",
+          "nl": "De systeemupdate installeren"
         },
         "titleFormatted": {
           "en": "Install the system update, reboot [[reboot]]",
-          "de": "System-Update installieren, Neustart [[reboot]]"
+          "de": "System-Update installieren, Neustart [[reboot]]",
+          "nl": "De systeemupdate installeren, opnieuw opstarten [[reboot]]"
         },
         "hint": {
           "en": "Downloads and applies a pending TrueNAS update into a new boot environment. Without a reboot the new version only becomes active the next time the NAS restarts, so you can install now and restart at a quiet moment. Does nothing when no update is pending.",
-          "de": "Lädt ein wartendes TrueNAS-Update und installiert es in eine neue Boot-Umgebung. Ohne Neustart wird die neue Version erst beim nächsten Hochfahren aktiv, du kannst also jetzt installieren und zu einem ruhigen Zeitpunkt neu starten. Tut nichts, wenn kein Update ansteht."
+          "de": "Lädt ein wartendes TrueNAS-Update und installiert es in eine neue Boot-Umgebung. Ohne Neustart wird die neue Version erst beim nächsten Hochfahren aktiv, du kannst also jetzt installieren und zu einem ruhigen Zeitpunkt neu starten. Tut nichts, wenn kein Update ansteht.",
+          "nl": "Downloadt een klaarstaande TrueNAS-update en zet hem in een nieuwe boot-omgeving. Zonder herstart wordt de nieuwe versie pas actief bij de volgende start van de NAS, dus je kunt nu installeren en op een rustig moment herstarten. Doet niets als er geen update klaarstaat."
         },
         "args": [
           {
@@ -1219,21 +1367,24 @@
             "type": "dropdown",
             "title": {
               "en": "Reboot",
-              "de": "Neustart"
+              "de": "Neustart",
+              "nl": "Opnieuw opstarten"
             },
             "values": [
               {
                 "id": "false",
                 "label": {
                   "en": "Install only",
-                  "de": "Nur installieren"
+                  "de": "Nur installieren",
+                  "nl": "Alleen installeren"
                 }
               },
               {
                 "id": "true",
                 "label": {
                   "en": "Install and reboot",
-                  "de": "Installieren und neu starten"
+                  "de": "Installieren und neu starten",
+                  "nl": "Installeren en opnieuw opstarten"
                 }
               }
             ]
@@ -1244,15 +1395,18 @@
         "id": "system_reboot",
         "title": {
           "en": "Reboot the NAS",
-          "de": "NAS neu starten"
+          "de": "NAS neu starten",
+          "nl": "De NAS opnieuw opstarten"
         },
         "titleFormatted": {
           "en": "Reboot the NAS after [[delay]] s",
-          "de": "NAS nach [[delay]] s neu starten"
+          "de": "NAS nach [[delay]] s neu starten",
+          "nl": "De NAS na [[delay]] s opnieuw opstarten"
         },
         "hint": {
           "en": "Reboots the whole TrueNAS system. All shares, apps and virtual machines go offline. The API key needs write permission.",
-          "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte."
+          "de": "Startet das gesamte TrueNAS-System neu. Alle Freigaben, Apps und virtuellen Maschinen sind währenddessen offline. Der API-Schlüssel benötigt Schreibrechte.",
+          "nl": "Start het hele TrueNAS-systeem opnieuw op. Alle shares, apps en virtuele machines gaan offline. De API-sleutel heeft schrijfrechten nodig."
         },
         "args": [
           {
@@ -1265,14 +1419,16 @@
             "type": "number",
             "title": {
               "en": "Delay (seconds)",
-              "de": "Verzögerung (Sekunden)"
+              "de": "Verzögerung (Sekunden)",
+              "nl": "Vertraging (seconden)"
             },
             "min": 0,
             "max": 3600,
             "step": 1,
             "placeholder": {
               "en": "0",
-              "de": "0"
+              "de": "0",
+              "nl": "0"
             }
           }
         ]
@@ -1281,7 +1437,8 @@
         "id": "system_refresh",
         "title": {
           "en": "Refresh all data",
-          "de": "Alle Daten aktualisieren"
+          "de": "Alle Daten aktualisieren",
+          "nl": "Alle gegevens vernieuwen"
         },
         "args": [
           {
@@ -1295,15 +1452,18 @@
         "id": "system_shutdown",
         "title": {
           "en": "Shut down the NAS",
-          "de": "NAS herunterfahren"
+          "de": "NAS herunterfahren",
+          "nl": "De NAS afsluiten"
         },
         "titleFormatted": {
           "en": "Shut down the NAS after [[delay]] s",
-          "de": "NAS nach [[delay]] s herunterfahren"
+          "de": "NAS nach [[delay]] s herunterfahren",
+          "nl": "De NAS na [[delay]] s afsluiten"
         },
         "hint": {
           "en": "Powers off the whole TrueNAS system. It cannot be switched back on from Homey.",
-          "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden."
+          "de": "Schaltet das gesamte TrueNAS-System aus. Es kann von Homey aus nicht wieder eingeschaltet werden.",
+          "nl": "Schakelt het hele TrueNAS-systeem uit. Vanuit Homey kan het niet weer worden ingeschakeld."
         },
         "args": [
           {
@@ -1316,14 +1476,16 @@
             "type": "number",
             "title": {
               "en": "Delay (seconds)",
-              "de": "Verzögerung (Sekunden)"
+              "de": "Verzögerung (Sekunden)",
+              "nl": "Vertraging (seconden)"
             },
             "min": 0,
             "max": 3600,
             "step": 1,
             "placeholder": {
               "en": "0",
-              "de": "0"
+              "de": "0",
+              "nl": "0"
             }
           }
         ]
@@ -1332,11 +1494,13 @@
         "id": "task_abort",
         "title": {
           "en": "Abort the running task",
-          "de": "Laufende Aufgabe abbrechen"
+          "de": "Laufende Aufgabe abbrechen",
+          "nl": "De lopende taak afbreken"
         },
         "hint": {
           "en": "Only cloud sync tasks can be aborted through the API. Replication and snapshot tasks have to finish.",
-          "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen."
+          "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen.",
+          "nl": "Alleen cloudsynchronisatietaken kunnen via de API worden afgebroken. Replicatie- en snapshottaken moeten aflopen."
         },
         "args": [
           {
@@ -1350,11 +1514,13 @@
         "id": "task_run",
         "title": {
           "en": "Run the task now",
-          "de": "Aufgabe jetzt ausführen"
+          "de": "Aufgabe jetzt ausführen",
+          "nl": "De taak nu uitvoeren"
         },
         "hint": {
           "en": "Starts the task immediately. Does nothing when it is already running.",
-          "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft."
+          "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft.",
+          "nl": "Start de taak direct. Doet niets als hij al loopt."
         },
         "args": [
           {
@@ -1368,7 +1534,8 @@
         "id": "vm_restart",
         "title": {
           "en": "Restart the virtual machine",
-          "de": "VM neu starten"
+          "de": "VM neu starten",
+          "nl": "De virtuele machine herstarten"
         },
         "args": [
           {
@@ -1382,7 +1549,8 @@
         "id": "vm_start",
         "title": {
           "en": "Start the virtual machine",
-          "de": "VM starten"
+          "de": "VM starten",
+          "nl": "De virtuele machine starten"
         },
         "args": [
           {
@@ -1395,21 +1563,24 @@
             "type": "dropdown",
             "title": {
               "en": "Memory",
-              "de": "Arbeitsspeicher"
+              "de": "Arbeitsspeicher",
+              "nl": "Geheugen"
             },
             "values": [
               {
                 "id": "false",
                 "label": {
                   "en": "Require free memory",
-                  "de": "Freien Speicher verlangen"
+                  "de": "Freien Speicher verlangen",
+                  "nl": "Vrij geheugen vereisen"
                 }
               },
               {
                 "id": "true",
                 "label": {
                   "en": "Allow overcommit",
-                  "de": "Überbelegung erlauben"
+                  "de": "Überbelegung erlauben",
+                  "nl": "Overcommit toestaan"
                 }
               }
             ]
@@ -1417,26 +1588,31 @@
         ],
         "titleFormatted": {
           "en": "Start the virtual machine, overcommit [[overcommit]]",
-          "de": "VM starten, Überbelegung [[overcommit]]"
+          "de": "VM starten, Überbelegung [[overcommit]]",
+          "nl": "De virtuele machine starten, overcommit [[overcommit]]"
         },
         "hint": {
           "en": "Memory overcommitment lets the machine start even when there is not enough free memory left. Use it only when you know the host can cope.",
-          "de": "Speicher-Überbelegung lässt die Maschine auch starten, wenn nicht genug freier Arbeitsspeicher vorhanden ist. Nur verwenden, wenn der Host das verkraftet."
+          "de": "Speicher-Überbelegung lässt die Maschine auch starten, wenn nicht genug freier Arbeitsspeicher vorhanden ist. Nur verwenden, wenn der Host das verkraftet.",
+          "nl": "Met geheugenovercommit start de machine ook wanneer er niet genoeg vrij geheugen meer is. Gebruik dit alleen als je weet dat de host het aankan."
         }
       },
       {
         "id": "vm_stop",
         "title": {
           "en": "Stop the virtual machine",
-          "de": "VM stoppen"
+          "de": "VM stoppen",
+          "nl": "De virtuele machine stoppen"
         },
         "titleFormatted": {
           "en": "Stop the virtual machine, force [[force]]",
-          "de": "VM stoppen, erzwingen [[force]]"
+          "de": "VM stoppen, erzwingen [[force]]",
+          "nl": "De virtuele machine stoppen, forceren [[force]]"
         },
         "hint": {
           "en": "Graceful asks the guest operating system to shut down. Forced cuts power immediately and can lose unsaved data.",
-          "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren."
+          "de": "Regulär fordert das Gastbetriebssystem zum Herunterfahren auf. Erzwungen trennt sofort die Stromversorgung und kann ungespeicherte Daten verlieren.",
+          "nl": "Netjes vraagt het gastbesturingssysteem om af te sluiten. Geforceerd haalt direct de stroom eraf, waardoor niet-opgeslagen gegevens verloren kunnen gaan."
         },
         "args": [
           {
@@ -1449,21 +1625,24 @@
             "type": "dropdown",
             "title": {
               "en": "Method",
-              "de": "Methode"
+              "de": "Methode",
+              "nl": "Methode"
             },
             "values": [
               {
                 "id": "false",
                 "label": {
                   "en": "Graceful",
-                  "de": "Regulär"
+                  "de": "Regulär",
+                  "nl": "Netjes"
                 }
               },
               {
                 "id": "true",
                 "label": {
                   "en": "Forced",
-                  "de": "Erzwungen"
+                  "de": "Erzwungen",
+                  "nl": "Geforceerd"
                 }
               }
             ]
@@ -1476,7 +1655,8 @@
     {
       "name": {
         "en": "App",
-        "de": "App"
+        "de": "App",
+        "nl": "App"
       },
       "class": "other",
       "capabilities": [
@@ -1493,15 +1673,18 @@
         "onoff": {
           "title": {
             "en": "Running",
-            "de": "Läuft"
+            "de": "Läuft",
+            "nl": "Draait"
           },
           "insightsTitleTrue": {
             "en": "App started",
-            "de": "App gestartet"
+            "de": "App gestartet",
+            "nl": "App gestart"
           },
           "insightsTitleFalse": {
             "en": "App stopped",
-            "de": "App gestoppt"
+            "de": "App gestoppt",
+            "nl": "App gestopt"
           }
         }
       },
@@ -1528,7 +1711,8 @@
           "type": "group",
           "label": {
             "en": "App",
-            "de": "App"
+            "de": "App",
+            "nl": "App"
           },
           "children": [
             {
@@ -1536,12 +1720,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show update button",
-                "de": "Update-Schaltfläche anzeigen"
+                "de": "Update-Schaltfläche anzeigen",
+                "nl": "Updateknop tonen"
               },
               "value": true,
               "hint": {
                 "en": "Shows a button on the device tile that installs a pending update. A catalog version upgrade is installed directly; if only newer container images are waiting, the app is redeployed instead. The app restarts either way.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu.",
+                "nl": "Toont een knop op de apparaattegel die een klaarstaande update installeert. Een catalogusversie wordt direct geïnstalleerd; staan er alleen nieuwere container-images klaar, dan wordt de app opnieuw uitgerold. In beide gevallen start de app opnieuw."
               }
             },
             {
@@ -1549,12 +1735,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show redeploy button",
-                "de": "Schaltfläche «Neu bereitstellen» anzeigen"
+                "de": "Schaltfläche «Neu bereitstellen» anzeigen",
+                "nl": "Knop voor opnieuw uitrollen tonen"
               },
               "value": false,
               "hint": {
                 "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet.",
+                "nl": "Toont een knop op de apparaattegel die de app stopt, de nieuwste container-images ophaalt en hem opnieuw start."
               }
             },
             {
@@ -1562,7 +1750,8 @@
               "type": "label",
               "label": {
                 "en": "App identifier",
-                "de": "App-Kennung"
+                "de": "App-Kennung",
+                "nl": "App-identificatie"
               },
               "value": "-"
             },
@@ -1571,7 +1760,8 @@
               "type": "label",
               "label": {
                 "en": "Latest version",
-                "de": "Neueste Version"
+                "de": "Neueste Version",
+                "nl": "Nieuwste versie"
               },
               "value": "-"
             },
@@ -1580,7 +1770,8 @@
               "type": "label",
               "label": {
                 "en": "Web address",
-                "de": "Webadresse"
+                "de": "Webadresse",
+                "nl": "Webadres"
               },
               "value": "-"
             }
@@ -1592,7 +1783,8 @@
     {
       "name": {
         "en": "Dataset",
-        "de": "Dataset"
+        "de": "Dataset",
+        "nl": "Dataset"
       },
       "class": "sensor",
       "capabilities": [
@@ -1626,7 +1818,8 @@
           "type": "group",
           "label": {
             "en": "Snapshots",
-            "de": "Snapshots"
+            "de": "Snapshots",
+            "nl": "Snapshots"
           },
           "children": [
             {
@@ -1634,12 +1827,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show snapshot button",
-                "de": "Snapshot-Schaltfläche anzeigen"
+                "de": "Snapshot-Schaltfläche anzeigen",
+                "nl": "Snapshotknop tonen"
               },
               "value": false,
               "hint": {
                 "en": "Shows a button on the device tile that creates a snapshot of this dataset. Off by default so snapshots are not created by accident.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen.",
+                "nl": "Toont een knop op de apparaattegel die een snapshot van deze dataset maakt. Standaard uit, zodat er niet per ongeluk snapshots worden gemaakt."
               }
             },
             {
@@ -1647,12 +1842,14 @@
               "type": "text",
               "label": {
                 "en": "Snapshot name prefix",
-                "de": "Präfix für Snapshot-Namen"
+                "de": "Präfix für Snapshot-Namen",
+                "nl": "Voorvoegsel snapshotnaam"
               },
               "value": "homey",
               "hint": {
                 "en": "Snapshots are named prefix-YYYY-MM-DD-HHMMSS so they sort chronologically and never collide with your periodic snapshot tasks.",
-                "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben."
+                "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben.",
+                "nl": "Snapshots heten voorvoegsel-JJJJ-MM-DD-UUMMSS, zodat ze chronologisch sorteren en nooit botsen met je periodieke snapshottaken."
               }
             },
             {
@@ -1660,7 +1857,8 @@
               "type": "checkbox",
               "label": {
                 "en": "Include child datasets",
-                "de": "Untergeordnete Datasets einbeziehen"
+                "de": "Untergeordnete Datasets einbeziehen",
+                "nl": "Onderliggende datasets meenemen"
               },
               "value": false
             }
@@ -1670,7 +1868,8 @@
           "type": "group",
           "label": {
             "en": "Dataset information",
-            "de": "Dataset-Informationen"
+            "de": "Dataset-Informationen",
+            "nl": "Datasetgegevens"
           },
           "children": [
             {
@@ -1678,7 +1877,8 @@
               "type": "label",
               "label": {
                 "en": "Pool",
-                "de": "Pool"
+                "de": "Pool",
+                "nl": "Pool"
               },
               "value": "-"
             },
@@ -1687,7 +1887,8 @@
               "type": "label",
               "label": {
                 "en": "Mount point",
-                "de": "Einhängepunkt"
+                "de": "Einhängepunkt",
+                "nl": "Koppelpunt"
               },
               "value": "-"
             },
@@ -1696,7 +1897,8 @@
               "type": "label",
               "label": {
                 "en": "Encrypted",
-                "de": "Verschlüsselt"
+                "de": "Verschlüsselt",
+                "nl": "Versleuteld"
               },
               "value": "-"
             }
@@ -1708,7 +1910,8 @@
     {
       "name": {
         "en": "Disk",
-        "de": "Festplatte"
+        "de": "Festplatte",
+        "nl": "Schijf"
       },
       "class": "sensor",
       "capabilities": [
@@ -1722,13 +1925,15 @@
         "alarm_generic": {
           "title": {
             "en": "Temperature Alarm",
-            "de": "Temperaturalarm"
+            "de": "Temperaturalarm",
+            "nl": "Temperatuuralarm"
           }
         },
         "measure_temperature": {
           "title": {
             "en": "Disk Temperature",
-            "de": "Festplattentemperatur"
+            "de": "Festplattentemperatur",
+            "nl": "Schijftemperatuur"
           }
         }
       },
@@ -1755,7 +1960,8 @@
           "type": "group",
           "label": {
             "en": "Temperature",
-            "de": "Temperatur"
+            "de": "Temperatur",
+            "nl": "Temperatuur"
           },
           "children": [
             {
@@ -1763,7 +1969,8 @@
               "type": "number",
               "label": {
                 "en": "Alarm above (°C)",
-                "de": "Alarm oberhalb (°C)"
+                "de": "Alarm oberhalb (°C)",
+                "nl": "Alarm boven (°C)"
               },
               "value": 50,
               "min": 20,
@@ -1771,7 +1978,8 @@
               "step": 1,
               "hint": {
                 "en": "Sets the temperature alarm when the disk exceeds this value. Typical limits are 50 °C for hard drives and 65 °C for SSDs.",
-                "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs."
+                "de": "Setzt den Temperaturalarm, wenn die Festplatte diesen Wert überschreitet. Übliche Grenzwerte sind 50 °C für Festplatten und 65 °C für SSDs.",
+                "nl": "Zet het temperatuuralarm wanneer de schijf deze waarde overschrijdt. Gebruikelijke grenzen zijn 50 °C voor harde schijven en 65 °C voor SSD’s."
               }
             }
           ]
@@ -1780,7 +1988,8 @@
           "type": "group",
           "label": {
             "en": "Disk information",
-            "de": "Festplatteninformationen"
+            "de": "Festplatteninformationen",
+            "nl": "Schijfgegevens"
           },
           "children": [
             {
@@ -1788,7 +1997,8 @@
               "type": "label",
               "label": {
                 "en": "Device",
-                "de": "Gerät"
+                "de": "Gerät",
+                "nl": "Apparaat"
               },
               "value": "-"
             },
@@ -1797,7 +2007,8 @@
               "type": "label",
               "label": {
                 "en": "Serial number",
-                "de": "Seriennummer"
+                "de": "Seriennummer",
+                "nl": "Serienummer"
               },
               "value": "-"
             },
@@ -1806,7 +2017,8 @@
               "type": "label",
               "label": {
                 "en": "Type",
-                "de": "Typ"
+                "de": "Typ",
+                "nl": "Type"
               },
               "value": "-"
             }
@@ -1818,7 +2030,8 @@
     {
       "name": {
         "en": "Storage Pool",
-        "de": "Speicher-Pool"
+        "de": "Speicher-Pool",
+        "nl": "Opslagpool"
       },
       "class": "sensor",
       "capabilities": [
@@ -1836,7 +2049,8 @@
         "alarm_generic": {
           "title": {
             "en": "Pool Problem",
-            "de": "Pool-Problem"
+            "de": "Pool-Problem",
+            "nl": "Poolprobleem"
           }
         }
       },
@@ -1863,7 +2077,8 @@
           "type": "group",
           "label": {
             "en": "Pool",
-            "de": "Pool"
+            "de": "Pool",
+            "nl": "Pool"
           },
           "children": [
             {
@@ -1871,12 +2086,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show scrub button",
-                "de": "Scrub-Schaltfläche anzeigen"
+                "de": "Scrub-Schaltfläche anzeigen",
+                "nl": "Scrubknop tonen"
               },
               "value": true,
               "hint": {
                 "en": "Shows a button on the device tile that starts a scrub of this pool. A scrub reads every block and can take hours.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Scrub dieses Pools startet. Ein Scrub liest jeden Block und kann Stunden dauern.",
+                "nl": "Toont een knop op de apparaattegel die een scrub van deze pool start. Een scrub leest elk blok en kan uren duren."
               }
             },
             {
@@ -1884,7 +2101,8 @@
               "type": "label",
               "label": {
                 "en": "Pool name",
-                "de": "Pool-Name"
+                "de": "Pool-Name",
+                "nl": "Poolnaam"
               },
               "value": "-"
             },
@@ -1893,7 +2111,8 @@
               "type": "label",
               "label": {
                 "en": "Status detail",
-                "de": "Statusdetails"
+                "de": "Statusdetails",
+                "nl": "Statusdetails"
               },
               "value": "-"
             }
@@ -1905,7 +2124,8 @@
     {
       "name": {
         "en": "Service",
-        "de": "Dienst"
+        "de": "Dienst",
+        "nl": "Service"
       },
       "class": "other",
       "capabilities": [
@@ -1918,15 +2138,18 @@
         "onoff": {
           "title": {
             "en": "Running",
-            "de": "Läuft"
+            "de": "Läuft",
+            "nl": "Draait"
           },
           "insightsTitleTrue": {
             "en": "Service started",
-            "de": "Dienst gestartet"
+            "de": "Dienst gestartet",
+            "nl": "Service gestart"
           },
           "insightsTitleFalse": {
             "en": "Service stopped",
-            "de": "Dienst gestoppt"
+            "de": "Dienst gestoppt",
+            "nl": "Service gestopt"
           }
         }
       },
@@ -1953,7 +2176,8 @@
           "type": "group",
           "label": {
             "en": "Service",
-            "de": "Dienst"
+            "de": "Dienst",
+            "nl": "Service"
           },
           "children": [
             {
@@ -1961,12 +2185,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show restart button",
-                "de": "Neustart-Schaltfläche anzeigen"
+                "de": "Neustart-Schaltfläche anzeigen",
+                "nl": "Herstartknop tonen"
               },
               "value": true,
               "hint": {
                 "en": "Shows a button on the device tile that restarts this service. Active connections are dropped.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt.",
+                "nl": "Toont een knop op de apparaattegel die deze service herstart. Actieve verbindingen worden verbroken."
               }
             },
             {
@@ -1974,7 +2200,8 @@
               "type": "label",
               "label": {
                 "en": "Service identifier",
-                "de": "Dienstkennung"
+                "de": "Dienstkennung",
+                "nl": "Service-identificatie"
               },
               "value": "-"
             }
@@ -1986,7 +2213,8 @@
     {
       "name": {
         "en": "TrueNAS System",
-        "de": "TrueNAS System"
+        "de": "TrueNAS System",
+        "nl": "TrueNAS-systeem"
       },
       "class": "sensor",
       "capabilities": [
@@ -2014,13 +2242,15 @@
         "alarm_generic": {
           "title": {
             "en": "Critical Alert",
-            "de": "Kritische Meldung"
+            "de": "Kritische Meldung",
+            "nl": "Kritieke melding"
           }
         },
         "measure_temperature": {
           "title": {
             "en": "CPU Temperature",
-            "de": "CPU-Temperatur"
+            "de": "CPU-Temperatur",
+            "nl": "CPU-temperatuur"
           }
         }
       },
@@ -2039,7 +2269,8 @@
           "type": "group",
           "label": {
             "en": "Connection",
-            "de": "Verbindung"
+            "de": "Verbindung",
+            "nl": "Verbinding"
           },
           "children": [
             {
@@ -2047,12 +2278,14 @@
               "type": "text",
               "label": {
                 "en": "Host or IP address",
-                "de": "Host oder IP-Adresse"
+                "de": "Host oder IP-Adresse",
+                "nl": "Host of IP-adres"
               },
               "value": "",
               "hint": {
                 "en": "The local address of your TrueNAS, e.g. 192.168.1.50 or truenas.local. A DHCP reservation in your router is recommended.",
-                "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen."
+                "de": "Die lokale Adresse deines TrueNAS, z.B. 192.168.1.50 oder truenas.local. Eine DHCP-Reservierung im Router wird empfohlen.",
+                "nl": "Het lokale adres van je TrueNAS, bijvoorbeeld 192.168.1.50 of truenas.local. Een DHCP-reservering in je router wordt aangeraden."
               }
             },
             {
@@ -2060,7 +2293,8 @@
               "type": "number",
               "label": {
                 "en": "Port",
-                "de": "Port"
+                "de": "Port",
+                "nl": "Poort"
               },
               "value": 443,
               "min": 1,
@@ -2068,7 +2302,8 @@
               "step": 1,
               "hint": {
                 "en": "443 for HTTPS, 80 for HTTP.",
-                "de": "443 für HTTPS, 80 für HTTP."
+                "de": "443 für HTTPS, 80 für HTTP.",
+                "nl": "443 voor HTTPS, 80 voor HTTP."
               }
             },
             {
@@ -2076,12 +2311,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Use HTTPS",
-                "de": "HTTPS verwenden"
+                "de": "HTTPS verwenden",
+                "nl": "HTTPS gebruiken"
               },
               "value": true,
               "hint": {
                 "en": "Connects over wss:// instead of ws://. Turn off only if your TrueNAS web interface is reachable over plain HTTP.",
-                "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist."
+                "de": "Verbindet über wss:// statt ws://. Nur ausschalten, wenn das TrueNAS-Webinterface über einfaches HTTP erreichbar ist.",
+                "nl": "Maakt verbinding via wss:// in plaats van ws://. Zet dit alleen uit als je TrueNAS-webinterface via gewoon HTTP bereikbaar is."
               }
             },
             {
@@ -2089,12 +2326,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Accept self-signed certificate",
-                "de": "Selbstsigniertes Zertifikat akzeptieren"
+                "de": "Selbstsigniertes Zertifikat akzeptieren",
+                "nl": "Zelfondertekend certificaat accepteren"
               },
               "value": true,
               "hint": {
                 "en": "TrueNAS uses a self-signed certificate by default. Turn this off only if you installed a certificate that Homey can verify.",
-                "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist."
+                "de": "TrueNAS verwendet standardmässig ein selbstsigniertes Zertifikat. Nur ausschalten, wenn ein von Homey prüfbares Zertifikat installiert ist.",
+                "nl": "TrueNAS gebruikt standaard een zelfondertekend certificaat. Zet dit alleen uit als je een certificaat hebt geïnstalleerd dat Homey kan verifiëren."
               }
             },
             {
@@ -2102,12 +2341,14 @@
               "type": "password",
               "label": {
                 "en": "API key",
-                "de": "API-Schlüssel"
+                "de": "API-Schlüssel",
+                "nl": "API-sleutel"
               },
               "value": "",
               "hint": {
                 "en": "Create the key in the TrueNAS web interface under Credentials → API Keys. The account behind the key needs read access, plus write access for the actions you use.",
-                "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen."
+                "de": "Den Schlüssel im TrueNAS-Webinterface unter Anmeldedaten → API-Schlüssel erstellen. Das Konto hinter dem Schlüssel benötigt Lesezugriff sowie Schreibzugriff für die genutzten Aktionen.",
+                "nl": "Maak de sleutel aan in de TrueNAS-webinterface onder Credentials → API Keys. Het account achter de sleutel heeft leesrechten nodig, plus schrijfrechten voor de acties die je gebruikt."
               }
             }
           ]
@@ -2116,7 +2357,8 @@
           "type": "group",
           "label": {
             "en": "Polling",
-            "de": "Abfrage"
+            "de": "Abfrage",
+            "nl": "Opvragen"
           },
           "children": [
             {
@@ -2124,7 +2366,8 @@
               "type": "number",
               "label": {
                 "en": "Poll interval (seconds)",
-                "de": "Abfrageintervall (Sekunden)"
+                "de": "Abfrageintervall (Sekunden)",
+                "nl": "Opvraaginterval (seconden)"
               },
               "value": 60,
               "min": 15,
@@ -2132,7 +2375,8 @@
               "step": 5,
               "hint": {
                 "en": "How often system state, pools, services, apps and virtual machines are read. All devices of this NAS share one request per cycle (default: 60 s).",
-                "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s)."
+                "de": "Wie oft Systemzustand, Pools, Dienste, Apps und virtuelle Maschinen gelesen werden. Alle Geräte dieses NAS teilen sich eine Abfrage pro Zyklus (Standard: 60 s).",
+                "nl": "Hoe vaak systeemstatus, pools, services, apps en virtuele machines worden gelezen. Alle apparaten van deze NAS delen één aanvraag per cyclus (standaard: 60 s)."
               }
             },
             {
@@ -2140,7 +2384,8 @@
               "type": "number",
               "label": {
                 "en": "Disk poll interval (seconds)",
-                "de": "Festplatten-Abfrageintervall (Sekunden)"
+                "de": "Festplatten-Abfrageintervall (Sekunden)",
+                "nl": "Opvraaginterval schijven (seconden)"
               },
               "value": 300,
               "min": 60,
@@ -2148,7 +2393,8 @@
               "step": 30,
               "hint": {
                 "en": "Reading disk temperatures queries SMART, which can keep drives from spinning down. Increase this if your drives should stay in standby (default: 300 s).",
-                "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s)."
+                "de": "Das Auslesen der Festplattentemperaturen fragt SMART ab und kann das Herunterfahren der Platten verhindern. Erhöhe den Wert, wenn die Platten im Standby bleiben sollen (Standard: 300 s).",
+                "nl": "Het uitlezen van schijftemperaturen bevraagt SMART, wat kan voorkomen dat schijven tot stilstand komen. Verhoog dit als je schijven in stand-by moeten blijven (standaard: 300 s)."
               }
             }
           ]
@@ -2157,7 +2403,8 @@
           "type": "group",
           "label": {
             "en": "Updates",
-            "de": "Updates"
+            "de": "Updates",
+            "nl": "Updates"
           },
           "children": [
             {
@@ -2165,12 +2412,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show install update button",
-                "de": "Schaltfläche «Update installieren» anzeigen"
+                "de": "Schaltfläche «Update installieren» anzeigen",
+                "nl": "Knop voor update installeren tonen"
               },
               "value": false,
               "hint": {
                 "en": "Shows a button on the device tile that installs a pending TrueNAS update. The button installs without rebooting, so the new version becomes active at the next restart. Off by default so it cannot be pressed by accident.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes TrueNAS-Update installiert. Die Schaltfläche installiert ohne Neustart, die neue Version wird also beim nächsten Hochfahren aktiv. Standardmässig aus, damit sie nicht versehentlich gedrückt wird.",
+                "nl": "Toont een knop op de apparaattegel die een klaarstaande TrueNAS-update installeert. De knop installeert zonder opnieuw op te starten, dus de nieuwe versie wordt bij de volgende herstart actief. Standaard uit, zodat er niet per ongeluk op wordt gedrukt."
               }
             }
           ]
@@ -2179,7 +2428,8 @@
           "type": "group",
           "label": {
             "en": "Alerts",
-            "de": "Meldungen"
+            "de": "Meldungen",
+            "nl": "Meldingen"
           },
           "children": [
             {
@@ -2187,7 +2437,8 @@
               "type": "radio",
               "label": {
                 "en": "Trigger alarm from level",
-                "de": "Alarm auslösen ab Stufe"
+                "de": "Alarm auslösen ab Stufe",
+                "nl": "Alarm vanaf niveau"
               },
               "value": "ERROR",
               "values": [
@@ -2195,27 +2446,31 @@
                   "id": "WARNING",
                   "label": {
                     "en": "Warning and above",
-                    "de": "Warnung und höher"
+                    "de": "Warnung und höher",
+                    "nl": "Waarschuwing en hoger"
                   }
                 },
                 {
                   "id": "ERROR",
                   "label": {
                     "en": "Error and above",
-                    "de": "Fehler und höher"
+                    "de": "Fehler und höher",
+                    "nl": "Fout en hoger"
                   }
                 },
                 {
                   "id": "CRITICAL",
                   "label": {
                     "en": "Critical and above",
-                    "de": "Kritisch und höher"
+                    "de": "Kritisch und höher",
+                    "nl": "Kritiek en hoger"
                   }
                 }
               ],
               "hint": {
                 "en": "Which TrueNAS alert level sets the Critical Alert flag and fires the alert flow trigger.",
-                "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird."
+                "de": "Ab welcher TrueNAS-Meldungsstufe die Kennzeichnung «Kritische Meldung» gesetzt und der Meldungs-Flow ausgelöst wird.",
+                "nl": "Welk TrueNAS-meldingsniveau de vlag Kritieke melding zet en de flow-trigger voor meldingen activeert."
               }
             }
           ]
@@ -2224,7 +2479,8 @@
           "type": "group",
           "label": {
             "en": "System information",
-            "de": "Systeminformationen"
+            "de": "Systeminformationen",
+            "nl": "Systeemgegevens"
           },
           "children": [
             {
@@ -2232,7 +2488,8 @@
               "type": "label",
               "label": {
                 "en": "Hostname",
-                "de": "Hostname"
+                "de": "Hostname",
+                "nl": "Hostnaam"
               },
               "value": "-"
             },
@@ -2241,7 +2498,8 @@
               "type": "label",
               "label": {
                 "en": "TrueNAS version",
-                "de": "TrueNAS-Version"
+                "de": "TrueNAS-Version",
+                "nl": "TrueNAS-versie"
               },
               "value": "-"
             },
@@ -2250,7 +2508,8 @@
               "type": "label",
               "label": {
                 "en": "Hardware",
-                "de": "Hardware"
+                "de": "Hardware",
+                "nl": "Hardware"
               },
               "value": "-"
             },
@@ -2259,7 +2518,8 @@
               "type": "label",
               "label": {
                 "en": "Serial number",
-                "de": "Seriennummer"
+                "de": "Seriennummer",
+                "nl": "Serienummer"
               },
               "value": "-"
             }
@@ -2271,7 +2531,8 @@
     {
       "name": {
         "en": "Backup Task",
-        "de": "Backup-Aufgabe"
+        "de": "Backup-Aufgabe",
+        "nl": "Back-uptaak"
       },
       "class": "sensor",
       "capabilities": [
@@ -2285,7 +2546,8 @@
         "alarm_generic": {
           "title": {
             "en": "Last Run Failed",
-            "de": "Letzter Lauf fehlgeschlagen"
+            "de": "Letzter Lauf fehlgeschlagen",
+            "nl": "Laatste uitvoering mislukt"
           }
         }
       },
@@ -2312,7 +2574,8 @@
           "type": "group",
           "label": {
             "en": "Task",
-            "de": "Aufgabe"
+            "de": "Aufgabe",
+            "nl": "Taak"
           },
           "children": [
             {
@@ -2320,12 +2583,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show run button",
-                "de": "Schaltfläche «Jetzt ausführen» anzeigen"
+                "de": "Schaltfläche «Jetzt ausführen» anzeigen",
+                "nl": "Uitvoerknop tonen"
               },
               "value": false,
               "hint": {
                 "en": "Shows a button on the device tile that starts this task immediately. Off by default so a backup cannot be kicked off by accident.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese Aufgabe sofort startet. Standardmässig aus, damit kein Backup versehentlich losläuft.",
+                "nl": "Toont een knop op de apparaattegel die deze taak direct start. Standaard uit, zodat er niet per ongeluk een back-up wordt gestart."
               }
             },
             {
@@ -2333,7 +2598,8 @@
               "type": "label",
               "label": {
                 "en": "Task type",
-                "de": "Aufgabentyp"
+                "de": "Aufgabentyp",
+                "nl": "Taaktype"
               },
               "value": "-"
             },
@@ -2342,7 +2608,8 @@
               "type": "label",
               "label": {
                 "en": "Path or target",
-                "de": "Pfad oder Ziel"
+                "de": "Pfad oder Ziel",
+                "nl": "Pad of doel"
               },
               "value": "-"
             }
@@ -2354,7 +2621,8 @@
     {
       "name": {
         "en": "Virtual Machine",
-        "de": "Virtuelle Maschine"
+        "de": "Virtuelle Maschine",
+        "nl": "Virtuele Machine"
       },
       "class": "other",
       "capabilities": [
@@ -2367,15 +2635,18 @@
         "onoff": {
           "title": {
             "en": "Running",
-            "de": "Läuft"
+            "de": "Läuft",
+            "nl": "Draait"
           },
           "insightsTitleTrue": {
             "en": "VM started",
-            "de": "VM gestartet"
+            "de": "VM gestartet",
+            "nl": "VM gestart"
           },
           "insightsTitleFalse": {
             "en": "VM stopped",
-            "de": "VM gestoppt"
+            "de": "VM gestoppt",
+            "nl": "VM gestopt"
           }
         }
       },
@@ -2402,7 +2673,8 @@
           "type": "group",
           "label": {
             "en": "Virtual machine",
-            "de": "Virtuelle Maschine"
+            "de": "Virtuelle Maschine",
+            "nl": "Virtuele machine"
           },
           "children": [
             {
@@ -2410,12 +2682,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Force stop",
-                "de": "Erzwungenes Stoppen"
+                "de": "Erzwungenes Stoppen",
+                "nl": "Geforceerd stoppen"
               },
               "value": false,
               "hint": {
                 "en": "Off sends a graceful shutdown request to the guest operating system. On cuts power immediately, which can lose unsaved data.",
-                "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können."
+                "de": "Aus sendet eine reguläre Herunterfahr-Anforderung an das Gastbetriebssystem. Ein trennt sofort die Stromversorgung, wodurch ungespeicherte Daten verloren gehen können.",
+                "nl": "Uit stuurt een nette afsluitopdracht naar het gastbesturingssysteem. Aan haalt direct de stroom eraf, waardoor niet-opgeslagen gegevens verloren kunnen gaan."
               }
             },
             {
@@ -2423,12 +2697,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Allow memory overcommit",
-                "de": "Speicher-Überbelegung erlauben"
+                "de": "Speicher-Überbelegung erlauben",
+                "nl": "Geheugenovercommit toestaan"
               },
               "value": false,
               "hint": {
                 "en": "Lets the machine start even when the host has less free memory than the machine is assigned. Applies when starting from the device tile; a flow can decide per run.",
-                "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden."
+                "de": "Lässt die Maschine auch starten, wenn der Host weniger freien Arbeitsspeicher hat als der Maschine zugewiesen ist. Gilt beim Start über die Gerätekachel; ein Flow kann pro Lauf entscheiden.",
+                "nl": "Laat de machine ook starten wanneer de host minder vrij geheugen heeft dan aan de machine is toegewezen. Geldt bij starten vanaf de apparaattegel; een flow kan het per keer bepalen."
               }
             },
             {
@@ -2436,12 +2712,14 @@
               "type": "checkbox",
               "label": {
                 "en": "Show restart button",
-                "de": "Neustart-Schaltfläche anzeigen"
+                "de": "Neustart-Schaltfläche anzeigen",
+                "nl": "Herstartknop tonen"
               },
               "value": true,
               "hint": {
                 "en": "Shows a button on the device tile that restarts this virtual machine.",
-                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet."
+                "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diese virtuelle Maschine neu startet.",
+                "nl": "Toont een knop op de apparaattegel die deze virtuele machine herstart."
               }
             },
             {
@@ -2449,7 +2727,8 @@
               "type": "label",
               "label": {
                 "en": "Virtual CPUs",
-                "de": "Virtuelle CPUs"
+                "de": "Virtuelle CPUs",
+                "nl": "Virtuele CPU’s"
               },
               "value": "-"
             }
@@ -2463,7 +2742,8 @@
     "nas-overview": {
       "name": {
         "en": "NAS Overview",
-        "de": "NAS-Übersicht"
+        "de": "NAS-Übersicht",
+        "nl": "NAS-overzicht"
       },
       "height": "100%",
       "devices": {
@@ -2476,7 +2756,8 @@
           "type": "checkbox",
           "label": {
             "en": "Show statistics tiles",
-            "de": "Statistik-Kacheln anzeigen"
+            "de": "Statistik-Kacheln anzeigen",
+            "nl": "Statistiektegels tonen"
           },
           "value": true
         },
@@ -2485,7 +2766,8 @@
           "type": "checkbox",
           "label": {
             "en": "Show storage pools",
-            "de": "Speicher-Pools anzeigen"
+            "de": "Speicher-Pools anzeigen",
+            "nl": "Opslagpools tonen"
           },
           "value": true
         },
@@ -2494,12 +2776,14 @@
           "type": "checkbox",
           "label": {
             "en": "Include the boot pool",
-            "de": "Boot-Pool einbeziehen"
+            "de": "Boot-Pool einbeziehen",
+            "nl": "Boot-pool meenemen"
           },
           "value": false,
           "hint": {
             "en": "The boot pool is small and rarely changes, so it is hidden by default and left out of the total storage figure.",
-            "de": "Der Boot-Pool ist klein und ändert sich selten. Er wird daher standardmässig ausgeblendet und nicht in den Gesamtspeicher eingerechnet."
+            "de": "Der Boot-Pool ist klein und ändert sich selten. Er wird daher standardmässig ausgeblendet und nicht in den Gesamtspeicher eingerechnet.",
+            "nl": "De boot-pool is klein en verandert zelden, daarom is hij standaard verborgen en telt hij niet mee in het totale opslagcijfer."
           }
         },
         {
@@ -2507,7 +2791,8 @@
           "type": "checkbox",
           "label": {
             "en": "Show apps",
-            "de": "Apps anzeigen"
+            "de": "Apps anzeigen",
+            "nl": "Apps tonen"
           },
           "value": true
         },
@@ -2516,12 +2801,14 @@
           "type": "checkbox",
           "label": {
             "en": "Running apps only",
-            "de": "Nur laufende Apps"
+            "de": "Nur laufende Apps",
+            "nl": "Alleen draaiende apps"
           },
           "value": true,
           "hint": {
             "en": "Off also lists stopped and crashed apps, so you can see at a glance if something is not running that should be.",
-            "de": "Aus listet auch gestoppte und abgestürzte Apps, damit du auf einen Blick siehst, wenn etwas nicht läuft."
+            "de": "Aus listet auch gestoppte und abgestürzte Apps, damit du auf einen Blick siehst, wenn etwas nicht läuft.",
+            "nl": "Uit toont ook gestopte en vastgelopen apps, zodat je in één oogopslag ziet of er iets niet draait dat wel zou moeten."
           }
         },
         {
@@ -2529,14 +2816,16 @@
           "type": "number",
           "label": {
             "en": "Maximum apps shown",
-            "de": "Maximal angezeigte Apps"
+            "de": "Maximal angezeigte Apps",
+            "nl": "Maximaal aantal getoonde apps"
           },
           "value": 8,
           "min": 1,
           "max": 40,
           "hint": {
             "en": "Apps waiting for an update are listed first, so they stay visible even when the list is cut off. Tap the update badge to install it.",
-            "de": "Apps mit wartendem Update stehen zuoberst und bleiben daher sichtbar, auch wenn die Liste gekürzt wird. Zum Installieren auf die Update-Marke tippen."
+            "de": "Apps mit wartendem Update stehen zuoberst und bleiben daher sichtbar, auch wenn die Liste gekürzt wird. Zum Installieren auf die Update-Marke tippen.",
+            "nl": "Apps die op een update wachten staan bovenaan, zodat ze zichtbaar blijven als de lijst wordt afgekapt. Tik op de updatebadge om de update te installeren."
           }
         },
         {
@@ -2544,7 +2833,8 @@
           "type": "checkbox",
           "label": {
             "en": "Show alerts",
-            "de": "Meldungen anzeigen"
+            "de": "Meldungen anzeigen",
+            "nl": "Meldingen tonen"
           },
           "value": true
         },
@@ -2553,14 +2843,16 @@
           "type": "number",
           "label": {
             "en": "Amber above (%)",
-            "de": "Gelb ab (%)"
+            "de": "Gelb ab (%)",
+            "nl": "Oranje boven (%)"
           },
           "value": 75,
           "min": 1,
           "max": 99,
           "hint": {
             "en": "Usage bars turn amber above this level.",
-            "de": "Balken werden oberhalb dieses Werts gelb dargestellt."
+            "de": "Balken werden oberhalb dieses Werts gelb dargestellt.",
+            "nl": "Gebruiksbalken worden oranje boven dit niveau."
           }
         },
         {
@@ -2568,14 +2860,16 @@
           "type": "number",
           "label": {
             "en": "Red above (%)",
-            "de": "Rot ab (%)"
+            "de": "Rot ab (%)",
+            "nl": "Rood boven (%)"
           },
           "value": 90,
           "min": 1,
           "max": 100,
           "hint": {
             "en": "Usage bars turn red above this level.",
-            "de": "Balken werden oberhalb dieses Werts rot dargestellt."
+            "de": "Balken werden oberhalb dieses Werts rot dargestellt.",
+            "nl": "Gebruiksbalken worden rood boven dit niveau."
           }
         }
       ],
@@ -2597,7 +2891,8 @@
       "type": "number",
       "title": {
         "en": "Containers",
-        "de": "Container"
+        "de": "Container",
+        "nl": "Containers"
       },
       "getable": true,
       "setable": false,
@@ -2611,7 +2906,8 @@
       "type": "boolean",
       "title": {
         "en": "Image Update",
-        "de": "Image-Update"
+        "de": "Image-Update",
+        "nl": "Image-update"
       },
       "getable": true,
       "setable": false,
@@ -2623,7 +2919,8 @@
       "type": "boolean",
       "title": {
         "en": "Redeploy",
-        "de": "Neu bereitstellen"
+        "de": "Neu bereitstellen",
+        "nl": "Opnieuw uitrollen"
       },
       "getable": false,
       "setable": true,
@@ -2634,7 +2931,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       },
       "getable": true,
       "setable": false,
@@ -2646,7 +2944,8 @@
       "type": "boolean",
       "title": {
         "en": "Update Available",
-        "de": "Update verfügbar"
+        "de": "Update verfügbar",
+        "nl": "Update beschikbaar"
       },
       "getable": true,
       "setable": false,
@@ -2658,7 +2957,8 @@
       "type": "boolean",
       "title": {
         "en": "Run Update",
-        "de": "Update ausführen"
+        "de": "Update ausführen",
+        "nl": "Update uitvoeren"
       },
       "getable": false,
       "setable": true,
@@ -2669,7 +2969,8 @@
       "type": "string",
       "title": {
         "en": "Version",
-        "de": "Version"
+        "de": "Version",
+        "nl": "Versie"
       },
       "getable": true,
       "setable": false,
@@ -2681,7 +2982,8 @@
       "type": "string",
       "title": {
         "en": "Compression Ratio",
-        "de": "Kompressionsrate"
+        "de": "Kompressionsrate",
+        "nl": "Compressieverhouding"
       },
       "getable": true,
       "setable": false,
@@ -2693,7 +2995,8 @@
       "type": "number",
       "title": {
         "en": "Free",
-        "de": "Frei"
+        "de": "Frei",
+        "nl": "Vrij"
       },
       "getable": true,
       "setable": false,
@@ -2701,7 +3004,8 @@
       "insights": true,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2711,7 +3015,8 @@
       "type": "number",
       "title": {
         "en": "Quota",
-        "de": "Kontingent"
+        "de": "Kontingent",
+        "nl": "Quota"
       },
       "getable": true,
       "setable": false,
@@ -2719,7 +3024,8 @@
       "insights": false,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2729,7 +3035,8 @@
       "type": "boolean",
       "title": {
         "en": "Create Snapshot",
-        "de": "Snapshot erstellen"
+        "de": "Snapshot erstellen",
+        "nl": "Snapshot maken"
       },
       "getable": false,
       "setable": true,
@@ -2740,7 +3047,8 @@
       "type": "number",
       "title": {
         "en": "Used Space",
-        "de": "Belegter Speicher"
+        "de": "Belegter Speicher",
+        "nl": "Gebruikte ruimte"
       },
       "getable": true,
       "setable": false,
@@ -2748,7 +3056,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 1,
       "min": 0,
@@ -2759,7 +3068,8 @@
       "type": "number",
       "title": {
         "en": "Used",
-        "de": "Belegt"
+        "de": "Belegt",
+        "nl": "Gebruikt"
       },
       "getable": true,
       "setable": false,
@@ -2767,7 +3077,8 @@
       "insights": true,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2777,7 +3088,8 @@
       "type": "string",
       "title": {
         "en": "Model",
-        "de": "Modell"
+        "de": "Modell",
+        "nl": "Model"
       },
       "getable": true,
       "setable": false,
@@ -2789,7 +3101,8 @@
       "type": "string",
       "title": {
         "en": "Pool",
-        "de": "Pool"
+        "de": "Pool",
+        "nl": "Pool"
       },
       "getable": true,
       "setable": false,
@@ -2801,7 +3114,8 @@
       "type": "number",
       "title": {
         "en": "Capacity",
-        "de": "Kapazität"
+        "de": "Kapazität",
+        "nl": "Capaciteit"
       },
       "getable": true,
       "setable": false,
@@ -2809,7 +3123,8 @@
       "insights": false,
       "units": {
         "en": "TB",
-        "de": "TB"
+        "de": "TB",
+        "nl": "TB"
       },
       "decimals": 2,
       "min": 0,
@@ -2819,7 +3134,8 @@
       "type": "number",
       "title": {
         "en": "Active Alerts",
-        "de": "Aktive Meldungen"
+        "de": "Aktive Meldungen",
+        "nl": "Actieve meldingen"
       },
       "getable": true,
       "setable": false,
@@ -2833,7 +3149,8 @@
       "type": "string",
       "title": {
         "en": "Latest Alert",
-        "de": "Neueste Meldung"
+        "de": "Neueste Meldung",
+        "nl": "Laatste melding"
       },
       "getable": true,
       "setable": false,
@@ -2845,7 +3162,8 @@
       "type": "number",
       "title": {
         "en": "ZFS ARC Size",
-        "de": "ZFS-ARC-Grösse"
+        "de": "ZFS-ARC-Grösse",
+        "nl": "ZFS ARC-grootte"
       },
       "getable": true,
       "setable": false,
@@ -2853,7 +3171,8 @@
       "insights": true,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2863,7 +3182,8 @@
       "type": "number",
       "title": {
         "en": "CPU Usage",
-        "de": "CPU-Auslastung"
+        "de": "CPU-Auslastung",
+        "nl": "CPU-gebruik"
       },
       "getable": true,
       "setable": false,
@@ -2871,7 +3191,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 1,
       "min": 0,
@@ -2882,7 +3203,8 @@
       "type": "number",
       "title": {
         "en": "Load Average (1 min)",
-        "de": "Systemlast (1 Min.)"
+        "de": "Systemlast (1 Min.)",
+        "nl": "Belasting (1 min)"
       },
       "getable": true,
       "setable": false,
@@ -2896,7 +3218,8 @@
       "type": "number",
       "title": {
         "en": "Load Average (15 min)",
-        "de": "Systemlast (15 Min.)"
+        "de": "Systemlast (15 Min.)",
+        "nl": "Belasting (15 min)"
       },
       "getable": true,
       "setable": false,
@@ -2910,7 +3233,8 @@
       "type": "number",
       "title": {
         "en": "Load Average (5 min)",
-        "de": "Systemlast (5 Min.)"
+        "de": "Systemlast (5 Min.)",
+        "nl": "Belasting (5 min)"
       },
       "getable": true,
       "setable": false,
@@ -2924,7 +3248,8 @@
       "type": "number",
       "title": {
         "en": "Memory Free",
-        "de": "Speicher frei"
+        "de": "Speicher frei",
+        "nl": "Vrij geheugen"
       },
       "getable": true,
       "setable": false,
@@ -2932,7 +3257,8 @@
       "insights": true,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2942,7 +3268,8 @@
       "type": "number",
       "title": {
         "en": "Memory Usage",
-        "de": "Speicherauslastung"
+        "de": "Speicherauslastung",
+        "nl": "Geheugengebruik"
       },
       "getable": true,
       "setable": false,
@@ -2950,7 +3277,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 0,
       "min": 0,
@@ -2961,7 +3289,8 @@
       "type": "number",
       "title": {
         "en": "Memory Used",
-        "de": "Speicher belegt"
+        "de": "Speicher belegt",
+        "nl": "Gebruikt geheugen"
       },
       "getable": true,
       "setable": false,
@@ -2969,7 +3298,8 @@
       "insights": true,
       "units": {
         "en": "GB",
-        "de": "GB"
+        "de": "GB",
+        "nl": "GB"
       },
       "decimals": 1,
       "min": 0,
@@ -2979,7 +3309,8 @@
       "type": "number",
       "title": {
         "en": "Network Received",
-        "de": "Netzwerk empfangen"
+        "de": "Netzwerk empfangen",
+        "nl": "Netwerk ontvangen"
       },
       "getable": true,
       "setable": false,
@@ -2987,7 +3318,8 @@
       "insights": true,
       "units": {
         "en": "Mbit/s",
-        "de": "Mbit/s"
+        "de": "Mbit/s",
+        "nl": "Mbit/s"
       },
       "decimals": 2,
       "min": 0,
@@ -2997,7 +3329,8 @@
       "type": "number",
       "title": {
         "en": "Network Sent",
-        "de": "Netzwerk gesendet"
+        "de": "Netzwerk gesendet",
+        "nl": "Netwerk verzonden"
       },
       "getable": true,
       "setable": false,
@@ -3005,7 +3338,8 @@
       "insights": true,
       "units": {
         "en": "Mbit/s",
-        "de": "Mbit/s"
+        "de": "Mbit/s",
+        "nl": "Mbit/s"
       },
       "decimals": 2,
       "min": 0,
@@ -3015,7 +3349,8 @@
       "type": "boolean",
       "title": {
         "en": "Refresh",
-        "de": "Aktualisieren"
+        "de": "Aktualisieren",
+        "nl": "Vernieuwen"
       },
       "getable": false,
       "setable": true,
@@ -3026,7 +3361,8 @@
       "type": "boolean",
       "title": {
         "en": "Install Update",
-        "de": "Update installieren"
+        "de": "Update installieren",
+        "nl": "Update installeren"
       },
       "getable": false,
       "setable": true,
@@ -3037,7 +3373,8 @@
       "type": "string",
       "title": {
         "en": "Update Status",
-        "de": "Update-Status"
+        "de": "Update-Status",
+        "nl": "Updatestatus"
       },
       "getable": true,
       "setable": false,
@@ -3049,7 +3386,8 @@
       "type": "string",
       "title": {
         "en": "Uptime",
-        "de": "Laufzeit"
+        "de": "Laufzeit",
+        "nl": "Bedrijfsduur"
       },
       "getable": true,
       "setable": false,
@@ -3061,7 +3399,8 @@
       "type": "string",
       "title": {
         "en": "Version",
-        "de": "Version"
+        "de": "Version",
+        "nl": "Versie"
       },
       "getable": true,
       "setable": false,
@@ -3073,7 +3412,8 @@
       "type": "number",
       "title": {
         "en": "Free",
-        "de": "Frei"
+        "de": "Frei",
+        "nl": "Vrij"
       },
       "getable": true,
       "setable": false,
@@ -3081,7 +3421,8 @@
       "insights": true,
       "units": {
         "en": "TB",
-        "de": "TB"
+        "de": "TB",
+        "nl": "TB"
       },
       "decimals": 2,
       "min": 0,
@@ -3091,7 +3432,8 @@
       "type": "boolean",
       "title": {
         "en": "Start Scrub",
-        "de": "Scrub starten"
+        "de": "Scrub starten",
+        "nl": "Scrub starten"
       },
       "getable": false,
       "setable": true,
@@ -3102,7 +3444,8 @@
       "type": "string",
       "title": {
         "en": "Pool Status",
-        "de": "Pool-Status"
+        "de": "Pool-Status",
+        "nl": "Poolstatus"
       },
       "getable": true,
       "setable": false,
@@ -3114,7 +3457,8 @@
       "type": "number",
       "title": {
         "en": "Total Size",
-        "de": "Gesamtgrösse"
+        "de": "Gesamtgrösse",
+        "nl": "Totale grootte"
       },
       "getable": true,
       "setable": false,
@@ -3122,7 +3466,8 @@
       "insights": true,
       "units": {
         "en": "TB",
-        "de": "TB"
+        "de": "TB",
+        "nl": "TB"
       },
       "decimals": 2,
       "min": 0,
@@ -3132,7 +3477,8 @@
       "type": "number",
       "title": {
         "en": "Used Space",
-        "de": "Belegter Speicher"
+        "de": "Belegter Speicher",
+        "nl": "Gebruikte ruimte"
       },
       "getable": true,
       "setable": false,
@@ -3140,7 +3486,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 1,
       "min": 0,
@@ -3151,7 +3498,8 @@
       "type": "number",
       "title": {
         "en": "Used",
-        "de": "Belegt"
+        "de": "Belegt",
+        "nl": "Gebruikt"
       },
       "getable": true,
       "setable": false,
@@ -3159,7 +3507,8 @@
       "insights": true,
       "units": {
         "en": "TB",
-        "de": "TB"
+        "de": "TB",
+        "nl": "TB"
       },
       "decimals": 2,
       "min": 0,
@@ -3169,7 +3518,8 @@
       "type": "number",
       "title": {
         "en": "Scrub Progress",
-        "de": "Scrub-Fortschritt"
+        "de": "Scrub-Fortschritt",
+        "nl": "Scrub-voortgang"
       },
       "getable": true,
       "setable": false,
@@ -3177,7 +3527,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 1,
       "min": 0,
@@ -3188,7 +3539,8 @@
       "type": "string",
       "title": {
         "en": "Scrub Status",
-        "de": "Scrub-Status"
+        "de": "Scrub-Status",
+        "nl": "Scrub-status"
       },
       "getable": true,
       "setable": false,
@@ -3200,7 +3552,8 @@
       "type": "boolean",
       "title": {
         "en": "Starts on Boot",
-        "de": "Startet beim Hochfahren"
+        "de": "Startet beim Hochfahren",
+        "nl": "Start bij opstarten"
       },
       "getable": true,
       "setable": false,
@@ -3212,7 +3565,8 @@
       "type": "boolean",
       "title": {
         "en": "Restart",
-        "de": "Neu starten"
+        "de": "Neu starten",
+        "nl": "Herstarten"
       },
       "getable": false,
       "setable": true,
@@ -3223,7 +3577,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       },
       "getable": true,
       "setable": false,
@@ -3235,7 +3590,8 @@
       "type": "string",
       "title": {
         "en": "Last Run",
-        "de": "Letzter Lauf"
+        "de": "Letzter Lauf",
+        "nl": "Laatste uitvoering"
       },
       "getable": true,
       "setable": false,
@@ -3247,7 +3603,8 @@
       "type": "number",
       "title": {
         "en": "Progress",
-        "de": "Fortschritt"
+        "de": "Fortschritt",
+        "nl": "Voortgang"
       },
       "getable": true,
       "setable": false,
@@ -3255,7 +3612,8 @@
       "insights": true,
       "units": {
         "en": "%",
-        "de": "%"
+        "de": "%",
+        "nl": "%"
       },
       "decimals": 0,
       "min": 0,
@@ -3266,7 +3624,8 @@
       "type": "boolean",
       "title": {
         "en": "Run Now",
-        "de": "Jetzt ausführen"
+        "de": "Jetzt ausführen",
+        "nl": "Nu uitvoeren"
       },
       "getable": false,
       "setable": true,
@@ -3277,7 +3636,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       },
       "getable": true,
       "setable": false,
@@ -3289,7 +3649,8 @@
       "type": "number",
       "title": {
         "en": "Memory",
-        "de": "Arbeitsspeicher"
+        "de": "Arbeitsspeicher",
+        "nl": "Geheugen"
       },
       "getable": true,
       "setable": false,
@@ -3297,7 +3658,8 @@
       "insights": false,
       "units": {
         "en": "MB",
-        "de": "MB"
+        "de": "MB",
+        "nl": "MB"
       },
       "decimals": 0,
       "min": 0,
@@ -3307,7 +3669,8 @@
       "type": "boolean",
       "title": {
         "en": "Restart",
-        "de": "Neu starten"
+        "de": "Neu starten",
+        "nl": "Herstarten"
       },
       "getable": false,
       "setable": true,
@@ -3318,7 +3681,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       },
       "getable": true,
       "setable": false,

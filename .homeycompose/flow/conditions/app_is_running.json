@@ -2,7 +2,8 @@
   "id": "app_is_running",
   "title": {
     "en": "App !{{is|is not}} running",
-    "de": "App !{{läuft|läuft nicht}}"
+    "de": "App !{{läuft|läuft nicht}}",
+    "nl": "App !{{draait|draait niet}}"
   },
   "args": [
     {

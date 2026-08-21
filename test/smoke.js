@@ -5,6 +5,7 @@
  * (shapes taken from the middleware API models) and checks the parsed output.
  */
 
+const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const TrueNasHub = require(path.join(ROOT, 'lib', 'TrueNasHub.js'));
@@ -94,6 +95,11 @@ const RESPONSES = {
       dismissed: false, datetime: { $date: 1700000100000 },
     },
     {
+      uuid: 'u-warn', id: 'a-warn', level: 'WARNING', klass: 'DiskTemp',
+      text: 'Device nvme0n1 is running hot', dismissed: false,
+      datetime: { $date: 1700000200000 },
+    },
+    {
       uuid: 'u-gone', id: 'a-gone', level: 'ERROR', klass: 'Old',
       text: 'Dismissed one', dismissed: true,
     },
@@ -121,6 +127,32 @@ const RESPONSES = {
     },
   ],
   'disk.temperatures': { sda: 38, nvme0n1: 52 },
+  // One of each task kind, in the three states the settings list colours
+  // differently: failed, running with progress, and finished.
+  'cloudsync.query': [{
+    id: 3,
+    description: 'Backblaze photos',
+    path: ['/mnt/tank/photos'],
+    enabled: true,
+    job: {
+      state: 'FAILED',
+      time_finished: { $date: 1755640440000 },
+      progress: { percent: 100, description: 'error' },
+    },
+  }],
+  'replication.query': [{
+    id: 1,
+    name: 'tank to backup',
+    target_dataset: 'backup/tank',
+    enabled: true,
+    job: { state: 'RUNNING', progress: { percent: 41, description: 'sending' } },
+  }],
+  'pool.snapshottask.query': [{
+    id: 7,
+    dataset: 'tank/media',
+    enabled: false,
+    state: { state: 'FINISHED', datetime: { $date: 1755741600000 } },
+  }],
   // 25.10 shape. update.check_available is deliberately absent so the stub
   // reports it as missing, mirroring a Goldeye system.
   'update.status': {
@@ -268,8 +300,9 @@ function check(label, actual, expected) {
   check('vm by string id', hub.getVm('1').name, 'Ubuntu');
 
   console.log('\nAlerts');
-  check('dismissed filtered out', hub.data.alerts.length, 2);
-  check('most severe first', hub.data.alerts[0].level, 'CRITICAL');
+  check('dismissed filtered out', hub.data.alerts.length, 3);
+  check('most severe first', hub.data.alerts.map((a) => a.level),
+    ['CRITICAL', 'WARNING', 'INFO']);
   check('critical count', hub.criticalAlerts.length, 1);
 
   console.log('\nInterfaces');
@@ -372,7 +405,134 @@ function check(label, actual, expected) {
   check('cpuUsage still parsed', hub.data.system.cpuUsage, 12.5);
   check('hub still available', hub.available, true);
 
+  // -------------------------------------------------------------------------
+  // Detail lists behind the stat tiles, built by api.js from this same hub.
+  // Driven through the real module rather than a fixture, because a fixture
+  // would only prove that my idea of the shape agrees with itself.
+  // -------------------------------------------------------------------------
+  console.log('\nSettings detail lists');
+
+  const settingsApi = require(path.join(ROOT, 'api.js'));
+  // A fixed timezone, so the formatted timestamps do not depend on where the
+  // test happens to run.
+  const fakeHomey = {
+    app: { getHub: (id) => (id === 'test' ? hub : null) },
+    clock: { getTimezone: () => 'Europe/Zurich' },
+  };
+  const details = async (kind) => settingsApi.getSystemDetails({
+    homey: fakeHomey,
+    query: { systemId: 'test', kind },
+  });
+
+  const KINDS = ['pools', 'disks', 'services', 'apps', 'vms', 'tasks', 'alerts'];
+  for (const kind of KINDS) {
+    const { items } = await details(kind);
+    check(`${kind}: one item per hub record`, items.length, hub.data[kind].length);
+    check(`${kind}: every item has a title`, items.filter((i) => !i.title).length, 0);
+    check(`${kind}: every item has a known tone`,
+      items.filter((i) => !['ok', 'warn', 'alarm', 'muted'].includes(i.tone)).map((i) => i.title), []);
+    check(`${kind}: every item has an id`, items.filter((i) => !i.id).length, 0);
+  }
+
+  const pools = (await details('pools')).items;
+  // The fixture pool is DEGRADED and mid-scrub; the boot pool is healthy.
+  check('degraded pool sorts first', pools[0].title, 'tank');
+  check('degraded pool is an alarm', pools[0].tone, 'alarm');
+  check('scrubbing pool shows SCRUB, not the status', pools[0].state, 'SCRUB');
+  check('pool size is formatted', pools[0].sub, '30 TB / 40 TB');
+  check('pool meter is the usage percentage', pools[0].meter, 75);
+  check('boot pool is flagged', pools.find((p) => p.title === 'boot-pool').flags, ['boot']);
+
+  const disks = (await details('disks')).items;
+  const cool = disks.find((d) => d.title === 'sda');
+  const hot = disks.find((d) => d.title === 'nvme0n1');
+  check('disk temperature becomes the badge', cool.state, '38 °C');
+  check('disk under 50 °C reads as ok', cool.tone, 'ok');
+  check('disk at 52 °C is a warning', [hot.state, hot.tone], ['52 °C', 'warn']);
+  check('the warm disk sorts above the cool one',
+    disks.findIndex((d) => d.title === 'nvme0n1') < disks.findIndex((d) => d.title === 'sda'), true);
+  check('disk names its pool', cool.note, 'tank');
+
+  const apps = (await details('apps')).items;
+  const upgradable = apps.find((a) => a.flags.includes('update'));
+  check('an upgradable app is flagged', Boolean(upgradable), true);
+
+  const tasks = (await details('tasks')).items;
+  check('all three task kinds are listed', tasks.length, 3);
+  check('the failed task sorts first', [tasks[0].title, tasks[0].tone], ['Backblaze photos', 'alarm']);
+  check('a running task carries its progress', tasks[1].meter, 41);
+  check('a finished task is not a meter', tasks[2].meter, null);
+  check('a disabled task is flagged', tasks[2].flags, ['disabled']);
+  check('tasks name their kind', tasks.map((t) => t.note), ['cloudsync', 'replication', 'snapshot']);
+
+  const alerts = (await details('alerts')).items;
+  const byLevel = (level) => alerts.find((a) => a.state === level);
+
+  // TrueNAS files routine successes as INFO alerts. Painting those amber, or
+  // reddening the tile for them, cries wolf on a healthy NAS.
+  check('an INFO alert is not a warning', byLevel('INFO').tone, 'muted');
+  check('a WARNING alert is a warning', byLevel('WARNING').tone, 'warn');
+  check('a CRITICAL alert is an alarm', byLevel('CRITICAL').tone, 'alarm');
+  check('alerts are never toned ok', alerts.filter((a) => a.tone === 'ok').length, 0);
+  check('the critical alert sorts first', alerts[0].state, 'CRITICAL');
+  check('the INFO alert sorts last', alerts[alerts.length - 1].state, 'INFO');
+
+  // `{"$date": 1787259230000}` reached the page as a raw run of digits once.
+  check('an alert timestamp is a readable date, not epoch milliseconds',
+    byLevel('INFO').sub, '2023-11-14 23:13');
+  check('no timestamp is left as raw digits',
+    alerts.filter((a) => /^\d{10,}$/.test(String(a.sub))).map((a) => a.state), []);
+  check('task timestamps are formatted the same way',
+    tasks.filter((t) => t.sub !== null).map((t) => /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(t.sub)),
+    tasks.filter((t) => t.sub !== null).map(() => true));
+
+  // Without a clock the timestamp must still be a date, just in host time.
+  const noClock = await settingsApi.getSystemDetails({
+    homey: { app: fakeHomey.app },
+    query: { systemId: 'test', kind: 'alerts' },
+  });
+  check('a missing clock does not lose the timestamp',
+    /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(noClock.items[0].sub), true);
+
+  const severe = alerts.filter((a) => a.tone !== 'muted').length;
+  check('only WARNING and above count as severe', severe, 2);
+
+  await details('pools').then(() => null);
+  let rejected = null;
+  await details('nonsense').catch((err) => { rejected = err.message; });
+  check('an unknown kind is rejected', rejected, 'Unknown kind: nonsense');
+
   hub.stop();
+
+  // -------------------------------------------------------------------------
+  // The app settings page talks to api.js by literal path. A renamed route
+  // would leave the page silently broken, so the paths are checked here rather
+  // than found by a user opening the settings.
+  // -------------------------------------------------------------------------
+  console.log('\nSettings page wiring');
+
+  const manifest = require(path.join(ROOT, '.homeycompose', 'app.json'));
+  const apiModule = require(path.join(ROOT, 'api.js'));
+  const settingsHtml = fs.readFileSync(path.join(ROOT, 'settings', 'index.html'), 'utf8');
+
+  const declared = new Set(
+    Object.values(manifest.api).map((route) => `${route.method} ${route.path}`),
+  );
+
+  // Matches api('GET', '/systems') and api('GET', '/refresh?systemId=' + id)
+  // alike; the query string is dropped because routes declare none.
+  const used = new Set();
+  const callRe = /\bapi\(\s*'(GET|POST|PUT|DELETE)'\s*,\s*'([^']+)'/g;
+  for (let m = callRe.exec(settingsHtml); m; m = callRe.exec(settingsHtml)) {
+    used.add(`${m[1]} ${m[2].split('?')[0]}`);
+  }
+
+  check('settings page calls every declared route',
+    [...declared].filter((route) => !used.has(route)), []);
+  check('every path the page calls is declared',
+    [...used].filter((route) => !declared.has(route)), []);
+  check('every declared route has a handler',
+    Object.keys(manifest.api).filter((name) => typeof apiModule[name] !== 'function'), []);
 
   console.log(failures === 0 ? '\nAll checks passed.' : `\n${failures} check(s) failed.`);
   process.exit(failures === 0 ? 0 : 1);

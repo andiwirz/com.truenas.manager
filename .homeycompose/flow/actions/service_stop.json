@@ -2,7 +2,8 @@
   "id": "service_stop",
   "title": {
     "en": "Stop the service",
-    "de": "Dienst stoppen"
+    "de": "Dienst stoppen",
+    "nl": "De service stoppen"
   },
   "args": [
     {

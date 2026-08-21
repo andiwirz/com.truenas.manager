@@ -2,7 +2,8 @@
   "id": "app_image_update_available",
   "title": {
     "en": "A container image update !{{is|is not}} available",
-    "de": "Ein Container-Image-Update !{{ist|ist nicht}} verfügbar"
+    "de": "Ein Container-Image-Update !{{ist|ist nicht}} verfügbar",
+    "nl": "Een container-image-update !{{is|is niet}} beschikbaar"
   },
   "args": [
     {

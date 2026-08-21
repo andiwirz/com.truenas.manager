@@ -2,7 +2,8 @@
   "id": "service_restart",
   "title": {
     "en": "Restart the service",
-    "de": "Dienst neu starten"
+    "de": "Dienst neu starten",
+    "nl": "De service herstarten"
   },
   "args": [
     {

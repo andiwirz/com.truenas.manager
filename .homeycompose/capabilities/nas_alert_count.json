@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Active Alerts",
-    "de": "Aktive Meldungen"
+    "de": "Aktive Meldungen",
+    "nl": "Actieve meldingen"
   },
   "getable": true,
   "setable": false,

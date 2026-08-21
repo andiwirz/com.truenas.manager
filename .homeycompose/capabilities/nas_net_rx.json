@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Network Received",
-    "de": "Netzwerk empfangen"
+    "de": "Netzwerk empfangen",
+    "nl": "Netwerk ontvangen"
   },
   "getable": true,
   "setable": false,
@@ -10,7 +11,8 @@
   "insights": true,
   "units": {
     "en": "Mbit/s",
-    "de": "Mbit/s"
+    "de": "Mbit/s",
+    "nl": "Mbit/s"
   },
   "decimals": 2,
   "min": 0,

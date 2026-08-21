@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Scrub Status",
-    "de": "Scrub-Status"
+    "de": "Scrub-Status",
+    "nl": "Scrub-status"
   },
   "getable": true,
   "setable": false,

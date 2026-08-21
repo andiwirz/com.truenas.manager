@@ -2,7 +2,8 @@
   "id": "task_last_run_failed",
   "title": {
     "en": "The last run !{{failed|succeeded}}",
-    "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}"
+    "de": "Der letzte Lauf !{{ist fehlgeschlagen|war erfolgreich}}",
+    "nl": "De laatste uitvoering !{{is mislukt|is geslaagd}}"
   },
   "args": [
     {

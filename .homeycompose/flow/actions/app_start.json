@@ -2,7 +2,8 @@
   "id": "app_start",
   "title": {
     "en": "Start the app",
-    "de": "App starten"
+    "de": "App starten",
+    "nl": "De app starten"
   },
   "args": [
     {

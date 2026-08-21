@@ -2,7 +2,8 @@
   "id": "system_refresh",
   "title": {
     "en": "Refresh all data",
-    "de": "Alle Daten aktualisieren"
+    "de": "Alle Daten aktualisieren",
+    "nl": "Alle gegevens vernieuwen"
   },
   "args": [
     {

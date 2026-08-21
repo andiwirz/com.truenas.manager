@@ -2,7 +2,8 @@
   "id": "app_state_changed",
   "title": {
     "en": "App status changed",
-    "de": "App-Status hat gewechselt"
+    "de": "App-Status hat gewechselt",
+    "nl": "App-status gewijzigd"
   },
   "args": [
     {
@@ -17,7 +18,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       }
     },
     {
@@ -25,7 +27,8 @@
       "type": "string",
       "title": {
         "en": "Previous status",
-        "de": "Vorheriger Status"
+        "de": "Vorheriger Status",
+        "nl": "Vorige status"
       }
     },
     {
@@ -33,7 +36,8 @@
       "type": "string",
       "title": {
         "en": "Web address",
-        "de": "Webadresse"
+        "de": "Webadresse",
+        "nl": "Webadres"
       }
     }
   ]

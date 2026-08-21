@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Containers",
-    "de": "Container"
+    "de": "Container",
+    "nl": "Containers"
   },
   "getable": true,
   "setable": false,

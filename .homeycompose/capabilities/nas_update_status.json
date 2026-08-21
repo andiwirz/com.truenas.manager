@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Update Status",
-    "de": "Update-Status"
+    "de": "Update-Status",
+    "nl": "Updatestatus"
   },
   "getable": true,
   "setable": false,

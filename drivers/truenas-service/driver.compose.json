@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Service",
-    "de": "Dienst"
+    "de": "Dienst",
+    "nl": "Service"
   },
   "class": "other",
   "capabilities": [
@@ -14,15 +15,18 @@
     "onoff": {
       "title": {
         "en": "Running",
-        "de": "Läuft"
+        "de": "Läuft",
+        "nl": "Draait"
       },
       "insightsTitleTrue": {
         "en": "Service started",
-        "de": "Dienst gestartet"
+        "de": "Dienst gestartet",
+        "nl": "Service gestart"
       },
       "insightsTitleFalse": {
         "en": "Service stopped",
-        "de": "Dienst gestoppt"
+        "de": "Dienst gestoppt",
+        "nl": "Service gestopt"
       }
     }
   },
@@ -49,7 +53,8 @@
       "type": "group",
       "label": {
         "en": "Service",
-        "de": "Dienst"
+        "de": "Dienst",
+        "nl": "Service"
       },
       "children": [
         {
@@ -57,12 +62,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show restart button",
-            "de": "Neustart-Schaltfläche anzeigen"
+            "de": "Neustart-Schaltfläche anzeigen",
+            "nl": "Herstartknop tonen"
           },
           "value": true,
           "hint": {
             "en": "Shows a button on the device tile that restarts this service. Active connections are dropped.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die diesen Dienst neu startet. Bestehende Verbindungen werden getrennt.",
+            "nl": "Toont een knop op de apparaattegel die deze service herstart. Actieve verbindingen worden verbroken."
           }
         },
         {
@@ -70,7 +77,8 @@
           "type": "label",
           "label": {
             "en": "Service identifier",
-            "de": "Dienstkennung"
+            "de": "Dienstkennung",
+            "nl": "Service-identificatie"
           },
           "value": "-"
         }

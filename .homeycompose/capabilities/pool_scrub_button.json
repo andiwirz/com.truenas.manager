@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Start Scrub",
-    "de": "Scrub starten"
+    "de": "Scrub starten",
+    "nl": "Scrub starten"
   },
   "getable": false,
   "setable": true,

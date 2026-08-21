@@ -2,7 +2,8 @@
   "type": "number",
   "title": {
     "en": "Load Average (5 min)",
-    "de": "Systemlast (5 Min.)"
+    "de": "Systemlast (5 Min.)",
+    "nl": "Belasting (5 min)"
   },
   "getable": true,
   "setable": false,

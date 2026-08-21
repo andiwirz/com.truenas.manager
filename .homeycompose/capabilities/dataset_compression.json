@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Compression Ratio",
-    "de": "Kompressionsrate"
+    "de": "Kompressionsrate",
+    "nl": "Compressieverhouding"
   },
   "getable": true,
   "setable": false,

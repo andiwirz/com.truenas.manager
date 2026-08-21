@@ -2,7 +2,8 @@
   "id": "pool_stop_scrub",
   "title": {
     "en": "Stop the scrub",
-    "de": "Scrub stoppen"
+    "de": "Scrub stoppen",
+    "nl": "De scrub stoppen"
   },
   "args": [
     {

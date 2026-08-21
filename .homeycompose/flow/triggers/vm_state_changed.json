@@ -2,7 +2,8 @@
   "id": "vm_state_changed",
   "title": {
     "en": "Virtual machine status changed",
-    "de": "VM-Status hat gewechselt"
+    "de": "VM-Status hat gewechselt",
+    "nl": "Status van virtuele machine gewijzigd"
   },
   "args": [
     {
@@ -17,7 +18,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       }
     },
     {
@@ -25,7 +27,8 @@
       "type": "string",
       "title": {
         "en": "Previous status",
-        "de": "Vorheriger Status"
+        "de": "Vorheriger Status",
+        "nl": "Vorige status"
       }
     }
   ]

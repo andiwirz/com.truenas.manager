@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "NAS Overview",
-    "de": "NAS-Übersicht"
+    "de": "NAS-Übersicht",
+    "nl": "NAS-overzicht"
   },
   "height": "100%",
   "devices": {
@@ -14,7 +15,8 @@
       "type": "checkbox",
       "label": {
         "en": "Show statistics tiles",
-        "de": "Statistik-Kacheln anzeigen"
+        "de": "Statistik-Kacheln anzeigen",
+        "nl": "Statistiektegels tonen"
       },
       "value": true
     },
@@ -23,7 +25,8 @@
       "type": "checkbox",
       "label": {
         "en": "Show storage pools",
-        "de": "Speicher-Pools anzeigen"
+        "de": "Speicher-Pools anzeigen",
+        "nl": "Opslagpools tonen"
       },
       "value": true
     },
@@ -32,12 +35,14 @@
       "type": "checkbox",
       "label": {
         "en": "Include the boot pool",
-        "de": "Boot-Pool einbeziehen"
+        "de": "Boot-Pool einbeziehen",
+        "nl": "Boot-pool meenemen"
       },
       "value": false,
       "hint": {
         "en": "The boot pool is small and rarely changes, so it is hidden by default and left out of the total storage figure.",
-        "de": "Der Boot-Pool ist klein und ändert sich selten. Er wird daher standardmässig ausgeblendet und nicht in den Gesamtspeicher eingerechnet."
+        "de": "Der Boot-Pool ist klein und ändert sich selten. Er wird daher standardmässig ausgeblendet und nicht in den Gesamtspeicher eingerechnet.",
+        "nl": "De boot-pool is klein en verandert zelden, daarom is hij standaard verborgen en telt hij niet mee in het totale opslagcijfer."
       }
     },
     {
@@ -45,7 +50,8 @@
       "type": "checkbox",
       "label": {
         "en": "Show apps",
-        "de": "Apps anzeigen"
+        "de": "Apps anzeigen",
+        "nl": "Apps tonen"
       },
       "value": true
     },
@@ -54,12 +60,14 @@
       "type": "checkbox",
       "label": {
         "en": "Running apps only",
-        "de": "Nur laufende Apps"
+        "de": "Nur laufende Apps",
+        "nl": "Alleen draaiende apps"
       },
       "value": true,
       "hint": {
         "en": "Off also lists stopped and crashed apps, so you can see at a glance if something is not running that should be.",
-        "de": "Aus listet auch gestoppte und abgestürzte Apps, damit du auf einen Blick siehst, wenn etwas nicht läuft."
+        "de": "Aus listet auch gestoppte und abgestürzte Apps, damit du auf einen Blick siehst, wenn etwas nicht läuft.",
+        "nl": "Uit toont ook gestopte en vastgelopen apps, zodat je in één oogopslag ziet of er iets niet draait dat wel zou moeten."
       }
     },
     {
@@ -67,14 +75,16 @@
       "type": "number",
       "label": {
         "en": "Maximum apps shown",
-        "de": "Maximal angezeigte Apps"
+        "de": "Maximal angezeigte Apps",
+        "nl": "Maximaal aantal getoonde apps"
       },
       "value": 8,
       "min": 1,
       "max": 40,
       "hint": {
         "en": "Apps waiting for an update are listed first, so they stay visible even when the list is cut off. Tap the update badge to install it.",
-        "de": "Apps mit wartendem Update stehen zuoberst und bleiben daher sichtbar, auch wenn die Liste gekürzt wird. Zum Installieren auf die Update-Marke tippen."
+        "de": "Apps mit wartendem Update stehen zuoberst und bleiben daher sichtbar, auch wenn die Liste gekürzt wird. Zum Installieren auf die Update-Marke tippen.",
+        "nl": "Apps die op een update wachten staan bovenaan, zodat ze zichtbaar blijven als de lijst wordt afgekapt. Tik op de updatebadge om de update te installeren."
       }
     },
     {
@@ -82,7 +92,8 @@
       "type": "checkbox",
       "label": {
         "en": "Show alerts",
-        "de": "Meldungen anzeigen"
+        "de": "Meldungen anzeigen",
+        "nl": "Meldingen tonen"
       },
       "value": true
     },
@@ -91,14 +102,16 @@
       "type": "number",
       "label": {
         "en": "Amber above (%)",
-        "de": "Gelb ab (%)"
+        "de": "Gelb ab (%)",
+        "nl": "Oranje boven (%)"
       },
       "value": 75,
       "min": 1,
       "max": 99,
       "hint": {
         "en": "Usage bars turn amber above this level.",
-        "de": "Balken werden oberhalb dieses Werts gelb dargestellt."
+        "de": "Balken werden oberhalb dieses Werts gelb dargestellt.",
+        "nl": "Gebruiksbalken worden oranje boven dit niveau."
       }
     },
     {
@@ -106,14 +119,16 @@
       "type": "number",
       "label": {
         "en": "Red above (%)",
-        "de": "Rot ab (%)"
+        "de": "Rot ab (%)",
+        "nl": "Rood boven (%)"
       },
       "value": 90,
       "min": 1,
       "max": 100,
       "hint": {
         "en": "Usage bars turn red above this level.",
-        "de": "Balken werden oberhalb dieses Werts rot dargestellt."
+        "de": "Balken werden oberhalb dieses Werts rot dargestellt.",
+        "nl": "Gebruiksbalken worden rood boven dit niveau."
       }
     }
   ],

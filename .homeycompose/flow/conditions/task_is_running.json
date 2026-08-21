@@ -2,7 +2,8 @@
   "id": "task_is_running",
   "title": {
     "en": "The task !{{is|is not}} running",
-    "de": "Die Aufgabe !{{läuft|läuft nicht}}"
+    "de": "Die Aufgabe !{{läuft|läuft nicht}}",
+    "nl": "De taak !{{loopt|loopt niet}}"
   },
   "args": [
     {

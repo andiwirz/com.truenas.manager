@@ -2,7 +2,8 @@
   "id": "pool_scrub_finished",
   "title": {
     "en": "Scrub finished",
-    "de": "Scrub ist abgeschlossen"
+    "de": "Scrub ist abgeschlossen",
+    "nl": "Scrub voltooid"
   },
   "args": [
     {
@@ -17,7 +18,8 @@
       "type": "string",
       "title": {
         "en": "Pool",
-        "de": "Pool"
+        "de": "Pool",
+        "nl": "Pool"
       }
     },
     {
@@ -25,7 +27,8 @@
       "type": "number",
       "title": {
         "en": "Errors",
-        "de": "Fehler"
+        "de": "Fehler",
+        "nl": "Fouten"
       }
     }
   ]

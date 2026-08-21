@@ -2,11 +2,13 @@
   "id": "pool_unhealthy",
   "title": {
     "en": "Pool became unhealthy",
-    "de": "Pool ist nicht mehr in Ordnung"
+    "de": "Pool ist nicht mehr in Ordnung",
+    "nl": "Pool is niet meer gezond"
   },
   "hint": {
     "en": "Fires when the pool leaves the healthy state, for example on DEGRADED or FAULTED.",
-    "de": "Wird ausgelöst, wenn der Pool den fehlerfreien Zustand verlässt, etwa bei DEGRADED oder FAULTED."
+    "de": "Wird ausgelöst, wenn der Pool den fehlerfreien Zustand verlässt, etwa bei DEGRADED oder FAULTED.",
+    "nl": "Wordt geactiveerd wanneer de pool de gezonde toestand verlaat, bijvoorbeeld bij DEGRADED of FAULTED."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Status",
-        "de": "Status"
+        "de": "Status",
+        "nl": "Status"
       }
     },
     {
@@ -29,7 +32,8 @@
       "type": "string",
       "title": {
         "en": "Detail",
-        "de": "Details"
+        "de": "Details",
+        "nl": "Details"
       }
     }
   ]

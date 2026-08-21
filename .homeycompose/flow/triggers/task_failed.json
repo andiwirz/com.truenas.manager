@@ -2,11 +2,13 @@
   "id": "task_failed",
   "title": {
     "en": "A task failed",
-    "de": "Eine Aufgabe ist fehlgeschlagen"
+    "de": "Eine Aufgabe ist fehlgeschlagen",
+    "nl": "Een taak is mislukt"
   },
   "hint": {
     "en": "Fires only when a run ends in a failed, errored or aborted state. Use this to notice a backup that quietly stopped working.",
-    "de": "Wird nur ausgelöst, wenn ein Lauf fehlgeschlagen, fehlerhaft oder abgebrochen endet. Damit merkst du, wenn ein Backup still stehen geblieben ist."
+    "de": "Wird nur ausgelöst, wenn ein Lauf fehlgeschlagen, fehlerhaft oder abgebrochen endet. Damit merkst du, wenn ein Backup still stehen geblieben ist.",
+    "nl": "Wordt alleen geactiveerd wanneer een uitvoering eindigt als mislukt, met fout of afgebroken. Zo merk je een back-up op die stilletjes gestopt is met werken."
   },
   "args": [
     {
@@ -21,7 +23,8 @@
       "type": "string",
       "title": {
         "en": "Task",
-        "de": "Aufgabe"
+        "de": "Aufgabe",
+        "nl": "Taak"
       }
     },
     {
@@ -29,7 +32,8 @@
       "type": "string",
       "title": {
         "en": "Result",
-        "de": "Ergebnis"
+        "de": "Ergebnis",
+        "nl": "Resultaat"
       }
     },
     {
@@ -37,7 +41,8 @@
       "type": "string",
       "title": {
         "en": "Type",
-        "de": "Typ"
+        "de": "Typ",
+        "nl": "Type"
       }
     }
   ]

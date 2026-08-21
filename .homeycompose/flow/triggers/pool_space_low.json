@@ -2,15 +2,18 @@
   "id": "pool_space_low",
   "title": {
     "en": "Free space dropped below",
-    "de": "Freier Speicher ist gefallen unter"
+    "de": "Freier Speicher ist gefallen unter",
+    "nl": "Vrije ruimte is gedaald onder"
   },
   "titleFormatted": {
     "en": "Free space dropped below [[percent]] %",
-    "de": "Freier Speicher ist unter [[percent]] % gefallen"
+    "de": "Freier Speicher ist unter [[percent]] % gefallen",
+    "nl": "Vrije ruimte is gedaald onder [[percent]] %"
   },
   "hint": {
     "en": "Fires once each time free space crosses the threshold downwards, not on every reading below it.",
-    "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter."
+    "de": "Wird jeweils einmal beim Unterschreiten des Schwellwerts ausgelöst, nicht bei jeder Messung darunter.",
+    "nl": "Wordt eenmaal geactiveerd telkens wanneer de vrije ruimte de drempel neerwaarts passeert, niet bij elke meting eronder."
   },
   "args": [
     {
@@ -23,14 +26,16 @@
       "type": "number",
       "title": {
         "en": "Free space (%)",
-        "de": "Freier Speicher (%)"
+        "de": "Freier Speicher (%)",
+        "nl": "Vrije ruimte (%)"
       },
       "min": 1,
       "max": 99,
       "step": 1,
       "placeholder": {
         "en": "10",
-        "de": "10"
+        "de": "10",
+        "nl": "10"
       }
     }
   ],
@@ -40,7 +45,8 @@
       "type": "number",
       "title": {
         "en": "Free space (%)",
-        "de": "Freier Speicher (%)"
+        "de": "Freier Speicher (%)",
+        "nl": "Vrije ruimte (%)"
       }
     },
     {
@@ -48,7 +54,8 @@
       "type": "number",
       "title": {
         "en": "Free space (TB)",
-        "de": "Freier Speicher (TB)"
+        "de": "Freier Speicher (TB)",
+        "nl": "Vrije ruimte (TB)"
       }
     }
   ]

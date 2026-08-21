@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "Dataset",
-    "de": "Dataset"
+    "de": "Dataset",
+    "nl": "Dataset"
   },
   "class": "sensor",
   "capabilities": [
@@ -35,7 +36,8 @@
       "type": "group",
       "label": {
         "en": "Snapshots",
-        "de": "Snapshots"
+        "de": "Snapshots",
+        "nl": "Snapshots"
       },
       "children": [
         {
@@ -43,12 +45,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show snapshot button",
-            "de": "Snapshot-Schaltfläche anzeigen"
+            "de": "Snapshot-Schaltfläche anzeigen",
+            "nl": "Snapshotknop tonen"
           },
           "value": false,
           "hint": {
             "en": "Shows a button on the device tile that creates a snapshot of this dataset. Off by default so snapshots are not created by accident.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die einen Snapshot dieses Datasets erstellt. Standardmässig aus, damit nicht versehentlich Snapshots entstehen.",
+            "nl": "Toont een knop op de apparaattegel die een snapshot van deze dataset maakt. Standaard uit, zodat er niet per ongeluk snapshots worden gemaakt."
           }
         },
         {
@@ -56,12 +60,14 @@
           "type": "text",
           "label": {
             "en": "Snapshot name prefix",
-            "de": "Präfix für Snapshot-Namen"
+            "de": "Präfix für Snapshot-Namen",
+            "nl": "Voorvoegsel snapshotnaam"
           },
           "value": "homey",
           "hint": {
             "en": "Snapshots are named prefix-YYYY-MM-DD-HHMMSS so they sort chronologically and never collide with your periodic snapshot tasks.",
-            "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben."
+            "de": "Snapshots heissen Präfix-YYYY-MM-DD-HHMMSS. So sortieren sie chronologisch und kollidieren nie mit deinen periodischen Snapshot-Aufgaben.",
+            "nl": "Snapshots heten voorvoegsel-JJJJ-MM-DD-UUMMSS, zodat ze chronologisch sorteren en nooit botsen met je periodieke snapshottaken."
           }
         },
         {
@@ -69,7 +75,8 @@
           "type": "checkbox",
           "label": {
             "en": "Include child datasets",
-            "de": "Untergeordnete Datasets einbeziehen"
+            "de": "Untergeordnete Datasets einbeziehen",
+            "nl": "Onderliggende datasets meenemen"
           },
           "value": false
         }
@@ -79,7 +86,8 @@
       "type": "group",
       "label": {
         "en": "Dataset information",
-        "de": "Dataset-Informationen"
+        "de": "Dataset-Informationen",
+        "nl": "Datasetgegevens"
       },
       "children": [
         {
@@ -87,7 +95,8 @@
           "type": "label",
           "label": {
             "en": "Pool",
-            "de": "Pool"
+            "de": "Pool",
+            "nl": "Pool"
           },
           "value": "-"
         },
@@ -96,7 +105,8 @@
           "type": "label",
           "label": {
             "en": "Mount point",
-            "de": "Einhängepunkt"
+            "de": "Einhängepunkt",
+            "nl": "Koppelpunt"
           },
           "value": "-"
         },
@@ -105,7 +115,8 @@
           "type": "label",
           "label": {
             "en": "Encrypted",
-            "de": "Verschlüsselt"
+            "de": "Verschlüsselt",
+            "nl": "Versleuteld"
           },
           "value": "-"
         }

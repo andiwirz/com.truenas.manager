@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Last Run",
-    "de": "Letzter Lauf"
+    "de": "Letzter Lauf",
+    "nl": "Laatste uitvoering"
   },
   "getable": true,
   "setable": false,

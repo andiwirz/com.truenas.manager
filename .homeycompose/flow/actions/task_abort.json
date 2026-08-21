@@ -2,11 +2,13 @@
   "id": "task_abort",
   "title": {
     "en": "Abort the running task",
-    "de": "Laufende Aufgabe abbrechen"
+    "de": "Laufende Aufgabe abbrechen",
+    "nl": "De lopende taak afbreken"
   },
   "hint": {
     "en": "Only cloud sync tasks can be aborted through the API. Replication and snapshot tasks have to finish.",
-    "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen."
+    "de": "Nur Cloudsync-Aufgaben lassen sich über die API abbrechen. Replikations- und Snapshot-Aufgaben müssen zu Ende laufen.",
+    "nl": "Alleen cloudsynchronisatietaken kunnen via de API worden afgebroken. Replicatie- en snapshottaken moeten aflopen."
   },
   "args": [
     {

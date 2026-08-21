@@ -1,7 +1,8 @@
 {
   "name": {
     "en": "App",
-    "de": "App"
+    "de": "App",
+    "nl": "App"
   },
   "class": "other",
   "capabilities": [
@@ -18,15 +19,18 @@
     "onoff": {
       "title": {
         "en": "Running",
-        "de": "Läuft"
+        "de": "Läuft",
+        "nl": "Draait"
       },
       "insightsTitleTrue": {
         "en": "App started",
-        "de": "App gestartet"
+        "de": "App gestartet",
+        "nl": "App gestart"
       },
       "insightsTitleFalse": {
         "en": "App stopped",
-        "de": "App gestoppt"
+        "de": "App gestoppt",
+        "nl": "App gestopt"
       }
     }
   },
@@ -53,7 +57,8 @@
       "type": "group",
       "label": {
         "en": "App",
-        "de": "App"
+        "de": "App",
+        "nl": "App"
       },
       "children": [
         {
@@ -61,12 +66,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show update button",
-            "de": "Update-Schaltfläche anzeigen"
+            "de": "Update-Schaltfläche anzeigen",
+            "nl": "Updateknop tonen"
           },
           "value": true,
           "hint": {
             "en": "Shows a button on the device tile that installs a pending update. A catalog version upgrade is installed directly; if only newer container images are waiting, the app is redeployed instead. The app restarts either way.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die ein wartendes Update installiert. Ein Katalog-Update wird direkt eingespielt; stehen nur neuere Container-Images an, wird die App stattdessen neu bereitgestellt. In beiden Fällen startet die App neu.",
+            "nl": "Toont een knop op de apparaattegel die een klaarstaande update installeert. Een catalogusversie wordt direct geïnstalleerd; staan er alleen nieuwere container-images klaar, dan wordt de app opnieuw uitgerold. In beide gevallen start de app opnieuw."
           }
         },
         {
@@ -74,12 +81,14 @@
           "type": "checkbox",
           "label": {
             "en": "Show redeploy button",
-            "de": "Schaltfläche «Neu bereitstellen» anzeigen"
+            "de": "Schaltfläche «Neu bereitstellen» anzeigen",
+            "nl": "Knop voor opnieuw uitrollen tonen"
           },
           "value": false,
           "hint": {
             "en": "Shows a button on the device tile that stops the app, pulls the latest container images and starts it again.",
-            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet."
+            "de": "Zeigt eine Schaltfläche auf der Gerätekachel, die die App stoppt, die neuesten Container-Images lädt und sie wieder startet.",
+            "nl": "Toont een knop op de apparaattegel die de app stopt, de nieuwste container-images ophaalt en hem opnieuw start."
           }
         },
         {
@@ -87,7 +96,8 @@
           "type": "label",
           "label": {
             "en": "App identifier",
-            "de": "App-Kennung"
+            "de": "App-Kennung",
+            "nl": "App-identificatie"
           },
           "value": "-"
         },
@@ -96,7 +106,8 @@
           "type": "label",
           "label": {
             "en": "Latest version",
-            "de": "Neueste Version"
+            "de": "Neueste Version",
+            "nl": "Nieuwste versie"
           },
           "value": "-"
         },
@@ -105,7 +116,8 @@
           "type": "label",
           "label": {
             "en": "Web address",
-            "de": "Webadresse"
+            "de": "Webadresse",
+            "nl": "Webadres"
           },
           "value": "-"
         }

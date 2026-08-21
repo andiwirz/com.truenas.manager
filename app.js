@@ -76,7 +76,18 @@ class TrueNasApp extends App {
   // Diagnostics log, surfaced on the app settings page
   // ---------------------------------------------------------------------------
 
+  /** Detailed poll chatter is only kept when the user asks for it. */
+  isVerbose() {
+    try {
+      return this.homey.settings.get('verbose_log') === true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
   addLog(source, level, message) {
+    if (level !== 'error' && !this.isVerbose()) return;
+
     this._logBuffer.push({
       time: new Date().toISOString(),
       source,

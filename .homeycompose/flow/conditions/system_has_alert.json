@@ -2,11 +2,13 @@
   "id": "system_has_alert",
   "title": {
     "en": "There !{{is|is no}} alert of level",
-    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe"
+    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe",
+    "nl": "Er !{{is|is geen}} melding van niveau"
   },
   "titleFormatted": {
     "en": "There !{{is|is no}} alert of level [[level]] or higher",
-    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher"
+    "de": "Es !{{gibt|gibt keine}} Meldung der Stufe [[level]] oder höher",
+    "nl": "Er !{{is|is geen}} melding van niveau [[level]] of hoger"
   },
   "args": [
     {
@@ -19,28 +21,32 @@
       "type": "dropdown",
       "title": {
         "en": "Level",
-        "de": "Stufe"
+        "de": "Stufe",
+        "nl": "Niveau"
       },
       "values": [
         {
           "id": "WARNING",
           "label": {
             "en": "Warning",
-            "de": "Warnung"
+            "de": "Warnung",
+            "nl": "Waarschuwing"
           }
         },
         {
           "id": "ERROR",
           "label": {
             "en": "Error",
-            "de": "Fehler"
+            "de": "Fehler",
+            "nl": "Fout"
           }
         },
         {
           "id": "CRITICAL",
           "label": {
             "en": "Critical",
-            "de": "Kritisch"
+            "de": "Kritisch",
+            "nl": "Kritiek"
           }
         }
       ]

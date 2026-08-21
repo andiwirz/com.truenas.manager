@@ -2,11 +2,13 @@
   "id": "task_run",
   "title": {
     "en": "Run the task now",
-    "de": "Aufgabe jetzt ausführen"
+    "de": "Aufgabe jetzt ausführen",
+    "nl": "De taak nu uitvoeren"
   },
   "hint": {
     "en": "Starts the task immediately. Does nothing when it is already running.",
-    "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft."
+    "de": "Startet die Aufgabe sofort. Tut nichts, wenn sie bereits läuft.",
+    "nl": "Start de taak direct. Doet niets als hij al loopt."
   },
   "args": [
     {

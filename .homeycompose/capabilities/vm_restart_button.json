@@ -2,7 +2,8 @@
   "type": "boolean",
   "title": {
     "en": "Restart",
-    "de": "Neu starten"
+    "de": "Neu starten",
+    "nl": "Herstarten"
   },
   "getable": false,
   "setable": true,

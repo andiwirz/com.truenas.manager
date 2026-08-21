@@ -2,7 +2,8 @@
   "type": "string",
   "title": {
     "en": "Latest Alert",
-    "de": "Neueste Meldung"
+    "de": "Neueste Meldung",
+    "nl": "Laatste melding"
   },
   "getable": true,
   "setable": false,
