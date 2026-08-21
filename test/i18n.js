@@ -136,6 +136,11 @@ for (const [version, entry] of Object.entries(changelog)) {
     LANGS.filter((l) => !entry[l]), []);
 }
 
+// Publishing is refused without an entry for the version being published, and
+// forgetting it after a bump is the easy mistake.
+check(`changelog has an entry for the current version (${manifest.version})`,
+  Boolean(changelog[manifest.version]), true);
+
 // ---------------------------------------------------------------------------
 // Hand-written HTML: the settings page and the widget localise themselves
 // ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 {
   "name": "com.truenas.manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TrueNAS Manager for Homey",
   "main": "app.js",
   "scripts": {
